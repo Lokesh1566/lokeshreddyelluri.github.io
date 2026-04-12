@@ -583,7 +583,7 @@ footer{
       <em>Elluri.</em>
     </h1>
     <p class="hero-bio">
-      Graduate researcher at <strong>Indiana University Bloomington</strong> building production ML systems, RAG pipelines, NLP engines, and scalable data architectures. I make models that actually ship.
+      IEEE-published graduate researcher at <strong>Indiana University Bloomington</strong> building production ML systems, transformer-based NLP, and large-scale GenAI pipelines with LangChain, FAISS, and FastAPI. I make models that actually ship.
     </p>
     <div class="hero-cta">
       <a href="mailto:redfylokesh@gmail.com" class="cta-primary">Let's Talk →</a>
@@ -631,13 +631,13 @@ footer{
       <div class="proof-source">Vidal Health · NLP Chatbot</div>
       <div class="proof-number">5,000+</div>
       <div class="proof-what">CRM queries automated / month</div>
-      <div class="proof-context">Reduced support tickets 15%, handling time 30%; F1-score lifted from 0.71 → 0.86</div>
+      <div class="proof-context">DistilBERT in production at sub-200ms p95; macro F1 lifted 0.71 → 0.86; LLM weak supervision cut labeling cost 40%</div>
     </div>
     <div class="proof-item reveal" style="transition-delay:.08s">
       <div class="proof-source">Team Lease · Full-Stack ATS</div>
       <div class="proof-number">−25%</div>
-      <div class="proof-what">manual processing cut</div>
-      <div class="proof-context">Django + PostgreSQL platform managing 500+ applicants; cut time-to-hire by 10%</div>
+      <div class="proof-what">p99 read latency cut</div>
+      <div class="proof-context">Django + PostgreSQL platform serving 500+ concurrent applicants; 80% test coverage; time-to-hire −10%</div>
     </div>
     <div class="proof-item reveal" style="transition-delay:.16s">
       <div class="proof-source">IEEE Xplore · CONIT 2023</div>
@@ -685,16 +685,16 @@ footer{
           <span>Feb – Apr 2024</span>
         </div>
         <ul class="exp-ul">
-          <li>Developed and deployed an <strong>NLP chatbot</strong> using Python, Scikit-learn, and NLTK to automate CRM query handling — reducing support tickets by <strong>15%</strong> across 5,000+ monthly customer interactions.</li>
-          <li>Trained and tuned <strong>Logistic Regression and Random Forest classifiers</strong> for query prioritization, cutting average handling time by <strong>30%</strong> and improving F1-score from <strong>0.71 → 0.86</strong>.</li>
-          <li>Engineered <strong>automated email workflows</strong> with REST APIs and Python backend services, lifting operational efficiency by <strong>20%</strong> and eliminating ~12 hours/week of manual triage.</li>
-          <li>Partnered with product and engineering teams to translate business requirements into scalable ML-driven solutions.</li>
+          <li>Owned an end-to-end <strong>NLP intent classification pipeline</strong> (TF-IDF + Logistic Regression baseline, fine-tuned <strong>DistilBERT</strong> in production) serving 5,000+ monthly queries at <strong>sub-200ms p95 latency</strong>, deflecting <strong>15%</strong> of L1 support tickets.</li>
+          <li>Productionized training with stratified k-fold CV and Bayesian hyperparameter search, lifting <strong>macro F1 from 0.71 → 0.86</strong> and trimming handling time by <strong>30%</strong>.</li>
+          <li>Pioneered an <strong>LLM-assisted weak supervision pipeline</strong> for data annotation, cutting labeling cost by <strong>40%</strong> while improving inter-annotator agreement.</li>
+          <li>Shipped <strong>Dockerized FastAPI inference services</strong> wired into <strong>CI/CD</strong>, reclaiming ~12 engineering hours per week.</li>
         </ul>
         <div class="impact-chips">
-          <span class="impact">−15% Support Tickets</span>
-          <span class="impact">−30% Handling Time</span>
+          <span class="impact">Sub-200ms p95</span>
+          <span class="impact">−40% Labeling Cost</span>
           <span class="impact">F1: 0.71 → 0.86</span>
-          <span class="impact">+20% Efficiency</span>
+          <span class="impact">DistilBERT</span>
         </div>
       </div>
       <div class="exp-panel" id="p2">
@@ -705,15 +705,14 @@ footer{
           <span>May – Jun 2023</span>
         </div>
         <ul class="exp-ul">
-          <li>Engineered a <strong>full-stack ATS-integrated recruitment platform</strong> using Django, JavaScript, and PostgreSQL managing 500+ applicants end-to-end.</li>
-          <li>Designed <strong>RESTful APIs</strong> to automate candidate tracking, reducing manual processing by <strong>25%</strong>.</li>
-          <li>Launched <strong>real-time analytics dashboards</strong> for applicant metrics, cutting average time-to-hire by <strong>10%</strong>.</li>
-          <li>Streamlined automated data pipelines ensuring a <strong>25% improvement</strong> in data accuracy and reporting reliability.</li>
+          <li>Launched a distributed ATS-integrated platform on Django, PostgreSQL, and JavaScript serving <strong>500+ concurrent applicants</strong>; tuned indexing and query plans, cutting <strong>p99 read latency by 35%</strong>.</li>
+          <li>Delivered REST microservices for candidate tracking and real-time analytics dashboards backed by materialized views, compressing <strong>time-to-hire by 10%</strong>.</li>
+          <li>Drove <strong>80% unit and integration test coverage</strong> on critical endpoints, enabling weekly zero-downtime deployments via automated regression gates.</li>
         </ul>
         <div class="impact-chips">
-          <span class="impact">500+ Applicants</span>
-          <span class="impact">−25% Manual Work</span>
-          <span class="impact">−10% Time-to-Hire</span>
+          <span class="impact">500+ Concurrent</span>
+          <span class="impact">−35% p99 Latency</span>
+          <span class="impact">80% Test Coverage</span>
         </div>
       </div>
       <div class="exp-panel" id="p3">
@@ -798,17 +797,17 @@ footer{
       </div>
     </div>
 
-    <!-- Excess Food -->
+    <!-- JPEG -->
     <div class="proj-card reveal" style="transition-delay:.12s">
       <div class="proj-head">
         <span class="proj-idx">03</span>
-        <span class="proj-badge orange">Full-Stack</span>
+        <span class="proj-badge orange">Computer Vision</span>
       </div>
-      <div class="proj-name" style="margin-top:.75rem;">Excess Food Management Platform</div>
-      <p class="proj-desc">Full-stack web app connecting food donors with NGOs. Geospatial donor-NGO matching with <strong>JWT-secured REST APIs</strong> across 15+ endpoints. Containerised with Docker for easy deployment.</p>
+      <div class="proj-name" style="margin-top:.75rem;">JPEG Forensic Analysis Tool</div>
+      <p class="proj-desc">DCT-based image forensics pipeline detecting JPEG recompression artifacts via block-level coefficient histogram analysis for tamper localization. Optimized core DCT routines with <strong>NumPy vectorization</strong> for an <strong>8× speedup</strong> over baseline, supporting batch evaluation across thousands of images.</p>
       <div class="proj-tags">
-        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span>
-        <span class="tag">Docker</span><span class="tag">JWT</span><span class="tag">Geospatial</span>
+        <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">OpenCV</span>
+        <span class="tag">DCT</span><span class="tag">Jupyter</span>
       </div>
       <div class="proj-links">
         <a href="https://github.com/Lokesh1566" target="_blank" class="proj-link">⌥ GitHub</a>
@@ -863,7 +862,7 @@ footer{
           <span class="pill new">LangChain</span>
           <span class="pill new">RAG</span>
           <span class="pill new">LLMs</span>
-          <span class="pill new">Hugging Face</span>
+          <span class="pill new">Hugging Face Transformers</span><span class="pill new">SHAP</span>
           <span class="pill">TensorFlow</span>
           <span class="pill">PyTorch</span>
           <span class="pill">XGBoost</span>
@@ -878,7 +877,7 @@ footer{
           <span class="pill new">FastAPI</span>
           <span class="pill new">Flask</span>
           <span class="pill new">Streamlit</span>
-          <span class="pill new">Docker</span>
+          <span class="pill new">Docker</span><span class="pill new">Kubernetes</span>
           <span class="pill">Django</span>
           <span class="pill">Java</span>
           <span class="pill">JavaScript</span>
@@ -897,7 +896,7 @@ footer{
           <span class="pill">Snowflake</span>
           <span class="pill">MySQL</span>
           <span class="pill">MongoDB</span>
-          <span class="pill">ETL Pipelines</span>
+          <span class="pill">ETL Pipelines</span><span class="pill new">MLflow</span><span class="pill new">Airflow</span><span class="pill new">FAISS</span><span class="pill new">Sentence Transformers</span>
         </div>
       </div>
       <div class="skill-category">

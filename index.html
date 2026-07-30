@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Lokesh Reddy Elluri — Data Scientist</title>
+<title>Lokesh Reddy Elluri — Backend ML Engineer</title>
+<meta name="description" content="Backend ML engineer working in healthcare NLP and applied LLM systems. Production DistilBERT at sub-200ms p95, Spark and Airflow pipelines, RAG on FAISS. IEEE published."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
@@ -16,7 +17,7 @@
   --accent-light:#f4e4d8;
   --teal:#0d6e6e;
   --teal-light:#d3eeee;
-  --muted:#7a7672;
+  --muted:#6f6a65;
   --line:rgba(11,12,16,.1);
   --font-display:'Clash Display',sans-serif;
   --font-body:'Cabinet Grotesk',sans-serif;
@@ -31,7 +32,7 @@
   --accent-light:rgba(255,122,61,.12);
   --teal:#2ecece;
   --teal-light:rgba(46,206,206,.1);
-  --muted:#6b7280;
+  --muted:#9aa0a8;
   --line:rgba(240,236,228,.08);
 }
 
@@ -50,6 +51,7 @@ body{
 }
 a{color:inherit;text-decoration:none;}
 img{max-width:100%;display:block;}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
 
 /* ─── CUSTOM CURSOR ──────────────────────────────────── */
 #cur{
@@ -178,7 +180,7 @@ h1.hero-name em{
   display:block;
 }
 .hero-bio{
-  max-width:480px;
+  max-width:500px;
   font-size:1.1rem;
   color:var(--muted);
   line-height:1.75;
@@ -251,24 +253,21 @@ h1.hero-name em{
 }
 .hero-card-value span{color:var(--accent);font-size:1.1rem;vertical-align:super;}
 .hero-card-sub{font-size:.82rem;color:var(--muted);margin-top:.3rem;}
-.card-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
-.mini-card{
-  background:var(--cream);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:1.25rem;
-  text-align:center;
-}
-.mini-card .val{font-family:var(--font-display);font-weight:700;font-size:1.6rem;color:var(--accent);line-height:1;}
-.mini-card .lbl{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;color:var(--muted);margin-top:.3rem;}
 
-/* Skill bars */
-.skill-bars{display:flex;flex-direction:column;gap:.65rem;margin-top:.75rem;}
-.sbar-row{display:flex;align-items:center;gap:.75rem;}
-.sbar-name{font-family:var(--font-mono);font-size:.68rem;color:var(--muted);width:90px;flex-shrink:0;letter-spacing:.04em;}
-.sbar-track{flex:1;height:4px;background:var(--line);border-radius:99px;overflow:hidden;}
-.sbar-fill{height:100%;background:var(--accent);border-radius:99px;width:0;transition:width 1.4s var(--ease-out);}
-.sbar-fill.teal{background:var(--teal);}
+/* Hero facts grid — real numbers, no invented percentages */
+.fact-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.35rem 1.5rem;margin-top:1rem;
+}
+.fact .n{
+  font-family:var(--font-display);font-weight:700;
+  font-size:1.5rem;letter-spacing:-.02em;color:var(--accent);line-height:1;
+}
+.fact .t{font-size:.78rem;color:var(--muted);line-height:1.45;margin-top:.35rem;}
+.stack-line{
+  font-family:var(--font-mono);font-size:.72rem;line-height:1.9;
+  color:var(--ink);margin-top:.35rem;
+}
 
 /* Hero blobs */
 .hero-blob{
@@ -352,6 +351,11 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
   font-family:var(--font-mono);font-size:.65rem;padding:.3rem .75rem;
   background:var(--accent-light);color:var(--accent);border-radius:3rem;letter-spacing:.04em;
 }
+.exp-cta{
+  display:inline-block;margin-top:1.5rem;
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;
+  color:var(--teal);border-bottom:1px solid currentColor;padding-bottom:2px;
+}
 
 /* ─── PROJECTS ───────────────────────────────────────── */
 .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
@@ -362,17 +366,17 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
   padding:2rem;
   display:flex;flex-direction:column;gap:1rem;
   transition:border-color .3s,transform .3s var(--ease-out),box-shadow .3s;
-  position:relative;overflow:hidden;cursor:none;
+  position:relative;overflow:hidden;
 }
 .proj-card::after{
   content:'';position:absolute;inset:0;
   background:linear-gradient(135deg,rgba(212,85,10,.04) 0%,transparent 60%);
-  opacity:0;transition:opacity .3s;
+  opacity:0;transition:opacity .3s;pointer-events:none;
 }
 .proj-card:hover{border-color:rgba(212,85,10,.3);transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,.07);}
 [data-theme=dark] .proj-card:hover{box-shadow:0 24px 60px rgba(0,0,0,.35);}
 .proj-card:hover::after{opacity:1;}
-.proj-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;}
+.proj-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;}
 .proj-head{display:flex;align-items:flex-start;justify-content:space-between;}
 .proj-idx{font-family:var(--font-mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em;}
 .proj-badge{
@@ -386,7 +390,7 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
 .proj-desc{font-size:.9rem;color:var(--muted);line-height:1.7;flex:1;}
 .proj-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;}
 .tag{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.04em;padding:.2rem .6rem;background:var(--paper);border:1px solid var(--line);border-radius:3px;color:var(--muted);}
-.proj-links{display:flex;gap:.75rem;margin-top:auto;}
+.proj-links{display:flex;gap:.75rem;margin-top:auto;flex-wrap:wrap;}
 .proj-link{
   font-family:var(--font-mono);font-size:.65rem;letter-spacing:.06em;
   padding:.35rem .85rem;border:1px solid var(--line);border-radius:3rem;
@@ -396,19 +400,28 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
 .proj-link.solid{background:var(--accent);color:#fff;border-color:var(--accent);}
 .proj-link.solid:hover{background:var(--teal);border-color:var(--teal);}
 
-/* Metrics for featured */
-.proj-metrics{display:flex;flex-direction:column;gap:.75rem;}
-.radar-item{display:flex;flex-direction:column;gap:.4rem;}
-.radar-meta{display:flex;justify-content:space-between;align-items:center;}
-.radar-name{font-size:.85rem;font-weight:500;color:var(--ink);}
-.radar-pct{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);}
-.radar-bar{height:5px;background:var(--line);border-radius:99px;overflow:hidden;}
-.radar-fill{height:100%;border-radius:99px;background:var(--accent);width:0;transition:width 1.5s var(--ease-out);}
-.radar-fill.alt{background:var(--teal);}
+/* Featured stat block — measured values, plainly stated */
+.stat-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.75rem 1.5rem;
+  padding:1.75rem;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--paper);
+}
+.stat .n{
+  font-family:var(--font-display);font-weight:700;
+  font-size:1.85rem;letter-spacing:-.03em;line-height:1;color:var(--ink);
+}
+.stat .n em{font-style:normal;color:var(--accent);}
+.stat .t{font-size:.78rem;color:var(--muted);line-height:1.45;margin-top:.45rem;}
+.stat-note{
+  grid-column:1/-1;border-top:1px solid var(--line);padding-top:1rem;
+  font-family:var(--font-mono);font-size:.65rem;color:var(--muted);line-height:1.7;letter-spacing:.02em;
+}
 
 /* ─── SKILLS ─────────────────────────────────────────── */
-.skills-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
-.skill-category{margin-bottom:2.5rem;}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 4rem;}
 .skill-cat-label{
   font-family:var(--font-mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
   color:var(--muted);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--line);
@@ -422,8 +435,11 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
 .pill:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);transform:translateY(-1px);}
 .pill.highlight{background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
 .pill.new{background:var(--teal-light);border-color:var(--teal);color:var(--teal);}
-
-.radar-wrap{display:flex;flex-direction:column;gap:1rem;}
+.skills-note{
+  margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);
+  font-size:.88rem;color:var(--muted);max-width:760px;line-height:1.75;
+}
+.skills-note strong{color:var(--ink);font-weight:600;}
 
 /* ─── EDUCATION ──────────────────────────────────────── */
 .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
@@ -487,8 +503,13 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
 [data-theme=dark] .proof-number{color:#ffffff;}
 .proof-what{font-size:.88rem;font-weight:600;color:rgba(245,240,232,.85);line-height:1.3;}
 [data-theme=dark] .proof-what{color:rgba(255,255,255,.9);}
-.proof-context{font-size:.78rem;color:rgba(245,240,232,.5);line-height:1.55;margin-top:.2rem;}
+.proof-context{font-size:.78rem;color:rgba(245,240,232,.55);line-height:1.55;margin-top:.2rem;}
 [data-theme=dark] .proof-context{color:rgba(255,255,255,.6);}
+.proof-verify{
+  font-family:var(--font-mono);font-size:.65rem;letter-spacing:.06em;
+  color:var(--accent);margin-top:.4rem;
+  border-bottom:1px solid currentColor;align-self:flex-start;padding-bottom:2px;
+}
 
 /* ─── CONTACT ────────────────────────────────────────── */
 #contact{background:var(--cream);}
@@ -501,7 +522,7 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
   padding:1.25rem 1.5rem;border:1px solid var(--line);border-radius:12px;
   background:var(--paper);
   transition:border-color .2s,transform .2s var(--ease-out),box-shadow .2s;
-  text-decoration:none;cursor:none;
+  text-decoration:none;
 }
 .contact-item:hover{border-color:var(--accent);transform:translateX(4px);box-shadow:0 8px 30px rgba(0,0,0,.05);}
 [data-theme=dark] .contact-item:hover{box-shadow:0 8px 30px rgba(0,0,0,.3);}
@@ -523,12 +544,23 @@ footer{
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out);}
 .reveal.in{opacity:1;transform:translateY(0);}
 
+/* ─── MOTION / ACCESSIBILITY ─────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+  .reveal{opacity:1;transform:none;}
+  #cur,#cur2{display:none;}
+  body{cursor:auto;}
+}
+
 /* ─── RESPONSIVE ─────────────────────────────────────── */
 @media(max-width:900px){
+  body{cursor:auto;}
+  #cur,#cur2{display:none;}
+  .btn-toggle,.cta-primary,.exp-tab{cursor:pointer;}
   nav{padding:.9rem 1.5rem;}
   .nav-links{display:none;}
-  #hero{grid-template-columns:1fr;padding:6rem 1.5rem 3rem;}
-  .hero-right{display:none;}
+  #hero{grid-template-columns:1fr;padding:6rem 1.5rem 3rem;gap:2.5rem;}
   section{padding:5rem 1.5rem;}
   .exp-grid{grid-template-columns:1fr;gap:2rem;}
   .exp-nav{border-right:none;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:1.5rem;display:flex;gap:.5rem;flex-wrap:wrap;}
@@ -537,7 +569,7 @@ footer{
   .exp-panels{padding-left:0;padding-top:2rem;}
   .proj-grid{grid-template-columns:1fr;}
   .proj-card.featured{grid-column:1;grid-template-columns:1fr;}
-  .skills-layout{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:1fr;gap:2.5rem;}
   .edu-grid{grid-template-columns:1fr;}
   .lead-grid{grid-template-columns:1fr;}
   .proof-inner{grid-template-columns:1fr 1fr;}
@@ -545,6 +577,11 @@ footer{
   .proof-item:nth-child(2n){border-right:none;}
   .proof-item:last-child{border-bottom:none;}
   footer{flex-direction:column;gap:.5rem;text-align:center;}
+}
+@media(max-width:520px){
+  .proof-inner{grid-template-columns:1fr;}
+  .proof-item{border-right:none;}
+  .fact-grid,.stat-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -565,7 +602,7 @@ footer{
     <li><a href="#contact">contact</a></li>
   </ul>
   <div class="nav-actions">
-    <button class="btn-toggle" id="themeBtn" title="Toggle theme">🌙</button>
+    <button class="btn-toggle" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">🌙</button>
     <a href="mailto:redfylokesh@gmail.com" class="btn-dl">✉ Get in touch</a>
   </div>
 </nav>
@@ -577,13 +614,13 @@ footer{
 
   <div class="hero-left">
     <div class="avail">Available Now · Graduated May 2026 · OPT with STEM Extension</div>
-    <div class="hero-eyebrow">Data Scientist & ML Engineer</div>
+    <div class="hero-eyebrow">Backend ML Engineer</div>
     <h1 class="hero-name">
       Lokesh Reddy
       <em>Elluri.</em>
     </h1>
     <p class="hero-bio">
-      IEEE-published <strong>M.S. Data Science</strong> graduate from <strong>Indiana University Bloomington</strong>, building production ML systems, transformer-based NLP, and large-scale data and GenAI pipelines with PySpark, Airflow, LangChain, and FastAPI. I make models that actually ship.
+      I build the backend side of machine learning: <strong>healthcare NLP in production</strong>, applied LLM and RAG systems, and the data pipelines underneath them. Fine-tuned DistilBERT serving live traffic at sub-200ms p95, Spark and Airflow moving millions of rows, retrieval running on FAISS. IEEE published. M.S. Data Science, Indiana University Bloomington.
     </p>
     <div class="hero-cta">
       <a href="mailto:redfylokesh@gmail.com" class="cta-primary">Let's Talk →</a>
@@ -593,32 +630,38 @@ footer{
 
   <div class="hero-right">
     <div class="hero-card reveal">
-      <div class="hero-card-label">Academic Standing · Indiana University</div>
+      <div class="hero-card-label">M.S. Data Science · Indiana University</div>
       <div class="hero-card-value">3.74<span>/4</span></div>
-      <div class="hero-card-sub">M.S. Data Science · Graduated May 2026</div>
+      <div class="hero-card-sub">Graduated May 2026 · Bloomington, Indiana</div>
     </div>
-    <div class="card-row reveal" style="transition-delay:.1s">
-      <div class="mini-card">
-        <div class="val">15%</div>
-        <div class="lbl">Ticket Reduction</div>
-      </div>
-      <div class="mini-card">
-        <div class="val">3.3M</div>
-        <div class="lbl">Rows Piped</div>
-      </div>
-      <div class="mini-card">
-        <div class="val">1</div>
-        <div class="lbl">IEEE Paper</div>
+
+    <div class="hero-card reveal" style="transition-delay:.1s">
+      <div class="hero-card-label">Shipped, Measured</div>
+      <div class="fact-grid">
+        <div class="fact">
+          <div class="n">3.3M</div>
+          <div class="t">rows through a PySpark pipeline into Snowflake</div>
+        </div>
+        <div class="fact">
+          <div class="n">&lt;200ms</div>
+          <div class="t">p95 inference latency, DistilBERT in production</div>
+        </div>
+        <div class="fact">
+          <div class="n">0.86</div>
+          <div class="t">macro F1, lifted from a 0.71 baseline</div>
+        </div>
+        <div class="fact">
+          <div class="n">IEEE</div>
+          <div class="t">peer-reviewed publication, CONIT 2023</div>
+        </div>
       </div>
     </div>
+
     <div class="hero-card reveal" style="transition-delay:.2s">
-      <div class="hero-card-label">Core Competencies</div>
-      <div class="skill-bars" id="heroBars">
-        <div class="sbar-row"><span class="sbar-name">Python / ML</span><div class="sbar-track"><div class="sbar-fill" data-w="92"></div></div></div>
-        <div class="sbar-row"><span class="sbar-name">NLP / LLMs</span><div class="sbar-track"><div class="sbar-fill" data-w="85"></div></div></div>
-        <div class="sbar-row"><span class="sbar-name">RAG / LangChain</span><div class="sbar-track"><div class="sbar-fill" data-w="82"></div></div></div>
-        <div class="sbar-row"><span class="sbar-name">Spark / Airflow</span><div class="sbar-track"><div class="sbar-fill teal" data-w="84"></div></div></div>
-        <div class="sbar-row"><span class="sbar-name">REST / FastAPI</span><div class="sbar-track"><div class="sbar-fill teal" data-w="88"></div></div></div>
+      <div class="hero-card-label">Working In</div>
+      <div class="stack-line">
+        Python · PySpark · FastAPI · PyTorch · Airflow<br/>
+        Snowflake · PostgreSQL · LangChain · Docker · AWS
       </div>
     </div>
   </div>
@@ -634,16 +677,18 @@ footer{
       <div class="proof-context">DistilBERT in production at sub-200ms p95; macro F1 lifted 0.71 to 0.86; LLM weak supervision cut labeling cost 40%</div>
     </div>
     <div class="proof-item reveal" style="transition-delay:.08s">
-      <div class="proof-source">Team Lease · Full-Stack ATS</div>
-      <div class="proof-number">−25%</div>
+      <div class="proof-source">Team Lease · Backend Platform</div>
+      <div class="proof-number">−35%</div>
       <div class="proof-what">p99 read latency cut</div>
-      <div class="proof-context">Django + PostgreSQL platform serving 500+ concurrent applicants; 80% test coverage; time-to-hire −10%</div>
+      <div class="proof-context">Django and PostgreSQL platform serving 500+ concurrent applicants; 80% test coverage; time-to-hire down 10%</div>
     </div>
     <div class="proof-item reveal" style="transition-delay:.16s">
       <div class="proof-source">IEEE Xplore · CONIT 2023</div>
       <div class="proof-number">Published</div>
       <div class="proof-what">peer-reviewed research</div>
-      <div class="proof-context">Real-time XSS vulnerability detection via ML, published as an undergraduate researcher</div>
+      <div class="proof-context">Real-time XSS vulnerability detection via ML, 82.65% accuracy, published as an undergraduate researcher</div>
+      <!-- IEEE LINK 1 of 3: replace IEEE_PAPER_URL_HERE with your IEEE Xplore document URL -->
+      <a href="IEEE_PAPER_URL_HERE" target="_blank" rel="noopener" class="proof-verify">Read on IEEE Xplore →</a>
     </div>
     <div class="proof-item reveal" style="transition-delay:.24s">
       <div class="proof-source">NYC Taxi Pipeline · PySpark</div>
@@ -685,10 +730,10 @@ footer{
           <span>Feb – Apr 2024</span>
         </div>
         <ul class="exp-ul">
-          <li>Owned an end-to-end <strong>NLP intent classification pipeline</strong> (TF-IDF + Logistic Regression baseline, fine-tuned <strong>DistilBERT</strong> in production) serving 5,000+ monthly queries at <strong>sub-200ms p95 latency</strong>, deflecting <strong>15%</strong> of L1 support tickets.</li>
+          <li>Owned an end-to-end <strong>NLP intent classification pipeline</strong> (TF-IDF and Logistic Regression baseline, fine-tuned <strong>DistilBERT</strong> in production) serving 5,000+ monthly queries at <strong>sub-200ms p95 latency</strong>, deflecting <strong>15%</strong> of L1 support tickets.</li>
           <li>Productionized training with stratified k-fold CV and Bayesian hyperparameter search, lifting <strong>macro F1 from 0.71 to 0.86</strong> and trimming handling time by <strong>30%</strong>.</li>
-          <li>Pioneered an <strong>LLM-assisted weak supervision pipeline</strong> for data annotation, cutting labeling cost by <strong>40%</strong> while improving inter-annotator agreement.</li>
-          <li>Shipped <strong>Dockerized FastAPI inference services</strong> wired into <strong>CI/CD</strong>, reclaiming ~12 engineering hours per week.</li>
+          <li>Built an <strong>LLM-assisted weak supervision pipeline</strong> for annotation, cutting labeling cost by <strong>40%</strong> while improving inter-annotator agreement.</li>
+          <li>Shipped <strong>Dockerized FastAPI inference services</strong> wired into <strong>CI/CD</strong>, reclaiming roughly 12 engineering hours per week.</li>
         </ul>
         <div class="impact-chips">
           <span class="impact">Sub-200ms p95</span>
@@ -706,7 +751,7 @@ footer{
         </div>
         <ul class="exp-ul">
           <li>Launched a distributed ATS-integrated platform on Django, PostgreSQL, and JavaScript serving <strong>500+ concurrent applicants</strong>; tuned indexing and query plans, cutting <strong>p99 read latency by 35%</strong>.</li>
-          <li>Delivered REST microservices for candidate tracking and real-time analytics dashboards backed by materialized views, compressing <strong>time-to-hire by 10%</strong>.</li>
+          <li>Delivered REST microservices for candidate tracking and analytics dashboards backed by materialized views, compressing <strong>time-to-hire by 10%</strong>.</li>
           <li>Drove <strong>80% unit and integration test coverage</strong> on critical endpoints, enabling weekly zero-downtime deployments via automated regression gates.</li>
         </ul>
         <div class="impact-chips">
@@ -718,17 +763,20 @@ footer{
       <div class="exp-panel" id="p3">
         <div class="exp-role">Research Team Member</div>
         <div class="exp-meta">
-          <span>VIT Vellore — Security &amp; ML Lab</span><span class="dot">·</span>
+          <span>VIT Vellore, Security and ML Lab</span><span class="dot">·</span>
           <span>Jan – Jul 2023</span>
         </div>
         <ul class="exp-ul">
-          <li>Developed a <strong>ML model for real-time XSS vulnerability detection</strong> using feature-based classification techniques.</li>
-          <li>Published research in <strong>IEEE Xplore (CONIT 2023)</strong>, one of the only undergrad students to achieve IEEE publication on the team.</li>
+          <li>Built an <strong>ML model for real-time XSS vulnerability detection</strong> using feature-based classification, reaching <strong>82.65% accuracy</strong> at 80% recall.</li>
+          <li>Published in <strong>IEEE Xplore (CONIT 2023)</strong>, one of the few undergraduates on the team to reach publication.</li>
         </ul>
         <div class="impact-chips">
           <span class="impact">IEEE Xplore Published</span>
           <span class="impact">CONIT 2023</span>
+          <span class="impact">82.65% Accuracy</span>
         </div>
+        <!-- IEEE LINK 2 of 3: replace IEEE_PAPER_URL_HERE with your IEEE Xplore document URL -->
+        <a href="IEEE_PAPER_URL_HERE" target="_blank" rel="noopener" class="exp-cta">Read the paper on IEEE Xplore →</a>
       </div>
     </div>
   </div>
@@ -751,31 +799,35 @@ footer{
           <span class="proj-badge">Data Engineering</span>
         </div>
         <div class="proj-name" style="margin-top:.75rem;font-size:1.5rem;">NYC Taxi Real-Time Data Pipeline</div>
-        <p class="proj-desc" style="margin-top:.75rem;">Production-shaped pipeline over NYC TLC trip records on a <strong>bronze, silver, gold medallion architecture</strong>. PySpark jobs move <strong>3.3M raw rows</strong> through schema enforcement and transformation into <strong>5 curated Snowflake aggregate tables</strong>, orchestrated by three Airflow DAGs. Great Expectations validation quarantines 2.29% of records on genuine TLC anomalies rather than silently passing them through, with a Streamlit dashboard on top for zone-level and payment analytics.</p>
+        <p class="proj-desc" style="margin-top:.75rem;">Production-shaped pipeline over NYC TLC trip records on a <strong>bronze, silver, gold medallion architecture</strong>. PySpark jobs move raw rows through schema enforcement and transformation into curated Snowflake aggregate tables, orchestrated by three Airflow DAGs. Great Expectations quarantines records that fail validation instead of letting them slip through silently, and a Streamlit dashboard sits on top for zone-level and payment analytics.</p>
         <div class="proj-tags" style="margin-top:1.25rem;">
           <span class="tag">PySpark</span><span class="tag">Airflow</span><span class="tag">Snowflake</span>
           <span class="tag">Great Expectations</span><span class="tag">Kafka</span><span class="tag">Docker</span><span class="tag">Streamlit</span>
         </div>
         <div class="proj-links" style="margin-top:1.25rem;">
-          <a href="https://github.com/Lokesh1566/nyc-taxi-pipeline" target="_blank" class="proj-link solid">⌥ GitHub</a>
+          <a href="https://github.com/Lokesh1566/nyc-taxi-pipeline" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+          <a href="https://github.com/Lokesh1566/nyc-taxi-pipeline#data-quality-findings" target="_blank" rel="noopener" class="proj-link">Data quality writeup →</a>
         </div>
       </div>
-      <div class="proj-metrics" id="projMetrics">
-        <div class="radar-item">
-          <div class="radar-meta"><span class="radar-name">Rows Ingested (Bronze)</span><span class="radar-pct">3,307,234</span></div>
-          <div class="radar-bar"><div class="radar-fill" data-w="97"></div></div>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="n">3,307,234</div>
+          <div class="t">raw rows ingested to bronze</div>
         </div>
-        <div class="radar-item">
-          <div class="radar-meta"><span class="radar-name">Validation Pass Rate</span><span class="radar-pct">97.7%</span></div>
-          <div class="radar-bar"><div class="radar-fill alt" data-w="98"></div></div>
+        <div class="stat">
+          <div class="n"><em>97.7%</em></div>
+          <div class="t">passed validation, 75,861 rows quarantined</div>
         </div>
-        <div class="radar-item">
-          <div class="radar-meta"><span class="radar-name">Silver Transform Time</span><span class="radar-pct">13s</span></div>
-          <div class="radar-bar"><div class="radar-fill" data-w="94"></div></div>
+        <div class="stat">
+          <div class="n">13s</div>
+          <div class="t">silver transform runtime</div>
         </div>
-        <div class="radar-item">
-          <div class="radar-meta"><span class="radar-name">Gold Aggregate Tables</span><span class="radar-pct">5 tables</span></div>
-          <div class="radar-bar"><div class="radar-fill alt" data-w="90"></div></div>
+        <div class="stat">
+          <div class="n">5</div>
+          <div class="t">gold aggregate tables in Snowflake</div>
+        </div>
+        <div class="stat-note">
+          The quarantined rows were real TLC anomalies, not pipeline bugs: a fare above $100k, trips running past 48 hours, and 1,506 rows resolving to an unknown borough. The writeup covers how each threshold was chosen.
         </div>
       </div>
     </div>
@@ -793,8 +845,8 @@ footer{
         <span class="tag">PyTorch</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">JavaScript</span>
       </div>
       <div class="proj-links">
-        <a href="https://lokesh1566.github.io/wove/" target="_blank" class="proj-link solid">↗ Live App</a>
-        <a href="https://github.com/Lokesh1566/wove" target="_blank" class="proj-link">⌥ GitHub</a>
+        <a href="https://lokesh1566.github.io/wove/" target="_blank" rel="noopener" class="proj-link solid">↗ Live App</a>
+        <a href="https://github.com/Lokesh1566/wove" target="_blank" rel="noopener" class="proj-link">⌥ GitHub</a>
       </div>
     </div>
 
@@ -805,13 +857,13 @@ footer{
         <span class="proj-badge">LLM · RAG</span>
       </div>
       <div class="proj-name" style="margin-top:.75rem;">RAG Document Q&A System</div>
-      <p class="proj-desc">Retrieval-augmented generation pipeline that ingests PDFs, chunks and embeds content with a <strong>FAISS vector store</strong>, and answers natural-language queries with grounded citations. FastAPI backend and Streamlit frontend, holding <strong>sub-2-second latency</strong> on 500-page document corpora.</p>
+      <p class="proj-desc">Retrieval-augmented generation pipeline that ingests PDFs, chunks and embeds content into a <strong>FAISS vector store</strong> with sentence-transformers, and answers natural-language queries with source citations. FastAPI backend and Streamlit chat frontend, holding <strong>sub-2-second latency</strong> on 500-page document corpora.</p>
       <div class="proj-tags">
         <span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">FAISS</span>
-        <span class="tag">OpenAI</span><span class="tag">FastAPI</span><span class="tag">Streamlit</span>
+        <span class="tag">Sentence Transformers</span><span class="tag">FastAPI</span><span class="tag">Streamlit</span>
       </div>
       <div class="proj-links">
-        <a href="https://github.com/Lokesh1566/doc-qa-rag" target="_blank" class="proj-link solid">⌥ GitHub</a>
+        <a href="https://github.com/Lokesh1566/doc-qa-rag" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
       </div>
     </div>
 
@@ -822,44 +874,49 @@ footer{
         <span class="proj-badge orange">ML · XGBoost</span>
       </div>
       <div class="proj-name" style="margin-top:.75rem;">Customer Churn Prediction</div>
-      <p class="proj-desc">Trained and compared Logistic Regression, Random Forest, and XGBoost on telecom data, achieving <strong>84% ROC-AUC</strong>. SHAP feature importance drives an interactive Streamlit dashboard for real-time scoring and segment-level retention insights.</p>
+      <p class="proj-desc">End-to-end churn system comparing Logistic Regression, Random Forest, and XGBoost, reaching <strong>0.84 ROC-AUC</strong>. Wrapped in a FastAPI service with single and batch prediction endpoints, a SHAP-driven Streamlit dashboard for segment-level retention insight, and Docker Compose for one-command deployment.</p>
       <div class="proj-tags">
         <span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span>
-        <span class="tag">SHAP</span><span class="tag">Streamlit</span><span class="tag">Pandas</span>
+        <span class="tag">SHAP</span><span class="tag">FastAPI</span><span class="tag">Streamlit</span><span class="tag">Docker</span>
       </div>
       <div class="proj-links">
-        <a href="https://github.com/Lokesh1566" target="_blank" class="proj-link">⌥ GitHub</a>
-      </div>
-    </div>
-
-    <!-- JPEG -->
-    <div class="proj-card reveal" style="transition-delay:.18s">
-      <div class="proj-head">
-        <span class="proj-idx">05</span>
-        <span class="proj-badge orange">Computer Vision</span>
-      </div>
-      <div class="proj-name" style="margin-top:.75rem;">JPEG Forensic Analysis Tool</div>
-      <p class="proj-desc">DCT-based image forensics pipeline detecting JPEG recompression artifacts via block-level coefficient histogram analysis for tamper localization. Optimized core DCT routines with <strong>NumPy vectorization</strong> for an <strong>8× speedup</strong> over baseline, supporting batch evaluation across thousands of images.</p>
-      <div class="proj-tags">
-        <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">OpenCV</span>
-        <span class="tag">DCT</span><span class="tag">Jupyter</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Lokesh1566" target="_blank" class="proj-link">⌥ GitHub</a>
+        <a href="https://github.com/Lokesh1566/churn-predictor" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
       </div>
     </div>
 
     <!-- XSS -->
+    <div class="proj-card reveal" style="transition-delay:.18s">
+      <div class="proj-head">
+        <span class="proj-idx">05</span>
+        <span class="proj-badge">IEEE Published</span>
+      </div>
+      <div class="proj-name" style="margin-top:.75rem;">Real-Time XSS Vulnerability Detection</div>
+      <p class="proj-desc">ML classifier for Cross-Site Scripting detection built on engineered URL and script features, reaching <strong>82.65% accuracy at 80% recall</strong>, packaged behind a browser extension for live inspection. Published at <strong>IEEE CONIT 2023</strong>.</p>
+      <div class="proj-tags">
+        <span class="tag">Python</span><span class="tag">Feature Engineering</span>
+        <span class="tag">Classification</span><span class="tag">Cybersecurity</span><span class="tag">Jupyter</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Lokesh1566/Real-time-XSS-Vulnerability-Detection" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+        <!-- IEEE LINK 3 of 3: replace IEEE_PAPER_URL_HERE with your IEEE Xplore document URL -->
+        <a href="IEEE_PAPER_URL_HERE" target="_blank" rel="noopener" class="proj-link">IEEE Xplore →</a>
+      </div>
+    </div>
+
+    <!-- JPEG -->
     <div class="proj-card reveal" style="transition-delay:.22s">
       <div class="proj-head">
         <span class="proj-idx">06</span>
-        <span class="proj-badge">IEEE Published</span>
+        <span class="proj-badge orange">Computer Vision</span>
       </div>
-      <div class="proj-name" style="margin-top:.75rem;">XSS Vulnerability Detection via ML</div>
-      <p class="proj-desc">Real-time ML model for Cross-Site Scripting vulnerability detection using feature engineering and classification. Published at <strong>IEEE CONIT 2023</strong>, contributing to proactive web security tooling.</p>
+      <div class="proj-name" style="margin-top:.75rem;">JPEG Forensic Analysis Tool</div>
+      <p class="proj-desc">DCT-based image forensics pipeline detecting JPEG recompression artifacts through block-level coefficient histogram analysis for tamper localization. Core DCT routines rewritten with <strong>NumPy vectorization</strong> for an <strong>8× speedup</strong>, making batch evaluation across thousands of images practical.</p>
       <div class="proj-tags">
-        <span class="tag">Python</span><span class="tag">Feature Engineering</span>
-        <span class="tag">Classification</span><span class="tag">Cybersecurity</span><span class="tag">IEEE</span>
+        <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">OpenCV</span>
+        <span class="tag">DCT</span><span class="tag">Matplotlib</span><span class="tag">Jupyter</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Lokesh1566/JPEG-Error-Analysis" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
       </div>
     </div>
 
@@ -870,12 +927,12 @@ footer{
         <span class="proj-badge orange">Security</span>
       </div>
       <div class="proj-name" style="margin-top:.75rem;">Secure Financial Transaction System</div>
-      <p class="proj-desc">Integrated <strong>AES-256 and RSA encryption</strong> in Java to secure 10,000+ simulated financial transactions. Led a 4-member team with modular architecture and Git-based version control.</p>
+      <p class="proj-desc">Java system securing 10,000+ simulated financial transactions with <strong>AES-256 and RSA</strong> under a modular key exchange architecture. Led a 4-member team through the design and integration.</p>
       <div class="proj-tags">
         <span class="tag">Java</span><span class="tag">AES-256</span><span class="tag">RSA</span><span class="tag">Cryptography</span>
       </div>
       <div class="proj-links">
-        <a href="https://github.com/Lokesh1566" target="_blank" class="proj-link">⌥ GitHub</a>
+        <a href="https://github.com/Lokesh1566/Secure-Financial-Transaction-System" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
       </div>
     </div>
 
@@ -889,112 +946,80 @@ footer{
     <h2 class="section-title">Skills & Stack</h2>
     <div class="section-line"></div>
   </div>
-  <div class="skills-layout">
-    <div class="reveal">
-      <div class="skill-category">
-        <div class="skill-cat-label">Machine Learning & AI</div>
-        <div class="skill-pills">
-          <span class="pill highlight">Python</span>
-          <span class="pill highlight">Scikit-learn</span>
-          <span class="pill highlight">NLP</span>
-          <span class="pill new">LangChain</span>
-          <span class="pill new">RAG</span>
-          <span class="pill new">LLMs</span>
-          <span class="pill new">Hugging Face Transformers</span>
-          <span class="pill new">CLIP</span>
-          <span class="pill new">SHAP</span>
-          <span class="pill">TensorFlow</span>
-          <span class="pill">PyTorch</span>
-          <span class="pill">XGBoost</span>
-          <span class="pill">Feature Engineering</span>
-          <span class="pill">A/B Testing</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-cat-label">Backend & APIs</div>
-        <div class="skill-pills">
-          <span class="pill highlight">REST APIs</span>
-          <span class="pill new">FastAPI</span>
-          <span class="pill new">Flask</span>
-          <span class="pill new">Streamlit</span>
-          <span class="pill new">Docker</span><span class="pill new">Kubernetes</span>
-          <span class="pill">Django</span>
-          <span class="pill">Java</span>
-          <span class="pill">JavaScript</span>
-          <span class="pill">C</span>
-          <span class="pill">R</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-cat-label">Data & Cloud</div>
-        <div class="skill-pills">
-          <span class="pill highlight">PostgreSQL</span>
-          <span class="pill highlight">AWS</span>
-          <span class="pill new">PySpark</span>
-          <span class="pill new">Airflow</span>
-          <span class="pill new">Snowflake</span>
-          <span class="pill new">Kafka</span>
-          <span class="pill new">Great Expectations</span>
-          <span class="pill new">MLflow</span>
-          <span class="pill new">FAISS</span>
-          <span class="pill new">Sentence Transformers</span>
-          <span class="pill">GCP</span>
-          <span class="pill">Hadoop</span>
-          <span class="pill">MySQL</span>
-          <span class="pill">MongoDB</span>
-          <span class="pill">ETL Pipelines</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-cat-label">Visualization & Tools</div>
-        <div class="skill-pills">
-          <span class="pill">Tableau</span>
-          <span class="pill">Power BI</span>
-          <span class="pill">Matplotlib</span>
-          <span class="pill new">Seaborn</span>
-          <span class="pill new">Plotly</span>
-          <span class="pill">SHAP</span>
-          <span class="pill">Git</span>
-          <span class="pill">Linux</span>
-          <span class="pill">Jupyter</span>
-        </div>
+  <div class="skills-grid reveal">
+    <div>
+      <div class="skill-cat-label">Machine Learning & AI</div>
+      <div class="skill-pills">
+        <span class="pill highlight">Python</span>
+        <span class="pill highlight">PyTorch</span>
+        <span class="pill highlight">NLP</span>
+        <span class="pill new">Hugging Face Transformers</span>
+        <span class="pill new">LangChain</span>
+        <span class="pill new">RAG</span>
+        <span class="pill new">LLMs</span>
+        <span class="pill new">CLIP</span>
+        <span class="pill">Scikit-learn</span>
+        <span class="pill">XGBoost</span>
+        <span class="pill">SHAP</span>
+        <span class="pill">TensorFlow</span>
+        <span class="pill">Feature Engineering</span>
+        <span class="pill">A/B Testing</span>
       </div>
     </div>
-    <div class="radar-wrap reveal" id="radarBars" style="transition-delay:.15s">
-      <div class="radar-item">
-        <div class="radar-meta"><span class="radar-name">Python & ML Frameworks</span><span class="radar-pct">92%</span></div>
-        <div class="radar-bar"><div class="radar-fill" data-w="92"></div></div>
+    <div>
+      <div class="skill-cat-label">Backend & Serving</div>
+      <div class="skill-pills">
+        <span class="pill highlight">FastAPI</span>
+        <span class="pill highlight">REST APIs</span>
+        <span class="pill new">Docker</span>
+        <span class="pill new">CI/CD</span>
+        <span class="pill new">Kubernetes</span>
+        <span class="pill">Django</span>
+        <span class="pill">Flask</span>
+        <span class="pill">Streamlit</span>
+        <span class="pill">Java</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">Linux</span>
+        <span class="pill">Git</span>
       </div>
-      <div class="radar-item">
-        <div class="radar-meta"><span class="radar-name">NLP & Text Processing</span><span class="radar-pct">85%</span></div>
-        <div class="radar-bar"><div class="radar-fill" data-w="85"></div></div>
+    </div>
+    <div>
+      <div class="skill-cat-label">Data & Pipelines</div>
+      <div class="skill-pills">
+        <span class="pill highlight">SQL</span>
+        <span class="pill highlight">PostgreSQL</span>
+        <span class="pill new">PySpark</span>
+        <span class="pill new">Airflow</span>
+        <span class="pill new">Snowflake</span>
+        <span class="pill new">Kafka</span>
+        <span class="pill new">Great Expectations</span>
+        <span class="pill new">FAISS</span>
+        <span class="pill new">MLflow</span>
+        <span class="pill">Hadoop</span>
+        <span class="pill">MongoDB</span>
+        <span class="pill">ETL Pipelines</span>
       </div>
-      <div class="radar-item">
-        <div class="radar-meta"><span class="radar-name">RAG / LangChain / LLMs</span><span class="radar-pct">82%</span></div>
-        <div class="radar-bar"><div class="radar-fill alt" data-w="82"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-meta"><span class="radar-name">REST APIs & FastAPI</span><span class="radar-pct">88%</span></div>
-        <div class="radar-bar"><div class="radar-fill alt" data-w="88"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-meta"><span class="radar-name">SQL & Data Modeling</span><span class="radar-pct">83%</span></div>
-        <div class="radar-bar"><div class="radar-fill" data-w="83"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-meta"><span class="radar-name">Data Engineering (Spark / Airflow)</span><span class="radar-pct">84%</span></div>
-        <div class="radar-bar"><div class="radar-fill alt" data-w="84"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-meta"><span class="radar-name">Cloud (AWS / GCP / Snowflake)</span><span class="radar-pct">78%</span></div>
-        <div class="radar-bar"><div class="radar-fill" data-w="78"></div></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-meta"><span class="radar-name">Deep Learning (TF / PT)</span><span class="radar-pct">72%</span></div>
-        <div class="radar-bar"><div class="radar-fill" data-w="72"></div></div>
+    </div>
+    <div>
+      <div class="skill-cat-label">Cloud & Analysis</div>
+      <div class="skill-pills">
+        <span class="pill highlight">AWS</span>
+        <span class="pill">GCP</span>
+        <span class="pill">Pandas</span>
+        <span class="pill">NumPy</span>
+        <span class="pill">Plotly</span>
+        <span class="pill">Matplotlib</span>
+        <span class="pill">Seaborn</span>
+        <span class="pill">Tableau</span>
+        <span class="pill">Power BI</span>
+        <span class="pill">Jupyter</span>
+        <span class="pill">R</span>
       </div>
     </div>
   </div>
+  <p class="skills-note reveal">
+    The ones I reach for daily are <strong>Python, FastAPI, PyTorch, PySpark, and PostgreSQL</strong>. Everything listed above appears in work I have actually shipped or published, and every project on this page links to its source so you can check the claim yourself.
+  </p>
 </section>
 
 <!-- EDUCATION -->
@@ -1016,7 +1041,7 @@ footer{
     </div>
     <div class="edu-card reveal" style="transition-delay:.1s">
       <div class="edu-school-badge">🎓 Vellore Institute of Technology</div>
-      <div class="edu-degree">B.Tech — Computer Science (Bioinformatics)</div>
+      <div class="edu-degree">B.Tech, Computer Science (Bioinformatics)</div>
       <div class="edu-school">Vellore, India · Sep 2020 – May 2024 · Graduated</div>
       <div class="edu-gpa">8.14</div>
       <div class="edu-gpa-label">GPA / 10.0</div>
@@ -1039,14 +1064,14 @@ footer{
       <div class="lead-role">Community Development Coordinator</div>
       <div class="lead-org">Graduate & Professional Student Government · Indiana University</div>
       <div class="lead-period">2025 – 2026</div>
-      <p class="lead-desc">Represented and advocated for graduate student interests at Indiana University Bloomington. Organised community initiatives and cross-departmental programs to foster engagement across the graduate student body.</p>
+      <p class="lead-desc">Represented and advocated for graduate student interests at Indiana University Bloomington. Organised community initiatives and cross-departmental programs to build engagement across the graduate student body.</p>
     </div>
     <div class="lead-card reveal" style="transition-delay:.1s">
       <div class="lead-icon">🎤</div>
       <div class="lead-role">Sergeant at Arms</div>
       <div class="lead-org">Toastmasters International · VIT Chapter</div>
       <div class="lead-period">2022</div>
-      <p class="lead-desc">Managed meeting protocols and maintained order across chapter sessions. Facilitated a productive environment for members developing public speaking and leadership skills at the VIT Vellore chapter.</p>
+      <p class="lead-desc">Managed meeting protocols and kept order across chapter sessions, running the room so members could focus on developing public speaking and leadership skills.</p>
     </div>
   </div>
 </section>
@@ -1060,7 +1085,7 @@ footer{
   </div>
   <div class="contact-inner reveal" style="transition-delay:.1s">
     <p class="contact-intro">
-      I graduated from Indiana University in May 2026 and I'm actively looking for full-time <strong>ML Engineer, Applied AI, Backend, and Data Scientist roles</strong> in the United States. I'm work-authorized right now on post-completion OPT with STEM extension eligibility, so I can start immediately. If you're building something data-driven, let's talk.
+      I graduated from Indiana University in May 2026 and I'm looking for full-time <strong>backend and ML engineering roles</strong>, particularly on teams putting models into production rather than leaving them in notebooks. Healthcare NLP, applied LLM work, and data infrastructure are where I'm strongest. I'm work-authorized now on post-completion OPT with STEM extension eligibility, so I can start immediately.
     </p>
     <div class="contact-links">
       <a href="mailto:redfylokesh@gmail.com" class="contact-item">
@@ -1073,7 +1098,7 @@ footer{
         </div>
         <span class="contact-arrow">→</span>
       </a>
-      <a href="https://www.linkedin.com/in/lokesh-reddy-elluri-a77a7b201/" target="_blank" class="contact-item">
+      <a href="https://www.linkedin.com/in/lokesh-reddy-elluri-a77a7b201/" target="_blank" rel="noopener" class="contact-item">
         <div class="contact-item-left">
           <div class="contact-ico">in</div>
           <div>
@@ -1083,7 +1108,7 @@ footer{
         </div>
         <span class="contact-arrow">→</span>
       </a>
-      <a href="https://github.com/Lokesh1566" target="_blank" class="contact-item">
+      <a href="https://github.com/Lokesh1566" target="_blank" rel="noopener" class="contact-item">
         <div class="contact-item-left">
           <div class="contact-ico">⌥</div>
           <div>
@@ -1150,18 +1175,6 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-/* ── animate bars when in view ── */
-function animBars(container){
-  container.querySelectorAll('[data-w]').forEach(el=>{el.style.width=el.dataset.w+'%';});
-}
-const barObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){animBars(e.target);barObs.unobserve(e.target);}});
-},{threshold:.3});
-['heroBars','radarBars','projMetrics'].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el)barObs.observe(el);
-});
 </script>
 </body>
 </html>

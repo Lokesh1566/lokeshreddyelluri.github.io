@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lokesh Reddy Elluri — Backend ML Engineer</title>
-<meta name="description" content="Backend ML engineer working in healthcare NLP and applied LLM systems. Production DistilBERT at sub-200ms p95, Spark and Airflow pipelines, RAG on FAISS. IEEE published."/>
+<meta name="description" content="Backend ML engineer working in applied LLM systems and healthcare NLP. Browser agents that replay without a model, production DistilBERT at sub-200ms p95, Spark and Airflow pipelines, RAG on FAISS. IEEE published."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
@@ -377,6 +377,24 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
 [data-theme=dark] .proj-card:hover{box-shadow:0 24px 60px rgba(0,0,0,.35);}
 .proj-card:hover::after{opacity:1;}
 .proj-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;}
+
+/* Flagship treatment — the one project the page is built around */
+.proj-card.flagship{
+  border:1.5px solid var(--accent);
+  background:linear-gradient(160deg,var(--accent-light) 0%,var(--cream) 45%);
+  padding:2.75rem;
+}
+.proj-card.flagship::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent) 0%,var(--teal) 100%);
+}
+.proj-card.flagship:hover{border-color:var(--accent);}
+.flagship-rule{
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:.6rem;margin-bottom:.35rem;
+}
+.flagship-rule::after{content:'';flex:1;height:1px;background:currentColor;opacity:.35;}
 .proj-head{display:flex;align-items:flex-start;justify-content:space-between;}
 .proj-idx{font-family:var(--font-mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em;}
 .proj-badge{
@@ -386,8 +404,10 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
 }
 [data-theme=dark] .proj-badge{background:rgba(46,206,206,.1);color:var(--teal);border-color:rgba(46,206,206,.2);}
 .proj-badge.orange{background:var(--accent-light);color:var(--accent);border-color:rgba(212,85,10,.2);}
+.proj-badge.solid{background:var(--accent);color:#fff;border-color:var(--accent);}
 .proj-name{font-family:var(--font-display);font-weight:700;font-size:1.2rem;letter-spacing:-.02em;line-height:1.2;}
 .proj-desc{font-size:.9rem;color:var(--muted);line-height:1.7;flex:1;}
+.proj-desc strong{color:var(--ink);font-weight:600;}
 .proj-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;}
 .tag{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.04em;padding:.2rem .6rem;background:var(--paper);border:1px solid var(--line);border-radius:3px;color:var(--muted);}
 .proj-links{display:flex;gap:.75rem;margin-top:auto;flex-wrap:wrap;}
@@ -419,6 +439,16 @@ section{padding:7rem 3rem;position:relative;z-index:1;}
   grid-column:1/-1;border-top:1px solid var(--line);padding-top:1rem;
   font-family:var(--font-mono);font-size:.65rem;color:var(--muted);line-height:1.7;letter-spacing:.02em;
 }
+
+/* Replay flow strip — the shape of the Sableau system in one line */
+.flow{
+  grid-column:1/-1;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+  border-top:1px solid var(--line);padding-top:1.15rem;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.04em;color:var(--muted);
+}
+.flow b{color:var(--ink);font-weight:400;}
+.flow .arw{color:var(--accent);}
+.flow .zero{color:var(--teal);}
 
 /* ─── SKILLS ─────────────────────────────────────────── */
 .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 4rem;}
@@ -569,6 +599,7 @@ footer{
   .exp-panels{padding-left:0;padding-top:2rem;}
   .proj-grid{grid-template-columns:1fr;}
   .proj-card.featured{grid-column:1;grid-template-columns:1fr;}
+  .proj-card.flagship{padding:2rem;}
   .skills-grid{grid-template-columns:1fr;gap:2.5rem;}
   .edu-grid{grid-template-columns:1fr;}
   .lead-grid{grid-template-columns:1fr;}
@@ -594,8 +625,8 @@ footer{
 <nav>
   <div class="nav-logo">Lokesh<span>.</span></div>
   <ul class="nav-links">
-    <li><a href="#experience">experience</a></li>
     <li><a href="#projects">projects</a></li>
+    <li><a href="#experience">experience</a></li>
     <li><a href="#skills">skills</a></li>
     <li><a href="#education">education</a></li>
     <li><a href="#leadership">leadership</a></li>
@@ -620,7 +651,7 @@ footer{
       <em>Elluri.</em>
     </h1>
     <p class="hero-bio">
-      I build the backend side of machine learning: <strong>healthcare NLP in production</strong>, applied LLM and RAG systems, and the data pipelines underneath them. Fine-tuned DistilBERT serving live traffic at sub-200ms p95, Spark and Airflow moving millions of rows, retrieval running on FAISS. IEEE published. M.S. Data Science, Indiana University Bloomington.
+      I build the backend side of machine learning. Most recently <strong>Sableau</strong>, which compiles an LLM's exploration of a live banking UI into automation that replays with <strong>zero model calls</strong>. Before that, healthcare NLP in production: fine-tuned DistilBERT serving live traffic at sub-200ms p95, Spark and Airflow moving millions of rows, retrieval running on FAISS. IEEE published. M.S. Data Science, Indiana University Bloomington.
     </p>
     <div class="hero-cta">
       <a href="mailto:redfylokesh@gmail.com" class="cta-primary">Let's Talk →</a>
@@ -631,7 +662,7 @@ footer{
   <div class="hero-right">
     <div class="hero-card reveal">
       <div class="hero-card-label">M.S. Data Science · Indiana University</div>
-      <div class="hero-card-value">3.74<span>/4</span></div>
+      <div class="hero-card-value">3.77<span>/4</span></div>
       <div class="hero-card-sub">Graduated May 2026 · Bloomington, Indiana</div>
     </div>
 
@@ -639,8 +670,8 @@ footer{
       <div class="hero-card-label">Shipped, Measured</div>
       <div class="fact-grid">
         <div class="fact">
-          <div class="n">3.3M</div>
-          <div class="t">rows through a PySpark pipeline into Snowflake</div>
+          <div class="n">0</div>
+          <div class="t">model calls during Sableau replay, enforced by test</div>
         </div>
         <div class="fact">
           <div class="n">&lt;200ms</div>
@@ -660,8 +691,8 @@ footer{
     <div class="hero-card reveal" style="transition-delay:.2s">
       <div class="hero-card-label">Working In</div>
       <div class="stack-line">
-        Python · PySpark · FastAPI · PyTorch · Airflow<br/>
-        Snowflake · PostgreSQL · LangChain · Docker · AWS
+        Python · Playwright · FastAPI · PyTorch · PySpark<br/>
+        Airflow · Snowflake · PostgreSQL · LangChain · AWS
       </div>
     </div>
   </div>
@@ -671,38 +702,220 @@ footer{
 <div class="proof-bar">
   <div class="proof-inner">
     <div class="proof-item reveal">
+      <div class="proof-source">Sableau · Browser Agents</div>
+      <div class="proof-number">7</div>
+      <div class="proof-what">banking workflows replaying without an LLM</div>
+      <div class="proof-context">One discovery run compiles into a typed capability; replay reports llm_calls=0 and a test keeps the planner out of that path</div>
+      <a href="https://github.com/Lokesh1566/sableau/tree/main-2" target="_blank" rel="noopener" class="proof-verify">See the system →</a>
+    </div>
+    <div class="proof-item reveal" style="transition-delay:.08s">
       <div class="proof-source">Vidal Health · NLP Chatbot</div>
       <div class="proof-number">5,000+</div>
       <div class="proof-what">CRM queries automated / month</div>
       <div class="proof-context">DistilBERT in production at sub-200ms p95; macro F1 lifted 0.71 to 0.86; LLM weak supervision cut labeling cost 40%</div>
     </div>
-    <div class="proof-item reveal" style="transition-delay:.08s">
+    <div class="proof-item reveal" style="transition-delay:.16s">
       <div class="proof-source">Team Lease · Backend Platform</div>
       <div class="proof-number">−35%</div>
       <div class="proof-what">p99 read latency cut</div>
       <div class="proof-context">Django and PostgreSQL platform serving 500+ concurrent applicants; 80% test coverage; time-to-hire down 10%</div>
     </div>
-    <div class="proof-item reveal" style="transition-delay:.16s">
+    <div class="proof-item reveal" style="transition-delay:.24s">
       <div class="proof-source">IEEE Xplore · CONIT 2023</div>
       <div class="proof-number">Published</div>
       <div class="proof-what">peer-reviewed research</div>
       <div class="proof-context">Real-time XSS vulnerability detection via ML, 82.65% accuracy, published as an undergraduate researcher</div>
-      <!-- IEEE LINK 1 of 3: replace IEEE_PAPER_URL_HERE with your IEEE Xplore document URL -->
-      <a href="IEEE_PAPER_URL_HERE" target="_blank" rel="noopener" class="proof-verify">Read on IEEE Xplore →</a>
-    </div>
-    <div class="proof-item reveal" style="transition-delay:.24s">
-      <div class="proof-source">NYC Taxi Pipeline · PySpark</div>
-      <div class="proof-number">3.3M</div>
-      <div class="proof-what">rows through bronze to gold</div>
-      <div class="proof-context">Airflow-orchestrated medallion pipeline into Snowflake; 97.7% validation pass rate, 13-second silver transform</div>
+      <a href="https://ieeexplore.ieee.org/document/10205698" target="_blank" rel="noopener" class="proof-verify">Read on IEEE Xplore →</a>
     </div>
   </div>
 </div>
 
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="proj-grid">
+
+    <!-- FLAGSHIP: Sableau -->
+    <div class="proj-card featured flagship reveal">
+      <div>
+        <div class="flagship-rule">Flagship project</div>
+        <div class="proj-head">
+          <span class="proj-idx">Built 2026</span>
+          <span class="proj-badge solid">LLM Agents · Determinism</span>
+        </div>
+        <div class="proj-name" style="margin-top:.75rem;font-size:1.65rem;">Sableau — Deterministic Browser Automation</div>
+        <p class="proj-desc" style="margin-top:.75rem;">An LLM explores a live legacy banking application once. Sableau compiles that run into a <strong>typed, versioned capability artifact</strong> that replays afterwards with <strong>zero model calls</strong> — same steps, new inputs, no planner in the loop. Seven production workflows ship this way, from sign-on and member lookup through transfers, share opening, and supervisor-only account holds.</p>
+        <p class="proj-desc">Each capability is projected straight from its artifact into a <strong>FastAPI invoke endpoint</strong>, a natural-language chat front door, and a run dashboard that streams every step, timing, and screenshot. Runtime outcomes are typed rather than boolean: a nonexistent member is a <strong>business outcome</strong>, not a crash. High-risk steps require explicit confirmation, credentials are redacted from logs, evidence, and API echoes, and a permission-denied run <strong>pauses the browser session and escalates to a human</strong>, who takes control of that same Chromium session through the dashboard and hands it back with retry, continue, or abort.</p>
+        <div class="proj-tags" style="margin-top:1.25rem;">
+          <span class="tag">Python</span><span class="tag">Playwright</span><span class="tag">Chrome DevTools Protocol</span>
+          <span class="tag">FastAPI</span><span class="tag">Anthropic API</span><span class="tag">Pydantic</span>
+          <span class="tag">pytest</span><span class="tag">GitHub Actions</span>
+        </div>
+        <div class="proj-links" style="margin-top:1.25rem;">
+          <a href="https://github.com/Lokesh1566/sableau/tree/main-2" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+          <a href="https://github.com/Lokesh1566/sableau/blob/main-2/REPORT.md" target="_blank" rel="noopener" class="proj-link">Design writeup →</a>
+          <a href="https://github.com/Lokesh1566/sableau/tree/main-2/evidence" target="_blank" rel="noopener" class="proj-link">Run evidence →</a>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="n"><em>0</em></div>
+          <div class="t">model calls at replay, enforced by a dependency test</div>
+        </div>
+        <div class="stat">
+          <div class="n">7</div>
+          <div class="t">shipped capabilities, each with a typed I/O contract</div>
+        </div>
+        <div class="stat">
+          <div class="n">4</div>
+          <div class="t">outcome classes: success, business, recoverable, hard failure</div>
+        </div>
+        <div class="stat">
+          <div class="n">80%</div>
+          <div class="t">branch coverage floor on the deterministic core in CI</div>
+        </div>
+        <div class="flow">
+          <b>goal + live UI</b><span class="arw">→</span><b>LLM observe / decide / act</b><span class="arw">→</span><b>capability JSON</b>
+          <span class="arw">→</span><b>replay</b><span class="zero">llm_calls=0</span>
+        </div>
+        <div class="stat-note">
+          Discovery never records the per-transaction hidden token, so replay submits the live form and the browser supplies a fresh one. Artifacts record which planner produced them, so a heuristic run can never be mistaken for a model run.
+        </div>
+      </div>
+    </div>
+
+    <!-- NYC Taxi Pipeline -->
+    <div class="proj-card reveal" style="transition-delay:.06s">
+      <div class="proj-head">
+        <span class="proj-idx">02</span>
+        <span class="proj-badge">Data Engineering</span>
+      </div>
+      <div class="proj-name" style="margin-top:.75rem;">NYC Taxi Real-Time Data Pipeline</div>
+      <p class="proj-desc">Medallion pipeline over <strong>3.3M NYC TLC trip records</strong>: PySpark moves raw rows through schema enforcement into curated Snowflake tables, orchestrated by three Airflow DAGs. Great Expectations quarantines the <strong>2.3% that fail validation</strong> instead of dropping them silently, so a wrong rule costs nothing. The quarantined rows were real anomalies, including a fare above $100k and trips running past 48 hours. Streamlit dashboard on top for zone and payment analytics.</p>
+      <div class="proj-tags">
+        <span class="tag">PySpark</span><span class="tag">Airflow</span><span class="tag">Snowflake</span>
+        <span class="tag">Great Expectations</span><span class="tag">Kafka</span><span class="tag">Docker</span><span class="tag">Streamlit</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Lokesh1566/nyc-taxi-pipeline" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+        <a href="https://github.com/Lokesh1566/nyc-taxi-pipeline#data-quality-findings" target="_blank" rel="noopener" class="proj-link">Data quality writeup →</a>
+      </div>
+    </div>
+
+    <!-- RAG -->
+    <div class="proj-card reveal" style="transition-delay:.1s">
+      <div class="proj-head">
+        <span class="proj-idx">03</span>
+        <span class="proj-badge">LLM · RAG</span>
+      </div>
+      <div class="proj-name" style="margin-top:.75rem;">RAG Document Q&amp;A System</div>
+      <p class="proj-desc">Retrieval pipeline that ingests PDFs, chunks and embeds them into a <strong>FAISS vector store</strong>, and answers questions with source citations, holding <strong>p95 under 2 seconds</strong> on 500-page corpora. An evaluation harness measuring retrieval hit@k, answer faithfulness, and context precision showed the failures were coming from retrieval rather than prompting; tuning chunk size and reranker depth raised grounded-answer accuracy 22%.</p>
+      <div class="proj-tags">
+        <span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">FAISS</span>
+        <span class="tag">BGE Embeddings</span><span class="tag">Cross-Encoder</span><span class="tag">FastAPI</span><span class="tag">Streamlit</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Lokesh1566/doc-qa-rag" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+      </div>
+    </div>
+
+    <!-- Wove -->
+    <div class="proj-card reveal" style="transition-delay:.14s">
+      <div class="proj-head">
+        <span class="proj-idx">04</span>
+        <span class="proj-badge">Startup · Computer Vision</span>
+      </div>
+      <div class="proj-name" style="margin-top:.75rem;">Wove — AI Wardrobe Stylist</div>
+      <p class="proj-desc">A fashion tech product that builds outfits from clothes you already own. FastAPI backend runs <strong>CLIP zero-shot classification</strong> to auto-tag garments across 50+ categories, with PIL dominant-color extraction and a <strong>cosine-similarity pairing engine</strong> that scores combinations on real color harmony. Zero-shot rather than a trained classifier because the attribute set kept changing: weaker per-label precision, but no retraining when an attribute is added. Multi-user accounts, occasion-aware styling, a look-board composer, and a wardrobe gap finder on top.</p>
+      <div class="proj-tags">
+        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">CLIP</span>
+        <span class="tag">PyTorch</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">JavaScript</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://lokesh1566.github.io/wove/" target="_blank" rel="noopener" class="proj-link solid">↗ Live App</a>
+        <a href="https://github.com/Lokesh1566/wove" target="_blank" rel="noopener" class="proj-link">⌥ GitHub</a>
+      </div>
+    </div>
+
+    <!-- Customer Churn -->
+    <div class="proj-card reveal" style="transition-delay:.18s">
+      <div class="proj-head">
+        <span class="proj-idx">05</span>
+        <span class="proj-badge orange">ML · XGBoost</span>
+      </div>
+      <div class="proj-name" style="margin-top:.75rem;">Customer Churn Prediction</div>
+      <p class="proj-desc">End-to-end churn system comparing Logistic Regression, Random Forest, and XGBoost, reaching <strong>0.84 ROC-AUC</strong>. Wrapped in a FastAPI service with single and batch prediction endpoints, a SHAP-driven Streamlit dashboard for segment-level retention insight, and Docker Compose for one-command deployment.</p>
+      <div class="proj-tags">
+        <span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span>
+        <span class="tag">SHAP</span><span class="tag">FastAPI</span><span class="tag">Streamlit</span><span class="tag">Docker</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Lokesh1566/churn-predictor" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+      </div>
+    </div>
+
+    <!-- XSS -->
+    <div class="proj-card reveal" style="transition-delay:.22s">
+      <div class="proj-head">
+        <span class="proj-idx">06</span>
+        <span class="proj-badge">IEEE Published</span>
+      </div>
+      <div class="proj-name" style="margin-top:.75rem;">Real-Time XSS Vulnerability Detection</div>
+      <p class="proj-desc">ML classifier for Cross-Site Scripting detection built on engineered URL and script features, reaching <strong>82.65% accuracy at 80% recall</strong>, packaged behind a browser extension for live inspection. Published at <strong>IEEE CONIT 2023</strong>.</p>
+      <div class="proj-tags">
+        <span class="tag">Python</span><span class="tag">Feature Engineering</span>
+        <span class="tag">Classification</span><span class="tag">Cybersecurity</span><span class="tag">Jupyter</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Lokesh1566/Real-time-XSS-Vulnerability-Detection" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+        <a href="https://ieeexplore.ieee.org/document/10205698" target="_blank" rel="noopener" class="proj-link">IEEE Xplore →</a>
+      </div>
+    </div>
+
+    <!-- JPEG -->
+    <div class="proj-card reveal" style="transition-delay:.26s">
+      <div class="proj-head">
+        <span class="proj-idx">07</span>
+        <span class="proj-badge orange">Computer Vision</span>
+      </div>
+      <div class="proj-name" style="margin-top:.75rem;">JPEG Forensic Analysis Tool</div>
+      <p class="proj-desc">DCT-based image forensics pipeline detecting JPEG recompression artifacts through block-level coefficient histogram analysis for tamper localization. Core DCT routines rewritten with <strong>NumPy vectorization</strong> for an <strong>8× speedup</strong>, making batch evaluation across thousands of images practical.</p>
+      <div class="proj-tags">
+        <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">OpenCV</span>
+        <span class="tag">DCT</span><span class="tag">Matplotlib</span><span class="tag">Jupyter</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Lokesh1566/JPEG-Error-Analysis" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+      </div>
+    </div>
+
+    <!-- Secure Financial -->
+    <div class="proj-card reveal" style="transition-delay:.3s">
+      <div class="proj-head">
+        <span class="proj-idx">08</span>
+        <span class="proj-badge orange">Security</span>
+      </div>
+      <div class="proj-name" style="margin-top:.75rem;">Secure Financial Transaction System</div>
+      <p class="proj-desc">Java system securing 10,000+ simulated financial transactions with <strong>AES-256 and RSA</strong> under a modular key exchange architecture. Led a 4-member team through the design and integration.</p>
+      <div class="proj-tags">
+        <span class="tag">Java</span><span class="tag">AES-256</span><span class="tag">RSA</span><span class="tag">Cryptography</span>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Lokesh1566/Secure-Financial-Transaction-System" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- EXPERIENCE -->
 <section id="experience" class="section-bg">
   <div class="section-header reveal">
-    <span class="section-num">01</span>
+    <span class="section-num">02</span>
     <h2 class="section-title">Experience</h2>
     <div class="section-line"></div>
   </div>
@@ -731,9 +944,9 @@ footer{
         </div>
         <ul class="exp-ul">
           <li>Owned an end-to-end <strong>NLP intent classification pipeline</strong> (TF-IDF and Logistic Regression baseline, fine-tuned <strong>DistilBERT</strong> in production) serving 5,000+ monthly queries at <strong>sub-200ms p95 latency</strong>, deflecting <strong>15%</strong> of L1 support tickets.</li>
-          <li>Productionized training with stratified k-fold CV and Bayesian hyperparameter search, lifting <strong>macro F1 from 0.71 to 0.86</strong> and trimming handling time by <strong>30%</strong>.</li>
-          <li>Built an <strong>LLM-assisted weak supervision pipeline</strong> for annotation, cutting labeling cost by <strong>40%</strong> while improving inter-annotator agreement.</li>
-          <li>Shipped <strong>Dockerized FastAPI inference services</strong> wired into <strong>CI/CD</strong>, reclaiming roughly 12 engineering hours per week.</li>
+          <li>Aggregate accuracy looked healthy while two low-volume intents sat under 0.40 F1. Moved model selection to <strong>macro F1</strong> with stratified k-fold CV and Bayesian hyperparameter search, lifting it <strong>from 0.71 to 0.86</strong> and trimming handling time by <strong>30%</strong>.</li>
+          <li>Built an <strong>LLM-assisted weak supervision pipeline</strong> for annotation, cutting labeling cost by <strong>40%</strong>. Low-confidence and disagreement cases still routed to a human reviewer.</li>
+          <li>Shipped <strong>Dockerized FastAPI inference services</strong> wired into <strong>CI/CD</strong>, replacing manual triage and hand-run releases.</li>
         </ul>
         <div class="impact-chips">
           <span class="impact">Sub-200ms p95</span>
@@ -750,8 +963,9 @@ footer{
           <span>May – Jun 2023</span>
         </div>
         <ul class="exp-ul">
-          <li>Launched a distributed ATS-integrated platform on Django, PostgreSQL, and JavaScript serving <strong>500+ concurrent applicants</strong>; tuned indexing and query plans, cutting <strong>p99 read latency by 35%</strong>.</li>
-          <li>Delivered REST microservices for candidate tracking and analytics dashboards backed by materialized views, compressing <strong>time-to-hire by 10%</strong>.</li>
+          <li>Launched a distributed ATS-integrated platform on Django, PostgreSQL, and JavaScript serving <strong>500+ concurrent applicants</strong>.</li>
+          <li>Recruiter search was slow under load. Read the query plan, found a sequential scan caused by a non-sargable filter, and fixed it with a composite index and a rewritten predicate, cutting <strong>p99 read latency 35%</strong> without adding a caching layer.</li>
+          <li>Delivered REST microservices and analytics dashboards backed by materialized views. Refreshing every five minutes instead of querying live took dashboard loads from several seconds to under one.</li>
           <li>Drove <strong>80% unit and integration test coverage</strong> on critical endpoints, enabling weekly zero-downtime deployments via automated regression gates.</li>
         </ul>
         <div class="impact-chips">
@@ -775,180 +989,22 @@ footer{
           <span class="impact">CONIT 2023</span>
           <span class="impact">82.65% Accuracy</span>
         </div>
-        <!-- IEEE LINK 2 of 3: replace IEEE_PAPER_URL_HERE with your IEEE Xplore document URL -->
-        <a href="IEEE_PAPER_URL_HERE" target="_blank" rel="noopener" class="exp-cta">Read the paper on IEEE Xplore →</a>
+        <a href="https://ieeexplore.ieee.org/document/10205698" target="_blank" rel="noopener" class="exp-cta">Read the paper on IEEE Xplore →</a>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-header reveal">
-    <span class="section-num">02</span>
-    <h2 class="section-title">Projects</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="proj-grid">
-
-    <!-- Featured: NYC Taxi Pipeline -->
-    <div class="proj-card featured reveal">
-      <div>
-        <div class="proj-head">
-          <span class="proj-idx">01 — Featured</span>
-          <span class="proj-badge">Data Engineering</span>
-        </div>
-        <div class="proj-name" style="margin-top:.75rem;font-size:1.5rem;">NYC Taxi Real-Time Data Pipeline</div>
-        <p class="proj-desc" style="margin-top:.75rem;">Production-shaped pipeline over NYC TLC trip records on a <strong>bronze, silver, gold medallion architecture</strong>. PySpark jobs move raw rows through schema enforcement and transformation into curated Snowflake aggregate tables, orchestrated by three Airflow DAGs. Great Expectations quarantines records that fail validation instead of letting them slip through silently, and a Streamlit dashboard sits on top for zone-level and payment analytics.</p>
-        <div class="proj-tags" style="margin-top:1.25rem;">
-          <span class="tag">PySpark</span><span class="tag">Airflow</span><span class="tag">Snowflake</span>
-          <span class="tag">Great Expectations</span><span class="tag">Kafka</span><span class="tag">Docker</span><span class="tag">Streamlit</span>
-        </div>
-        <div class="proj-links" style="margin-top:1.25rem;">
-          <a href="https://github.com/Lokesh1566/nyc-taxi-pipeline" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
-          <a href="https://github.com/Lokesh1566/nyc-taxi-pipeline#data-quality-findings" target="_blank" rel="noopener" class="proj-link">Data quality writeup →</a>
-        </div>
-      </div>
-      <div class="stat-grid">
-        <div class="stat">
-          <div class="n">3,307,234</div>
-          <div class="t">raw rows ingested to bronze</div>
-        </div>
-        <div class="stat">
-          <div class="n"><em>97.7%</em></div>
-          <div class="t">passed validation, 75,861 rows quarantined</div>
-        </div>
-        <div class="stat">
-          <div class="n">13s</div>
-          <div class="t">silver transform runtime</div>
-        </div>
-        <div class="stat">
-          <div class="n">5</div>
-          <div class="t">gold aggregate tables in Snowflake</div>
-        </div>
-        <div class="stat-note">
-          The quarantined rows were real TLC anomalies, not pipeline bugs: a fare above $100k, trips running past 48 hours, and 1,506 rows resolving to an unknown borough. The writeup covers how each threshold was chosen.
-        </div>
-      </div>
-    </div>
-
-    <!-- Wove -->
-    <div class="proj-card reveal" style="transition-delay:.06s">
-      <div class="proj-head">
-        <span class="proj-idx">02</span>
-        <span class="proj-badge">Startup · Computer Vision</span>
-      </div>
-      <div class="proj-name" style="margin-top:.75rem;">Wove — AI Wardrobe Stylist</div>
-      <p class="proj-desc">A fashion tech product that builds outfits from clothes you already own. FastAPI backend runs <strong>CLIP zero-shot classification</strong> to auto-tag garments across 50+ categories, with PIL dominant-color extraction and a <strong>cosine-similarity pairing engine</strong> that scores combinations on real color harmony. The app layers on multi-user accounts, weather and occasion-aware styling across six modes, a look-board composer, and a wardrobe gap finder. I am building this out as a startup.</p>
-      <div class="proj-tags">
-        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">CLIP</span>
-        <span class="tag">PyTorch</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">JavaScript</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://lokesh1566.github.io/wove/" target="_blank" rel="noopener" class="proj-link solid">↗ Live App</a>
-        <a href="https://github.com/Lokesh1566/wove" target="_blank" rel="noopener" class="proj-link">⌥ GitHub</a>
-      </div>
-    </div>
-
-    <!-- RAG -->
-    <div class="proj-card reveal" style="transition-delay:.1s">
-      <div class="proj-head">
-        <span class="proj-idx">03</span>
-        <span class="proj-badge">LLM · RAG</span>
-      </div>
-      <div class="proj-name" style="margin-top:.75rem;">RAG Document Q&A System</div>
-      <p class="proj-desc">Retrieval-augmented generation pipeline that ingests PDFs, chunks and embeds content into a <strong>FAISS vector store</strong> with sentence-transformers, and answers natural-language queries with source citations. FastAPI backend and Streamlit chat frontend, holding <strong>sub-2-second latency</strong> on 500-page document corpora.</p>
-      <div class="proj-tags">
-        <span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">FAISS</span>
-        <span class="tag">Sentence Transformers</span><span class="tag">FastAPI</span><span class="tag">Streamlit</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Lokesh1566/doc-qa-rag" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
-      </div>
-    </div>
-
-    <!-- Customer Churn -->
-    <div class="proj-card reveal" style="transition-delay:.14s">
-      <div class="proj-head">
-        <span class="proj-idx">04</span>
-        <span class="proj-badge orange">ML · XGBoost</span>
-      </div>
-      <div class="proj-name" style="margin-top:.75rem;">Customer Churn Prediction</div>
-      <p class="proj-desc">End-to-end churn system comparing Logistic Regression, Random Forest, and XGBoost, reaching <strong>0.84 ROC-AUC</strong>. Wrapped in a FastAPI service with single and batch prediction endpoints, a SHAP-driven Streamlit dashboard for segment-level retention insight, and Docker Compose for one-command deployment.</p>
-      <div class="proj-tags">
-        <span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">XGBoost</span>
-        <span class="tag">SHAP</span><span class="tag">FastAPI</span><span class="tag">Streamlit</span><span class="tag">Docker</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Lokesh1566/churn-predictor" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
-      </div>
-    </div>
-
-    <!-- XSS -->
-    <div class="proj-card reveal" style="transition-delay:.18s">
-      <div class="proj-head">
-        <span class="proj-idx">05</span>
-        <span class="proj-badge">IEEE Published</span>
-      </div>
-      <div class="proj-name" style="margin-top:.75rem;">Real-Time XSS Vulnerability Detection</div>
-      <p class="proj-desc">ML classifier for Cross-Site Scripting detection built on engineered URL and script features, reaching <strong>82.65% accuracy at 80% recall</strong>, packaged behind a browser extension for live inspection. Published at <strong>IEEE CONIT 2023</strong>.</p>
-      <div class="proj-tags">
-        <span class="tag">Python</span><span class="tag">Feature Engineering</span>
-        <span class="tag">Classification</span><span class="tag">Cybersecurity</span><span class="tag">Jupyter</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Lokesh1566/Real-time-XSS-Vulnerability-Detection" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
-        <!-- IEEE LINK 3 of 3: replace IEEE_PAPER_URL_HERE with your IEEE Xplore document URL -->
-        <a href="IEEE_PAPER_URL_HERE" target="_blank" rel="noopener" class="proj-link">IEEE Xplore →</a>
-      </div>
-    </div>
-
-    <!-- JPEG -->
-    <div class="proj-card reveal" style="transition-delay:.22s">
-      <div class="proj-head">
-        <span class="proj-idx">06</span>
-        <span class="proj-badge orange">Computer Vision</span>
-      </div>
-      <div class="proj-name" style="margin-top:.75rem;">JPEG Forensic Analysis Tool</div>
-      <p class="proj-desc">DCT-based image forensics pipeline detecting JPEG recompression artifacts through block-level coefficient histogram analysis for tamper localization. Core DCT routines rewritten with <strong>NumPy vectorization</strong> for an <strong>8× speedup</strong>, making batch evaluation across thousands of images practical.</p>
-      <div class="proj-tags">
-        <span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">OpenCV</span>
-        <span class="tag">DCT</span><span class="tag">Matplotlib</span><span class="tag">Jupyter</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Lokesh1566/JPEG-Error-Analysis" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
-      </div>
-    </div>
-
-    <!-- Secure Financial -->
-    <div class="proj-card reveal" style="transition-delay:.26s">
-      <div class="proj-head">
-        <span class="proj-idx">07</span>
-        <span class="proj-badge orange">Security</span>
-      </div>
-      <div class="proj-name" style="margin-top:.75rem;">Secure Financial Transaction System</div>
-      <p class="proj-desc">Java system securing 10,000+ simulated financial transactions with <strong>AES-256 and RSA</strong> under a modular key exchange architecture. Led a 4-member team through the design and integration.</p>
-      <div class="proj-tags">
-        <span class="tag">Java</span><span class="tag">AES-256</span><span class="tag">RSA</span><span class="tag">Cryptography</span>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Lokesh1566/Secure-Financial-Transaction-System" target="_blank" rel="noopener" class="proj-link solid">⌥ GitHub</a>
-      </div>
-    </div>
-
   </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills" class="section-bg">
+<section id="skills">
   <div class="section-header reveal">
     <span class="section-num">03</span>
-    <h2 class="section-title">Skills & Stack</h2>
+    <h2 class="section-title">Skills &amp; Stack</h2>
     <div class="section-line"></div>
   </div>
   <div class="skills-grid reveal">
     <div>
-      <div class="skill-cat-label">Machine Learning & AI</div>
+      <div class="skill-cat-label">Machine Learning &amp; AI</div>
       <div class="skill-pills">
         <span class="pill highlight">Python</span>
         <span class="pill highlight">PyTorch</span>
@@ -957,23 +1013,37 @@ footer{
         <span class="pill new">LangChain</span>
         <span class="pill new">RAG</span>
         <span class="pill new">LLMs</span>
+        <span class="pill new">Anthropic API</span>
         <span class="pill new">CLIP</span>
         <span class="pill">Scikit-learn</span>
         <span class="pill">XGBoost</span>
         <span class="pill">SHAP</span>
         <span class="pill">TensorFlow</span>
         <span class="pill">Feature Engineering</span>
-        <span class="pill">A/B Testing</span>
       </div>
     </div>
     <div>
-      <div class="skill-cat-label">Backend & Serving</div>
+      <div class="skill-cat-label">Agents &amp; Automation</div>
+      <div class="skill-pills">
+        <span class="pill highlight">Playwright</span>
+        <span class="pill highlight">Browser Agents</span>
+        <span class="pill new">Chrome DevTools Protocol</span>
+        <span class="pill new">Deterministic Replay</span>
+        <span class="pill new">Typed Capability Contracts</span>
+        <span class="pill new">Policy Allowlisting</span>
+        <span class="pill new">Redaction</span>
+        <span class="pill">Human-in-the-Loop Escalation</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-cat-label">Backend &amp; Serving</div>
       <div class="skill-pills">
         <span class="pill highlight">FastAPI</span>
         <span class="pill highlight">REST APIs</span>
+        <span class="pill new">Pydantic</span>
         <span class="pill new">Docker</span>
         <span class="pill new">CI/CD</span>
-        <span class="pill new">Kubernetes</span>
+        <span class="pill new">pytest</span>
         <span class="pill">Django</span>
         <span class="pill">Flask</span>
         <span class="pill">Streamlit</span>
@@ -984,7 +1054,7 @@ footer{
       </div>
     </div>
     <div>
-      <div class="skill-cat-label">Data & Pipelines</div>
+      <div class="skill-cat-label">Data &amp; Pipelines</div>
       <div class="skill-pills">
         <span class="pill highlight">SQL</span>
         <span class="pill highlight">PostgreSQL</span>
@@ -995,35 +1065,21 @@ footer{
         <span class="pill new">Great Expectations</span>
         <span class="pill new">FAISS</span>
         <span class="pill new">MLflow</span>
-        <span class="pill">Hadoop</span>
         <span class="pill">MongoDB</span>
         <span class="pill">ETL Pipelines</span>
-      </div>
-    </div>
-    <div>
-      <div class="skill-cat-label">Cloud & Analysis</div>
-      <div class="skill-pills">
-        <span class="pill highlight">AWS</span>
-        <span class="pill">GCP</span>
         <span class="pill">Pandas</span>
         <span class="pill">NumPy</span>
-        <span class="pill">Plotly</span>
-        <span class="pill">Matplotlib</span>
-        <span class="pill">Seaborn</span>
-        <span class="pill">Tableau</span>
-        <span class="pill">Power BI</span>
-        <span class="pill">Jupyter</span>
-        <span class="pill">R</span>
+        <span class="pill">AWS</span>
       </div>
     </div>
   </div>
   <p class="skills-note reveal">
-    The ones I reach for daily are <strong>Python, FastAPI, PyTorch, PySpark, and PostgreSQL</strong>. Everything listed above appears in work I have actually shipped or published, and every project on this page links to its source so you can check the claim yourself.
+    The ones I reach for daily are <strong>Python, FastAPI, Playwright, PyTorch, and PostgreSQL</strong>. Everything listed above appears in work I have actually shipped or published, and every project on this page links to its source so you can check the claim yourself.
   </p>
 </section>
 
 <!-- EDUCATION -->
-<section id="education">
+<section id="education" class="section-bg">
   <div class="section-header reveal">
     <span class="section-num">04</span>
     <h2 class="section-title">Education</h2>
@@ -1034,7 +1090,7 @@ footer{
       <div class="edu-school-badge">🎓 Indiana University Bloomington</div>
       <div class="edu-degree">Master of Science in Data Science</div>
       <div class="edu-school">Bloomington, Indiana · Aug 2024 – May 2026 · Graduated</div>
-      <div class="edu-gpa">3.74</div>
+      <div class="edu-gpa">3.77</div>
       <div class="edu-gpa-label">GPA / 4.0</div>
       <div class="edu-courses">Applied Machine Learning · Advanced Database Concepts · Introduction to Statistics · Applied Algorithms · Data Mining · Big Data Management</div>
       <div class="edu-watermark">IU</div>
@@ -1045,14 +1101,14 @@ footer{
       <div class="edu-school">Vellore, India · Sep 2020 – May 2024 · Graduated</div>
       <div class="edu-gpa">8.14</div>
       <div class="edu-gpa-label">GPA / 10.0</div>
-      <div class="edu-courses">Data Structures & Algorithms · Object-Oriented Programming · Artificial Intelligence · Machine Learning · Computer Organization · Combinatorics · Statistics & Applications</div>
+      <div class="edu-courses">Data Structures &amp; Algorithms · Object-Oriented Programming · Artificial Intelligence · Machine Learning · Computer Organization · Combinatorics · Statistics &amp; Applications</div>
       <div class="edu-watermark">VIT</div>
     </div>
   </div>
 </section>
 
 <!-- LEADERSHIP -->
-<section id="leadership" class="section-bg">
+<section id="leadership">
   <div class="section-header reveal">
     <span class="section-num">05</span>
     <h2 class="section-title">Leadership</h2>
@@ -1062,7 +1118,7 @@ footer{
     <div class="lead-card reveal">
       <div class="lead-icon">🏛️</div>
       <div class="lead-role">Community Development Coordinator</div>
-      <div class="lead-org">Graduate & Professional Student Government · Indiana University</div>
+      <div class="lead-org">Graduate &amp; Professional Student Government · Indiana University</div>
       <div class="lead-period">2025 – 2026</div>
       <p class="lead-desc">Represented and advocated for graduate student interests at Indiana University Bloomington. Organised community initiatives and cross-departmental programs to build engagement across the graduate student body.</p>
     </div>
@@ -1085,7 +1141,7 @@ footer{
   </div>
   <div class="contact-inner reveal" style="transition-delay:.1s">
     <p class="contact-intro">
-      I graduated from Indiana University in May 2026 and I'm looking for full-time <strong>backend and ML engineering roles</strong>, particularly on teams putting models into production rather than leaving them in notebooks. Healthcare NLP, applied LLM work, and data infrastructure are where I'm strongest. I'm work-authorized now on post-completion OPT with STEM extension eligibility, so I can start immediately.
+      I graduated from Indiana University in May 2026 and I'm looking for full-time <strong>backend and ML engineering roles</strong>, particularly on teams putting models into production rather than leaving them in notebooks. Applied LLM and agent work, healthcare NLP, and data infrastructure are where I'm strongest. I'm work-authorized now on post-completion OPT with STEM extension eligibility, so I can start immediately.
     </p>
     <div class="contact-links">
       <a href="mailto:redfylokesh@gmail.com" class="contact-item">

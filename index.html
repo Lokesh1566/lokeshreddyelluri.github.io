@@ -7,9 +7,13 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Lokesh Reddy Elluri — Backend ML Engineer">
   <meta property="og:description" content="Models in production, not notebooks.">
+  <meta property="og:image" content="og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Lokesh Reddy Elluri — Backend ML Engineer">
   <meta name="twitter:description" content="Models in production, not notebooks.">
+  <meta name="twitter:image" content="og.png">
   
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMzMTU1ZjUiLz4KICA8cGF0aCBkPSJNMTggMTRoOHYyOWgxOXY3SDE4eiIgZmlsbD0iI2Y1ZjNlZiIvPgogIDxjaXJjbGUgY3g9IjQ3IiBjeT0iNDYiIHI9IjQiIGZpbGw9IiNmNWYzZWYiLz4KPC9zdmc+Cg==" type="image/svg+xml">
   <meta name="theme-color" content="#f5f3ef">
@@ -71,6 +75,7 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: color .35s var(--ease), background-color .35s var(--ease);
 }
+body[data-modal-open="true"] { overflow: hidden; }
 
 a { color: inherit; text-decoration: none; }
 button { color: inherit; }
@@ -83,6 +88,8 @@ button { font: inherit; }
 .skip-link { position: fixed; top: -100px; left: 16px; z-index: 100; background: var(--ink); color: var(--paper); padding: 12px 16px; font: 600 .72rem/1 var(--mono); }
 .skip-link:focus { top: 12px; }
 .top-rule { --scroll-progress: 0; position: fixed; inset: 0 0 auto; height: 2px; z-index: 80; background: var(--blue); transform: scaleX(var(--scroll-progress)); transform-origin: left; will-change: transform; }
+.cursor-label { position: fixed; z-index: 200; top: 0; left: 0; min-width: 58px; padding: 7px 9px; border: 1px solid color-mix(in srgb, var(--blue) 70%, transparent); background: color-mix(in srgb, var(--inverse) 92%, transparent); color: var(--inverse-ink); backdrop-filter: blur(10px); pointer-events: none; opacity: 0; transform: translate3d(-100px,-100px,0); transition: opacity .18s var(--ease); font: 560 .54rem/1 var(--mono); letter-spacing: .1em; text-align: center; }
+.cursor-label[data-visible="true"] { opacity: 1; }
 
 /* Header */
 .site-header {
@@ -104,56 +111,192 @@ button { font: inherit; }
 .nav-tools { justify-self: end; display: flex; align-items: center; gap: 10px; }
 .theme-toggle, .menu-toggle { min-width: 50px; min-height: 38px; border: 0; background: transparent; cursor: pointer; color: var(--muted); font: 520 .66rem/1 var(--mono); }
 .theme-toggle:hover, .menu-toggle:hover { color: var(--blue); }
-.nav-cta { min-height: 38px; display: inline-flex; align-items: center; gap: 18px; padding: 0 14px; border: 1px solid var(--ink); font: 520 .69rem/1 var(--mono); transition: background .2s, color .2s; }
+.nav-cta { min-height: 38px; display: inline-flex; align-items: center; gap: 18px; padding: 0 14px; border: 1px solid var(--ink); font: 520 .69rem/1 var(--mono); transition: background .2s, color .2s, translate .35s var(--ease); }
 .nav-cta:hover { background: var(--ink); color: var(--paper); }
 .menu-toggle { display: none; }
 .mobile-menu { display: none; }
 
-/* Hero */
-.hero { min-height: 790px; padding: 142px 0 70px; display: flex; flex-direction: column; position: relative; isolation: isolate; }
-.hero > *:not(.hero-tech-field) { position: relative; z-index: 2; }
-.hero-tech-field { position: absolute; z-index: 0; top: 100px; right: -6vw; width: min(52vw, 660px); height: 390px; opacity: .58; pointer-events: none; -webkit-mask-image: linear-gradient(105deg, transparent 0%, #000 24%, #000 82%, transparent 100%); mask-image: linear-gradient(105deg, transparent 0%, #000 24%, #000 82%, transparent 100%); }
-.tech-grid { position: absolute; inset: 0; background-image: linear-gradient(color-mix(in srgb, var(--blue) 10%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--blue) 10%, transparent) 1px, transparent 1px); background-size: 36px 36px; transform: perspective(520px) rotateX(58deg) rotateZ(-7deg) scale(1.12); transform-origin: center; }
-.signal-line { position: absolute; display: block; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--blue) 55%, transparent), transparent); transform-origin: left; }
-.signal-line i { position: absolute; top: -3px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px color-mix(in srgb, var(--blue) 12%, transparent), 0 0 18px color-mix(in srgb, var(--blue) 60%, transparent); animation: signalTravel 8s var(--ease) infinite; animation-play-state: paused; }
-.signal-line-a { width: 78%; top: 31%; left: 8%; transform: rotate(-8deg); }
-.signal-line-b { width: 60%; top: 58%; left: 22%; transform: rotate(11deg); }
-.signal-line-b i { animation-delay: -2.7s; }
-.signal-line-c { width: 46%; top: 76%; left: 4%; transform: rotate(-17deg); }
-.signal-line-c i { animation-delay: -5.2s; }
+/* Cinematic hero */
+.hero { --hero-x: 0px; --hero-y: 0px; min-height: 990px; padding: 104px 0 44px; display: flex; flex-direction: column; position: relative; isolation: isolate; }
+.hero > *:not(.hero-tech-field) { position: relative; z-index: 7; }
+.hero-atmosphere { position: absolute; z-index: 0; inset: 68px -18vw 0; opacity: .72; overflow: hidden; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 18%, transparent 76%); mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 18%, transparent 76%); }
+.tech-grid { position: absolute; inset: 4% 7% 14%; background-image: linear-gradient(color-mix(in srgb, var(--blue) 8%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--blue) 8%, transparent) 1px, transparent 1px); background-size: 42px 42px; transform: perspective(760px) rotateX(64deg) rotateZ(-4deg) scale(1.15); transform-origin: center 64%; opacity: .8; }
+.signal-line { position: absolute; display: block; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--blue) 56%, transparent), transparent); transform-origin: left; }
+.signal-line i { position: absolute; top: -3px; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px color-mix(in srgb, var(--blue) 10%, transparent), 0 0 18px color-mix(in srgb, var(--blue) 55%, transparent); animation: signalTravel 9s var(--ease) infinite; animation-play-state: paused; }
+.signal-line-a { width: 42%; top: 26%; left: 6%; transform: rotate(6deg); }
+.signal-line-b { width: 36%; top: 46%; right: 4%; transform: rotate(-9deg); }
+.signal-line-b i { animation-delay: -3s; }
+.signal-line-c { width: 34%; top: 70%; left: 13%; transform: rotate(-15deg); }
+.signal-line-c i { animation-delay: -6s; }
 .tech-node { position: absolute; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--blue); background: var(--paper); box-shadow: 0 0 0 6px color-mix(in srgb, var(--blue) 8%, transparent); animation: nodePing 4.8s ease-in-out infinite; animation-play-state: paused; }
-.tech-node-a { top: 21%; left: 22%; }
-.tech-node-b { top: 49%; right: 18%; animation-delay: -1.6s; }
-.tech-node-c { bottom: 16%; left: 39%; animation-delay: -3.2s; }
-.tech-coordinate { position: absolute; right: 6%; bottom: 3%; color: var(--blue); font: 500 .57rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
-.hero.is-live .signal-line i, .hero.is-live .tech-node { animation-play-state: running; }
-@keyframes signalTravel { 0% { opacity: 0; transform: translateX(0) scale(.5); } 8% { opacity: 1; } 88% { opacity: 1; } 100% { opacity: 0; transform: translateX(min(380px, 40vw)) scale(1); } }
+.tech-node-a { top: 20%; left: 23%; }
+.tech-node-b { top: 44%; right: 18%; animation-delay: -1.6s; }
+.tech-node-c { bottom: 15%; left: 34%; animation-delay: -3.2s; }
+.tech-coordinate { position: absolute; right: 19%; bottom: 11%; color: var(--blue); font: 500 .56rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.hero-orbit { position: absolute; top: 46%; left: 50%; border: 1px solid color-mix(in srgb, var(--blue) 22%, transparent); border-radius: 50%; transform: translate(-50%, -50%) rotateX(67deg); animation: orbitSpin 18s linear infinite; animation-play-state: paused; }
+.hero-orbit::after { content: ""; position: absolute; top: 50%; left: -4px; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 14px var(--blue); }
+.hero-orbit-a { width: min(70vw, 850px); aspect-ratio: 1; }
+.hero-orbit-b { width: min(52vw, 630px); aspect-ratio: 1; animation-duration: 13s; animation-direction: reverse; }
+.hero.is-live .signal-line i, .hero.is-live .tech-node, .hero.is-live .hero-orbit, .hero.is-live .robot-orbit, .hero.is-live .robot-antenna i { animation-play-state: running; }
+@keyframes signalTravel { 0% { opacity: 0; transform: translateX(0) scale(.5); } 8% { opacity: 1; } 88% { opacity: 1; } 100% { opacity: 0; transform: translateX(min(430px, 42vw)) scale(1); } }
 @keyframes nodePing { 0%, 100% { transform: scale(.7); opacity: .45; } 50% { transform: scale(1.12); opacity: 1; } }
-.availability { width: max-content; display: flex; align-items: center; gap: 9px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); background: var(--panel); font: 520 .66rem/1 var(--mono); }
+@keyframes orbitSpin { to { transform: translate(-50%, -50%) rotateX(67deg) rotateZ(360deg); } }
+.hero-topline { min-height: 38px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.availability { width: max-content; display: flex; align-items: center; gap: 9px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); background: color-mix(in srgb, var(--paper-solid) 72%, transparent); backdrop-filter: blur(12px); font: 520 .66rem/1 var(--mono); }
 .availability i { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 14%, transparent); animation: breathe 2.8s ease-in-out infinite; }
+.hero-index { color: var(--muted); font: 520 .61rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
 @keyframes breathe { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--blue) 0%, transparent); } }
-.hero-main { margin-top: auto; }
-.eyebrow { margin: 0 0 22px; color: var(--blue); font: 520 .67rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
-h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-height: .84; letter-spacing: -.078em; font-weight: 620; }
-.hero-line { display: block; overflow: hidden; color: var(--ink); }
+.hero-stage { height: clamp(610px, 61vw, 700px); margin-top: 12px; position: relative; isolation: isolate; }
+.eyebrow { position: absolute; z-index: 8; top: 8%; left: 50%; width: max-content; margin: 0; transform: translateX(-50%); color: var(--blue); font: 520 .65rem/1 var(--mono); letter-spacing: .13em; text-transform: uppercase; }
+.cinematic-title { position: absolute; z-index: 2; top: 49%; left: 50%; width: min(1440px, 112vw); margin: 0; transform: translate(-50%, -50%); font-size: clamp(5.2rem, 11.1vw, 10.2rem); line-height: .73; letter-spacing: -.086em; font-weight: 630; text-align: center; pointer-events: none; }
+.hero-line { display: block; overflow: hidden; position: relative; color: var(--ink); }
 .hero-line > span { display: block; color: inherit; }
-.hero-line-muted { color: var(--faint); }
-.motion-ready .hero-line > span { animation: heroRise .95s var(--ease) both; }
-.motion-ready .hero-line-muted > span { animation-delay: .09s; }
-.motion-ready .eyebrow, .motion-ready .availability { animation: heroFade .8s var(--ease) .18s both; }
+.hero-line-one { z-index: 2; transform: translateX(-5.5vw); }
+.hero-line-two { z-index: 2; color: var(--faint); transform: translateX(5vw); }
+.hero-line-three { z-index: 6; color: var(--ink); }
+.hero-robot { --robot-ry: 0deg; --robot-rx: -2deg; --eye-x: 0px; --eye-y: 0px; position: absolute; z-index: 4; bottom: -2%; left: 50%; width: min(48vw, 540px); height: 92%; transform: translate3d(calc(-50% + var(--hero-x)), var(--hero-y), 0); cursor: grab; touch-action: pan-y; user-select: none; perspective: 1100px; will-change: transform; transition: transform .35s var(--ease); }
+.hero-robot:active, .hero-robot.is-dragging { cursor: grabbing; }
+.hero-robot:focus-visible { outline: 1px solid var(--blue); outline-offset: 8px; }
+.robot-glow { position: absolute; z-index: 0; inset: 18% -7% 1%; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--blue) 20%, transparent), color-mix(in srgb, var(--blue) 5%, transparent) 43%, transparent 70%); filter: blur(6px); pointer-events: none; }
+.robot-orbit { position: absolute; z-index: 1; top: 49%; left: 50%; border: 1px solid color-mix(in srgb, var(--blue) 28%, transparent); border-radius: 50%; transform: translate(-50%, -50%) rotateX(70deg); animation: robotOrbit 12s linear infinite; animation-play-state: paused; pointer-events: none; }
+.robot-orbit::after { content: ""; position: absolute; top: 50%; left: -3px; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 14px var(--blue); }
+.robot-orbit-a { width: 106%; aspect-ratio: 1; }
+.robot-orbit-b { width: 76%; aspect-ratio: 1; animation-duration: 8s; animation-direction: reverse; }
+@keyframes robotOrbit { to { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(360deg); } }
+.robot-model { position: absolute; z-index: 3; top: 5%; left: 50%; width: 360px; height: 560px; translate: -50% 0; transform: rotateX(var(--robot-rx)) rotateY(var(--robot-ry)); transform-style: preserve-3d; transform-origin: 50% 43%; transition: transform .18s var(--ease), translate .35s var(--ease); animation: robotHover 5.4s ease-in-out infinite; }
+.hero-robot.is-dragging .robot-model { transition: none; animation-play-state: paused; }
+@keyframes robotHover { 0%, 100% { translate: -50% 0; } 50% { translate: -50% -9px; } }
+.robot-antenna { position: absolute; z-index: 8; top: 0; left: 50%; width: 3px; height: 47px; translate: -50% 0; background: linear-gradient(#88909d, #2a2e36); transform: translateZ(8px); }
+.robot-antenna i { position: absolute; top: -8px; left: 50%; width: 15px; height: 15px; translate: -50% 0; border: 3px solid #dfe5eb; border-radius: 50%; background: #3155f5; box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 16%, transparent), 0 0 20px color-mix(in srgb, var(--blue) 55%, transparent); animation: antennaPulse 2.4s ease-in-out infinite; animation-play-state: paused; }
+@keyframes antennaPulse { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--blue) 0%, transparent), 0 0 28px color-mix(in srgb, var(--blue) 80%, transparent); } }
+.robot-headphones { position: absolute; z-index: 7; top: 34px; left: 50%; width: 350px; height: 246px; translate: -50% 0; transform-style: preserve-3d; pointer-events: none; }
+.headphone-band { position: absolute; inset: 0 13px 25px; border: 14px solid #272a31; border-bottom: 0; border-radius: 50% 50% 22% 22%; background: transparent; box-shadow: inset 0 5px 0 #555b65, 0 -2px 10px color-mix(in srgb, #000 22%, transparent); transform: translateZ(-3px); }
+.headphone-band::after { content: ""; position: absolute; inset: 5px 7px auto; height: 6px; border-radius: 99px; background: linear-gradient(90deg, transparent, #7b8390, transparent); }
+.headphone-pod { position: absolute; top: 92px; width: 51px; height: 116px; border: 1px solid #15171c; border-radius: 45% 45% 42% 42%; background: linear-gradient(90deg, #16181d, #4b515b 52%, #16181d); box-shadow: inset 0 0 0 5px #242830, 0 8px 22px color-mix(in srgb, #000 28%, transparent); transform: translateZ(18px); }
+.headphone-pod::after { content: ""; position: absolute; inset: 16px 8px; border: 2px solid #5ebeff; border-radius: 45%; box-shadow: 0 0 12px #3155f5, inset 0 0 8px #3155f5; opacity: .86; }
+.headphone-pod-left { left: 0; }
+.headphone-pod-right { right: 0; }
+.robot-head { position: absolute; z-index: 5; top: 48px; left: 50%; width: 284px; height: 222px; translate: -50% 0; transform-style: preserve-3d; }
+.robot-face, .robot-head-back, .robot-head-side { position: absolute; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.robot-face { inset: 5px 0 0; display: flex; align-items: center; justify-content: center; gap: 25px; border: 1px solid #b8bec5; border-radius: 47% 47% 42% 42%; background: radial-gradient(circle at 50% 22%, #fff, #e7eaec 58%, #abb1b7 100%); box-shadow: inset 0 0 0 8px #f6f7f7, inset 0 -20px 32px #b7bdc2, 0 22px 48px color-mix(in srgb, #000 25%, transparent); transform: translateZ(51px); }
+.robot-face::before { content: ""; position: absolute; top: 22px; width: 38px; height: 6px; border-radius: 99px; background: linear-gradient(90deg, #c5cbd0, #fff, #aeb4ba); box-shadow: 0 1px 2px #8e949a; }
+.robot-eye { position: relative; width: 82px; height: 82px; display: grid; place-items: center; border: 4px solid #5ec8ff; border-radius: 50%; background: radial-gradient(circle at 42% 38%, #243449, #06090d 62%); box-shadow: 0 0 0 5px #252a31, 0 0 0 7px #89919b, 0 0 20px #3155f5, inset 0 0 18px #3155f5; }
+.robot-eye::after { content: ""; position: absolute; inset: 8px; border: 1px solid color-mix(in srgb, #fff 45%, transparent); border-radius: 50%; animation: eyeRing 4s linear infinite; }
+.robot-eye i { width: 21px; height: 21px; position: absolute; top: 50%; left: 50%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff 0 10%, #66d5ff 13%, #3155f5 36%, #05070a 70%); transform: translate(calc(-50% + var(--eye-x)), calc(-50% + var(--eye-y))); box-shadow: 0 0 16px #3155f5; transition: transform .12s ease-out; }
+@keyframes eyeRing { to { rotate: 360deg; } }
+.robot-mouth { position: absolute; bottom: 34px; left: 50%; width: 28px; height: 5px; translate: -50% 0; border-radius: 99px; background: #6e7780; box-shadow: 0 0 8px color-mix(in srgb, var(--blue) 35%, transparent); }
+.robot-head-back { inset: 5px 0 0; display: flex; align-items: center; justify-content: center; gap: 11px; border: 1px solid #959ca4; border-radius: 47% 47% 42% 42%; background: radial-gradient(circle at 50% 25%, #e9ecee, #b9bec3 70%, #828991); box-shadow: inset 0 0 0 8px #dfe2e4, inset 0 -20px 30px #8e959c; transform: rotateY(180deg) translateZ(51px); }
+.robot-head-back i { width: 9px; height: 72px; border-radius: 99px; background: linear-gradient(#737b84, #d9dde0 45%, #747b83); box-shadow: inset 0 0 0 2px #9da4ab; }
+.robot-head-back span { position: absolute; bottom: 29px; color: #5c646d; font: 650 .58rem/1 var(--mono); letter-spacing: .15em; }
+.robot-head-side { top: 30px; left: 50%; width: 102px; height: 161px; margin-left: -51px; border: 1px solid #969da4; border-radius: 33px; background: linear-gradient(90deg, #a7adb3, #e7eaec 50%, #a3a9af); }
+.robot-head-side-left { transform: rotateY(-90deg) translateZ(142px); }
+.robot-head-side-right { transform: rotateY(90deg) translateZ(142px); }
+.robot-neck { position: absolute; z-index: 2; top: 258px; left: 50%; width: 74px; height: 55px; translate: -50% 0; border: 1px solid #858c94; border-radius: 16px; background: repeating-linear-gradient(0deg, #20242a 0 7px, #59616a 7px 11px); transform: translateZ(0); }
+.robot-torso { position: absolute; z-index: 3; top: 299px; left: 50%; width: 230px; height: 193px; translate: -50% 0; transform-style: preserve-3d; }
+.robot-chest, .robot-torso-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 36% 36% 30% 30%; }
+.robot-chest { border: 1px solid #9fa6ad; background: radial-gradient(circle at 50% 12%, #f8f9f9, #d3d7da 65%, #969da4); box-shadow: inset 0 0 0 7px #eceeef, inset 0 -24px 30px #9ba2a8, 0 22px 36px color-mix(in srgb, #000 18%, transparent); transform: translateZ(34px); }
+.robot-chest::before { content: ""; position: absolute; top: 24px; left: 50%; width: 98px; height: 62px; translate: -50% 0; border: 1px solid #969da4; border-radius: 19px; background: linear-gradient(145deg, #cfd4d8, #fff); box-shadow: inset 0 0 14px #b0b6bc; }
+.robot-chest i { position: absolute; z-index: 2; top: 45px; left: 50%; width: 18px; height: 18px; translate: -50% 0; border: 3px solid #3155f5; border-radius: 50%; background: #0b0e13; box-shadow: 0 0 15px #3155f5; }
+.robot-chest span { position: absolute; bottom: 35px; left: 50%; width: 62px; height: 4px; translate: -50% 0; border-radius: 99px; background: #7f878f; box-shadow: 0 10px 0 #aeb4ba; }
+.robot-torso-back { border: 1px solid #8f969e; background: radial-gradient(circle at 50% 15%, #e4e7e9, #aab0b6 75%); box-shadow: inset 0 0 0 7px #d1d5d8; transform: rotateY(180deg) translateZ(34px); }
+.robot-torso-back i { position: absolute; inset: 27px 33px 50px; border: 1px solid #7e858d; border-radius: 22px; background: repeating-linear-gradient(90deg, #8c939a 0 5px, #bec3c7 5px 10px); }
+.robot-arm { position: absolute; z-index: -1; top: 21px; width: 64px; height: 164px; border: 1px solid #8d949b; border-radius: 34px; background: linear-gradient(90deg, #9299a0, #f0f2f2 48%, #8e959c); box-shadow: inset 0 0 0 5px #cdd1d4; transform: translateZ(8px) rotate(var(--arm-angle)); transform-origin: top center; }
+.robot-arm::after { content: ""; position: absolute; left: 50%; bottom: -14px; width: 58px; height: 58px; translate: -50% 0; border: 1px solid #818990; border-radius: 50%; background: radial-gradient(circle at 42% 30%, #eef0f1, #9ba2a8 75%); }
+.robot-arm i { position: absolute; top: 74px; left: 50%; width: 74%; height: 12px; translate: -50% 0; border-block: 2px solid #747c84; }
+.robot-arm-left { --arm-angle: 8deg; left: -48px; }
+.robot-arm-right { --arm-angle: -8deg; right: -48px; }
+.robot-shadow { position: absolute; z-index: -2; left: 50%; bottom: 24px; width: 255px; height: 28px; translate: -50% 0; border-radius: 50%; background: color-mix(in srgb, #000 23%, transparent); filter: blur(15px); transform: rotateX(74deg) translateZ(-40px); }
+.robot-control { position: absolute; z-index: 10; bottom: 5%; width: 39px; height: 39px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); background: color-mix(in srgb, var(--paper-solid) 74%, transparent); backdrop-filter: blur(12px); cursor: pointer; font: 520 .8rem/1 var(--mono); transition: color .2s, border-color .2s, transform .25s var(--ease); }
+.robot-control:hover { color: var(--blue); border-color: var(--blue); transform: scale(1.08); }
+.robot-control-left { left: 20%; }
+.robot-control-right { right: 20%; }
+.robot-360 { position: absolute; z-index: 9; bottom: 6.6%; left: 50%; translate: -50% 0; color: var(--muted); font: 520 .56rem/1 var(--mono); letter-spacing: .1em; }
+.hero-float { position: absolute; z-index: 8; min-width: 148px; padding: 12px 13px; border: 1px solid color-mix(in srgb, var(--line) 82%, transparent); background: color-mix(in srgb, var(--paper-solid) 67%, transparent); box-shadow: 0 12px 40px color-mix(in srgb, var(--ink) 5%, transparent); backdrop-filter: blur(16px); animation: cardDrift 5.5s ease-in-out infinite; }
+.hero-float span { display: block; margin-bottom: 8px; color: var(--muted); font: 500 .55rem/1 var(--mono); text-transform: uppercase; letter-spacing: .09em; }
+.hero-float strong { color: var(--ink); font: 560 .72rem/1 var(--mono); }
+.hero-float-left { left: 7%; top: 37%; }
+.hero-float-right { right: 6%; top: 53%; animation-delay: -2.7s; }
+@keyframes cardDrift { 50% { transform: translateY(-9px); } }
+.hero-role { position: absolute; z-index: 8; top: 50%; color: var(--muted); font: 520 .56rem/1 var(--mono); text-transform: uppercase; letter-spacing: .13em; writing-mode: vertical-rl; }
+.hero-role::before { content: ""; display: inline-block; width: 1px; height: 44px; margin-bottom: 12px; background: var(--line-strong); }
+.hero-role-left { left: 0; transform: translateY(-50%) rotate(180deg); }
+.hero-role-right { right: 0; transform: translateY(-50%); }
+.motion-ready .hero-line > span { animation: heroRise 1.05s var(--ease) both; }
+.motion-ready .hero-line-two > span { animation-delay: .09s; }
+.motion-ready .hero-line-three > span { animation-delay: .16s; }
+.motion-ready .robot-model { animation: robotEnter 1.05s var(--ease) .08s both, robotHover 5.4s ease-in-out 1.2s infinite; }
+.motion-ready .eyebrow, .motion-ready .availability, .motion-ready .hero-index { animation: heroFade .8s var(--ease) .24s both; }
 @keyframes heroRise { from { opacity: 0; transform: translateY(110%) rotate(.5deg); } }
 @keyframes heroFade { from { opacity: 0; transform: translateY(8px); } }
-.hero-bottom { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(420px, .92fr); gap: 64px; align-items: end; }
-.hero-copy { max-width: 640px; margin: 0; color: var(--muted); font-size: clamp(1.04rem, 1.45vw, 1.22rem); line-height: 1.58; letter-spacing: -.022em; }
+@keyframes robotEnter { from { opacity: 0; translate: -50% 45px; scale: .92; filter: blur(7px); } }
+.hero-bottom { margin-top: -4px; padding-top: 22px; border-top: 1px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(420px, .92fr); gap: 64px; align-items: end; }
+.hero-copy { max-width: 640px; margin: 0; color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.16rem); line-height: 1.58; letter-spacing: -.022em; }
 .hero-copy strong { color: var(--ink); font-weight: 620; }
 .hero-actions { display: flex; justify-content: flex-end; align-items: center; gap: 24px; }
-.primary-button { min-height: 48px; padding: 0 19px; display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; color: #fff; background: #3155f5; font: 520 .72rem/1 var(--mono); transition: transform .25s var(--ease), background .2s; }
+.hero-scroll { width: max-content; margin-top: 24px; display: flex; align-items: center; gap: 10px; color: var(--muted); font: 500 .56rem/1 var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+.hero-scroll span { width: 34px; height: 1px; position: relative; overflow: hidden; background: var(--line-strong); }
+.hero-scroll span::after { content: ""; position: absolute; inset: 0; background: var(--blue); animation: scrollCue 2.2s var(--ease) infinite; }
+@keyframes scrollCue { 0% { transform: translateX(-105%); } 55%, 100% { transform: translateX(105%); } }
+.primary-button { min-height: 48px; padding: 0 19px; display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; color: #fff; background: #3155f5; font: 520 .72rem/1 var(--mono); transition: transform .25s var(--ease), translate .35s var(--ease), background .2s; }
 .primary-button:hover { transform: translateY(-2px); background: #2345e4; }
 .text-link { font: 520 .7rem/1 var(--mono); white-space: nowrap; }
 .primary-button span, .text-link span, .nav-cta span { display: inline-block; transition: transform .3s var(--ease); }
 .primary-button:hover span { transform: translate(2px, 2px); }
 .text-link:hover span { transform: translate(3px, -3px); }
 .nav-cta:hover span { transform: translateY(3px); }
+.motion-ribbon { overflow: hidden; border-block: 1px solid var(--line); background: color-mix(in srgb, var(--blue) 4%, var(--paper)); }
+.motion-ribbon > div { width: max-content; min-height: 48px; display: flex; align-items: center; animation: ribbonMove 28s linear infinite; }
+.motion-ribbon span { padding-inline: 34px; color: var(--muted); font: 520 .61rem/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; }
+.motion-ribbon i { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+@keyframes ribbonMove { to { transform: translateX(-50%); } }
+
+/* True WebGL hero — restores the original editorial balance with a 3D focal point on the right. */
+.hero { min-height: 820px; padding: 142px 0 70px; display: flex; flex-direction: column; position: relative; isolation: isolate; z-index: 40; }
+.hero > *:not(.hero-tech-field):not(.hero-robot-3d) { position: relative; z-index: 4; }
+.hero-tech-field { position: absolute; z-index: 0; inset: 96px -8vw auto auto; width: min(55vw, 720px); height: 430px; opacity: .5; overflow: visible; pointer-events: none; -webkit-mask-image: linear-gradient(105deg, transparent 0%, #000 21%, #000 84%, transparent 100%); mask-image: linear-gradient(105deg, transparent 0%, #000 21%, #000 84%, transparent 100%); }
+.tech-grid { position: absolute; inset: 0; background-image: linear-gradient(color-mix(in srgb, var(--blue) 10%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--blue) 10%, transparent) 1px, transparent 1px); background-size: 36px 36px; transform: perspective(520px) rotateX(58deg) rotateZ(-7deg) scale(1.12); transform-origin: center; opacity: .82; }
+.signal-line-a { width: 78%; top: 31%; left: 8%; transform: rotate(-8deg); }
+.signal-line-b { width: 60%; top: 58%; left: 22%; transform: rotate(11deg); }
+.signal-line-c { width: 46%; top: 76%; left: 4%; transform: rotate(-17deg); }
+.tech-node-a { top: 21%; left: 22%; }
+.tech-node-b { top: 49%; right: 18%; }
+.tech-node-c { bottom: 16%; left: 39%; }
+.tech-coordinate { right: 6%; bottom: 3%; }
+.hero-main { width: min(72%, 850px); margin-top: auto; }
+.hero .eyebrow { position: static; width: auto; margin: 0 0 22px; transform: none; color: var(--blue); font: 520 .67rem/1 var(--mono); letter-spacing: .12em; text-align: left; text-transform: uppercase; }
+.hero h1 { max-width: 850px; margin: 0; font-size: clamp(4rem, 7.65vw, 7rem); line-height: .84; letter-spacing: -.078em; font-weight: 620; text-align: left; }
+.hero .hero-line { display: block; overflow: hidden; position: relative; color: var(--ink); transform: none; }
+.hero .hero-line > span { display: block; color: inherit; }
+.hero .hero-line-muted { color: var(--faint); }
+.motion-ready .hero .hero-line-muted > span { animation-delay: .09s; }
+.hero > .hero-robot-3d { position: absolute; z-index: 3; top: 108px; right: -34px; width: min(40vw, 470px); height: 520px; pointer-events: auto; }
+.hero-robot-3d::before { content: ""; position: absolute; z-index: -1; inset: 12% 0 3%; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--blue) 18%, transparent), color-mix(in srgb, var(--blue) 4%, transparent) 44%, transparent 70%); filter: blur(6px); }
+#robot-canvas { width: 100%; height: 100%; display: block; opacity: 0; cursor: grab; touch-action: pan-y; outline: 0; transition: opacity .65s var(--ease); }
+.robot-3d-ready #robot-canvas { opacity: 1; }
+#robot-canvas:active { cursor: grabbing; }
+.robot-loader { position: absolute; z-index: 2; inset: 0; display: grid; place-content: center; justify-items: center; gap: 13px; color: var(--muted); font: 520 .56rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; transition: opacity .35s; }
+.robot-loader i { width: 31px; height: 31px; border: 1px solid var(--line-strong); border-top-color: var(--blue); border-radius: 50%; animation: robotLoad .8s linear infinite; }
+.robot-3d-ready .robot-loader, .robot-3d-unavailable .robot-loader { opacity: 0; pointer-events: none; }
+@keyframes robotLoad { to { transform: rotate(360deg); } }
+.robot-fallback { display: none; position: absolute; inset: 18% 14% 12%; place-items: center; }
+.robot-3d-unavailable .robot-fallback { display: grid; }
+.fallback-head { width: 148px; height: 116px; border: 1px solid var(--line-strong); border-radius: 48% 48% 42% 42%; background: linear-gradient(145deg, color-mix(in srgb, #fff 72%, var(--paper)), var(--wash)); box-shadow: inset -18px -12px 34px color-mix(in srgb, var(--ink) 10%, transparent), 0 24px 58px color-mix(in srgb, var(--blue) 16%, transparent); position: relative; }
+.fallback-head::before { content: ""; position: absolute; inset: 29px 18px 22px; border-radius: 38%; background: #080b12; }
+.fallback-head i { position: absolute; z-index: 2; top: 49px; width: 22px; height: 22px; border: 4px solid #75d8ff; border-radius: 50%; box-shadow: 0 0 14px #3155f5; }
+.fallback-head i:first-child { left: 41px; }
+.fallback-head i:nth-child(2) { right: 41px; }
+.fallback-head b { position: absolute; z-index: 2; left: calc(50% - 12px); bottom: 31px; width: 24px; height: 1px; background: #75d8ff; }
+.fallback-band { position: absolute; width: 190px; height: 160px; border: 13px solid #252a34; border-bottom-color: transparent; border-radius: 50%; }
+.robot-guide { position: absolute; z-index: 4; top: 10px; right: 0; width: 220px; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--line) 82%, transparent); background: color-mix(in srgb, var(--paper-solid) 82%, transparent); backdrop-filter: blur(14px); pointer-events: none; transition: transform .45s var(--ease), opacity .35s, background .35s; }
+.robot-guide span { display: block; margin-bottom: 8px; color: var(--blue); font: 550 .55rem/1 var(--mono); letter-spacing: .1em; }
+.robot-guide p { margin: 0; color: var(--muted); font-size: .7rem; line-height: 1.45; }
+html[data-robot-docked="true"] .hero > .hero-robot-3d { position: fixed; z-index: 60; top: auto; right: 18px; bottom: 18px; width: 176px; height: 206px; border: 0; background: transparent; box-shadow: none; will-change: transform; }
+html[data-robot-docked="true"] .robot-guide { top: -42px; right: 0; width: 176px; padding-block: 10px; }
+html[data-robot-docked="true"] .robot-guide p { display: none; }
+.hero-robot-3d.robot-walking .robot-guide,
+.hero-robot-3d.robot-returning .robot-guide { opacity: 0; transform: translateY(8px); }
+.hero-bottom { z-index: 5; margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--ink); display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(420px, .92fr); gap: 64px; align-items: end; }
+.motion-ribbon { display: none; }
 
 /* Metrics */
 .metric-band { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
@@ -254,6 +397,7 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
 .projects-section { padding-top: 36px; }
 .project-list { border-bottom: 1px solid var(--line); }
 .project-row { display: grid; grid-template-columns: 48px minmax(290px, .9fr) minmax(360px, 1.1fr); gap: clamp(24px, 4vw, 58px); padding: 44px 0; border-bottom: 1px solid var(--line); position: relative; z-index: 1; transition: transform .38s var(--ease), background .35s var(--ease), box-shadow .38s var(--ease), padding .38s var(--ease); }
+.project-row[data-case-row] { cursor: pointer; }
 .project-row::before { content: ""; position: absolute; inset: 0 auto 0 -1px; width: 2px; background: var(--blue); transform: scaleY(0); transform-origin: bottom; transition: transform .4s var(--ease); }
 .project-row:last-child { border-bottom: 0; }
 .project-index { color: var(--blue); font: 520 .65rem/1 var(--mono); }
@@ -264,6 +408,13 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
 .project-story > strong { color: var(--ink); font-size: clamp(1.4rem, 2.6vw, 2.2rem); line-height: 1; letter-spacing: -.05em; font-weight: 580; }
 .project-story > p { max-width: 620px; margin: 20px 0 0; color: var(--muted); font-size: .93rem; line-height: 1.65; }
 .project-story .project-links { margin-top: auto; padding-top: 25px; }
+.project-evidence { width: 100%; margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--line); }
+.project-evidence span { min-height: 48px; display: flex; align-items: center; padding: 0 10px; border-right: 1px solid var(--line); color: var(--muted); font: 510 .57rem/1.25 var(--mono); }
+.project-evidence span:first-child { padding-left: 0; color: var(--blue); }
+.project-evidence span:last-child { border-right: 0; }
+.case-open { padding: 0 0 5px; border: 0; border-bottom: 1px solid var(--blue); background: transparent; color: var(--blue); cursor: pointer; font: 540 .68rem/1 var(--mono); }
+.case-open span { display: inline-block; margin-left: 5px; transition: transform .25s var(--ease); }
+.case-open:hover span { transform: translate(3px, -3px); }
 .project-motif { width: 82px; height: 54px; margin-bottom: 24px; position: relative; transition: transform .45s var(--ease); }
 .project-motif i { position: absolute; display: block; }
 .motif-pipeline::before, .motif-retrieval::before { content: ""; position: absolute; inset: 12px 3px auto; height: 1px; background: var(--line-strong); box-shadow: 0 14px 0 var(--line-strong), 0 28px 0 var(--blue); }
@@ -345,6 +496,72 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
 .contact-links b { font-weight: 520; }
 .footer { min-height: 90px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font: 500 .62rem/1 var(--mono); }
 .footer a:hover { color: var(--blue); }
+
+/* Full-screen evidence views */
+.case-modal-shell { position: fixed; z-index: 120; inset: 0; display: grid; place-items: stretch; padding: 14px; background: color-mix(in srgb, #05060a 76%, transparent); backdrop-filter: blur(12px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .38s var(--ease), visibility .38s; }
+.case-modal-shell[data-open="true"] { opacity: 1; visibility: visible; pointer-events: auto; }
+.case-modal { width: min(1280px, 100%); height: 100%; margin: auto; overflow: auto; overscroll-behavior: contain; background: var(--paper-solid); border: 1px solid var(--line); box-shadow: 0 30px 100px rgba(0,0,0,.3); transform: translateY(24px) scale(.985); transition: transform .48s var(--ease); }
+.case-modal-shell[data-open="true"] .case-modal { transform: translateY(0) scale(1); }
+.case-modal-shell[data-open="true"][data-transition="expand"] .case-modal { animation: caseExpand .72s var(--ease) both; }
+@keyframes caseExpand {
+  0% { opacity: .12; transform: translate(var(--case-origin-x, 0px), var(--case-origin-y, 20px)) scale(var(--case-origin-scale-x, .2), var(--case-origin-scale-y, .18)); clip-path: inset(34% 4% 34% 4% round 3px); }
+  58% { opacity: 1; clip-path: inset(0 0 0 0 round 1px); }
+  100% { opacity: 1; transform: translate(0,0) scale(1,1); clip-path: inset(0 0 0 0 round 0); }
+}
+.case-modal-header { position: sticky; z-index: 5; top: 0; min-height: 64px; padding: 0 clamp(18px, 3.2vw, 44px); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--paper-solid) 88%, transparent); backdrop-filter: blur(16px); }
+.case-modal-header > p { margin: 0; color: var(--muted); font: 520 .58rem/1 var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+.case-modal-close { justify-self: end; display: inline-flex; align-items: center; gap: 12px; min-height: 38px; padding: 0 12px; border: 1px solid var(--line-strong); background: transparent; cursor: pointer; font: 520 .62rem/1 var(--mono); }
+.case-modal-close:hover { border-color: var(--blue); color: var(--blue); }
+.case-modal-close span { font-size: 1rem; font-weight: 350; }
+.case-modal-panel { display: none; width: min(1120px, calc(100% - 52px)); margin: auto; padding: clamp(48px, 7vw, 96px) 0 72px; }
+.case-modal-panel.is-active { display: block; animation: caseReveal .55s var(--ease) both; }
+@keyframes caseReveal { from { opacity: 0; transform: translateY(14px); } }
+.case-modal-hero { display: grid; grid-template-columns: .72fr 1.28fr; column-gap: clamp(36px, 6vw, 88px); align-items: end; }
+.case-modal-hero > p { grid-column: 1 / -1; margin: 0 0 28px; color: var(--blue); font: 520 .63rem/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+.case-modal-hero > p span { margin-right: 18px; }
+.case-modal-hero h2 { margin: 0; font-size: clamp(4.2rem, 10vw, 9.2rem); line-height: .78; letter-spacing: -.08em; font-weight: 620; }
+.case-modal-hero > strong { max-width: 620px; color: var(--muted); font-size: clamp(1.25rem, 2.25vw, 2rem); line-height: 1.18; letter-spacing: -.035em; font-weight: 500; }
+.case-metrics { margin-top: clamp(52px, 8vw, 90px); display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--line); }
+.case-metrics p { min-height: 122px; margin: 0; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--line); }
+.case-metrics p:first-child { padding-left: 0; }
+.case-metrics p:last-child { border-right: 0; }
+.case-metrics span { color: var(--muted); font: 500 .57rem/1 var(--mono); }
+.case-metrics strong { color: var(--blue); font-size: clamp(1.35rem, 2.6vw, 2.45rem); letter-spacing: -.05em; font-weight: 600; }
+.case-flow { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); background: var(--panel); }
+.case-flow > div { min-height: 152px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; border-right: 1px solid var(--line); }
+.case-flow > div:last-child { border-right: 0; }
+.case-flow span { color: var(--muted); font: 500 .57rem/1 var(--mono); }
+.case-flow strong { font-size: clamp(1.25rem, 2vw, 1.9rem); letter-spacing: -.04em; font-weight: 560; }
+.case-flow i { position: absolute; z-index: 2; right: -12px; top: calc(50% - 12px); width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid var(--blue); border-radius: 50%; background: var(--paper-solid); color: var(--blue); font: normal .62rem/1 var(--mono); }
+.case-architecture-demo { margin-top: 56px; border: 1px solid var(--line); background: var(--panel); overflow: hidden; }
+.case-architecture-track { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
+.case-architecture-track button { min-height: 104px; padding: 17px 18px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; position: relative; border: 0; border-right: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; text-align: left; transition: color .25s, background .3s var(--ease); }
+.case-architecture-track button:last-child { border-right: 0; }
+.case-architecture-track button:hover { color: var(--ink); background: color-mix(in srgb, var(--blue) 5%, transparent); }
+.case-architecture-track button span { font: 500 .56rem/1 var(--mono); }
+.case-architecture-track button strong { font-size: 1rem; font-weight: 540; }
+.case-architecture-track button i { position: absolute; inset: auto 0 -1px; height: 2px; background: var(--blue); transform: scaleX(0); transform-origin: left; transition: transform .38s var(--ease); }
+.case-architecture-track button.is-active { color: var(--blue); background: color-mix(in srgb, var(--blue) 6%, transparent); }
+.case-architecture-track button.is-active i { transform: scaleX(1); }
+.case-architecture-reveal { min-height: 250px; padding: clamp(24px, 4vw, 48px); display: grid; grid-template-columns: .72fr 1.28fr; grid-template-rows: auto 1fr auto; gap: 18px clamp(34px, 7vw, 92px); position: relative; animation: architectureReveal .48s var(--ease) both; }
+@keyframes architectureReveal { from { opacity: .2; transform: translateY(10px); } }
+.architecture-stage-code { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font: 500 .56rem/1 var(--mono); text-transform: uppercase; letter-spacing: .09em; }
+.architecture-stage-code b { color: var(--blue); font-weight: 520; }
+.case-architecture-reveal h3 { align-self: center; margin: 10px 0 0; font-size: clamp(2.7rem, 5vw, 5rem); line-height: .85; letter-spacing: -.07em; font-weight: 600; }
+.case-architecture-reveal > p { align-self: center; max-width: 640px; margin: 10px 0 0; color: var(--muted); font-size: clamp(1rem, 1.65vw, 1.35rem); line-height: 1.5; letter-spacing: -.015em; }
+.architecture-stage-signal { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-top: 16px; }
+.architecture-stage-signal i { height: 2px; background: var(--line); position: relative; overflow: hidden; }
+.architecture-stage-signal i::after { content: ""; position: absolute; inset: 0; background: var(--blue); transform: translateX(-101%); animation: architectureSignal 1.6s var(--ease) infinite; }
+.architecture-stage-signal i:nth-child(2)::after { animation-delay: .11s; }
+.architecture-stage-signal i:nth-child(3)::after { animation-delay: .22s; }
+.architecture-stage-signal i:nth-child(4)::after { animation-delay: .33s; }
+@keyframes architectureSignal { 0% { transform: translateX(-101%); } 55%, 100% { transform: translateX(101%); } }
+.case-narrative { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(26px, 4vw, 54px); }
+.case-narrative article { border-top: 1px solid var(--line); padding-top: 17px; }
+.case-narrative span { color: var(--blue); font: 520 .59rem/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+.case-narrative p { margin: 18px 0 0; color: var(--muted); font-size: .94rem; line-height: 1.65; }
+.case-modal-footer { margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+.case-modal-footer .tag-list, .case-modal-footer .project-links { margin-top: 0; }
 
 /* Viewport choreography stays opt-in so content remains visible without JS. */
 .motion-ready .reveal-ready { opacity: 0; translate: 0 18px; transition: opacity .78s var(--ease) var(--reveal-delay, 0ms), translate .78s var(--ease) var(--reveal-delay, 0ms); }
@@ -435,7 +652,10 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
   .mobile-menu a { min-height: 0; overflow: hidden; display: flex; align-items: center; gap: 18px; border-top: 1px solid var(--line); color: var(--ink); font-size: 1.05rem; }
   .mobile-menu[data-open="true"] a { min-height: 52px; }
   .mobile-menu a span { color: var(--blue); font: 500 .59rem/1 var(--mono); }
-  .hero { min-height: 750px; }
+  .hero { min-height: 820px; }
+  .hero-main { width: min(82%, 820px); }
+  .hero h1 { font-size: clamp(4rem, 9.2vw, 6.8rem); }
+  .hero > .hero-robot-3d { right: -7vw; width: min(48vw, 455px); height: 520px; }
   .hero-bottom { grid-template-columns: 1fr; gap: 34px; }
   .hero-actions { justify-content: flex-start; }
   .flagship-grid { grid-template-columns: 1fr; }
@@ -450,17 +670,28 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
   .stack-grid article > span { margin-top: 0; max-width: 60ch; }
   .about-grid { grid-template-columns: 1fr; }
   .about-copy p { max-width: 850px; }
+  html[data-robot-docked="true"] .robot-guide { display: none; }
+  .case-modal-hero { grid-template-columns: 1fr; }
+  .case-modal-hero > strong { margin-top: 32px; }
+  .case-narrative { grid-template-columns: 1fr; }
+  .case-modal-footer { align-items: flex-start; flex-direction: column; }
+  .case-architecture-reveal { grid-template-columns: 1fr; }
+  .case-architecture-reveal > * { grid-column: 1; }
 }
 
 @media (max-width: 760px) {
   :root { --shell: min(100% - 32px, 1180px); }
   .nav-cta { display: none; }
   .hero { min-height: auto; padding: 112px 0 58px; }
-  .hero-tech-field { top: 118px; right: -35vw; width: 115vw; height: 350px; opacity: .32; }
-  .hero-main { margin-top: 120px; }
-  .eyebrow { line-height: 1.55; }
-  h1 { font-size: clamp(3.3rem, 14.5vw, 6rem); line-height: .87; }
-  .hero-bottom { margin-top: 42px; border-top-color: var(--line); }
+  .hero-tech-field { top: 118px; right: -35vw; width: 115vw; height: 350px; opacity: .28; }
+  .hero-main { width: 100%; margin-top: 92px; }
+  .hero .eyebrow { line-height: 1.55; }
+  .hero h1 { max-width: none; font-size: clamp(3.3rem, 14.5vw, 6rem); line-height: .87; }
+  .hero > .hero-robot-3d { position: relative; inset: auto; width: 100%; height: 410px; margin: -10px 0 -26px; }
+  html[data-robot-docked="true"] .hero > .hero-robot-3d { position: relative; inset: auto; width: 100%; height: 410px; margin: -10px 0 -26px; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
+  html[data-robot-docked="true"] .robot-guide { display: block; top: 10px; right: 0; width: 220px; padding-block: 12px; }
+  html[data-robot-docked="true"] .robot-guide p { display: block; }
+  .hero-bottom { margin-top: 0; border-top-color: var(--line); }
   .hero-actions { flex-wrap: wrap; }
   .metric-band { grid-template-columns: 1fr 1fr; }
   .metric:nth-child(2) { border-right: 0; }
@@ -478,21 +709,45 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
   .project-row, .experience-row { grid-template-columns: 30px 1fr; gap: 18px; }
   .project-motif { margin-top: 20px; }
   .project-story, .experience-detail { grid-column: 1 / -1; padding-left: 48px; }
+  .project-evidence { grid-template-columns: 1fr; }
+  .project-evidence span, .project-evidence span:first-child { min-height: 40px; padding: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  .project-evidence span:last-child { border-bottom: 0; }
   .earlier-work { grid-template-columns: 1fr; gap: 18px; }
   .experience-meta { flex-direction: column; gap: 8px; }
   .contact-links { grid-template-columns: 1fr; }
   .contact-links a, .contact-links a:first-child, .contact-links a:last-child { padding: 0; border-right: 0; border-bottom: 1px solid #27282d; }
   .contact-links a:last-child { border-bottom: 0; }
   .footer span:nth-child(2) { display: none; }
+  .case-modal-shell { padding: 0; }
+  .case-modal { border: 0; }
+  .case-modal-header { grid-template-columns: 1fr auto; padding-inline: 16px; }
+  .case-modal-header > p { display: none; }
+  .case-modal-panel { width: calc(100% - 32px); padding-top: 52px; }
+  .case-modal-hero h2 { font-size: clamp(3.4rem, 19vw, 5.8rem); }
+  .case-metrics { grid-template-columns: 1fr; }
+  .case-metrics p, .case-metrics p:first-child { min-height: 84px; padding: 15px 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  .case-metrics p:last-child { border-bottom: 0; }
+  .case-flow { grid-template-columns: 1fr; }
+  .case-flow > div { min-height: 100px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .case-flow > div:last-child { border-bottom: 0; }
+  .case-flow i { right: auto; left: calc(50% - 12px); top: auto; bottom: -12px; transform: rotate(90deg); }
+  .case-architecture-track { grid-template-columns: 1fr 1fr; }
+  .case-architecture-track button { min-height: 86px; border-bottom: 1px solid var(--line); }
+  .case-architecture-track button:nth-child(2) { border-right: 0; }
+  .case-architecture-track button:nth-child(n+3) { border-bottom: 0; }
+  .case-architecture-reveal { min-height: 300px; padding: 24px 18px; }
+  .case-architecture-reveal h3 { font-size: 2.8rem; }
 }
 
 @media (max-width: 520px) {
   .nav { height: 60px; }
   .hero { padding-top: 96px; }
-  .hero-tech-field { top: 110px; right: -52vw; width: 145vw; height: 310px; opacity: .25; }
+  .hero-tech-field { top: 110px; right: -52vw; width: 145vw; height: 310px; opacity: .23; }
   .availability { width: auto; max-width: 100%; line-height: 1.4; }
-  .hero-main { margin-top: 90px; }
-  h1 { font-size: clamp(3.1rem, 15.7vw, 5rem); }
+  .hero-main { margin-top: 76px; }
+  .hero h1 { font-size: clamp(3.1rem, 15.7vw, 5rem); }
+  .hero > .hero-robot-3d { width: calc(100% + 30px); height: 370px; margin: -5px -15px -18px; }
+  .hero-bottom { padding-top: 18px; }
   .primary-button { width: 100%; }
   .hero-actions { gap: 20px; }
   .metric { min-height: 162px; padding: 20px 14px; }
@@ -520,8 +775,12 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
 }
 
+@media (hover: none), (pointer: coarse) {
+  .cursor-label { display: none; }
+}
+
 @media print {
-  .site-header, .top-rule, .hero-actions, .theme-toggle, .menu-toggle, .copy-button, .hero-tech-field { display: none !important; }
+  .site-header, .top-rule, .hero-actions, .theme-toggle, .menu-toggle, .copy-button, .hero-tech-field, .hero-robot-3d { display: none !important; }
   body { background: #fff; color: #111; }
   .hero { min-height: auto; padding-top: 30px; }
   .section { break-inside: avoid; padding-block: 45px; }
@@ -530,10 +789,549 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
 </style>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a><div class="top-rule" id="scroll-progress" aria-hidden="true"></div><header class="site-header"><nav class="shell nav" aria-label="Primary navigation"><a class="wordmark" href="#top" aria-label="Lokesh Reddy Elluri, home">LRE<span>.</span></a><div class="nav-links"><a href="#work">Work</a><a href="#experience">Experience</a><a href="#stack">Stack</a><a href="#about">About</a></div><div class="nav-tools"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme">Dark</button><a class="nav-cta" href="#contact">Let&#x27;s talk <span>↓</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">Menu</button></div></nav><div class="mobile-menu" id="mobile-menu" data-open="false"><a href="#work"><span>01</span>Work</a><a href="#experience"><span>02</span>Experience</a><a href="#stack"><span>03</span>Stack</a><a href="#about"><span>04</span>About</a><a href="#contact"><span>05</span>Contact</a></div></header><main id="main"><section class="hero shell" id="top"><div class="hero-tech-field" aria-hidden="true"><div class="tech-grid"></div><span class="signal-line signal-line-a"><i></i></span><span class="signal-line signal-line-b"><i></i></span><span class="signal-line signal-line-c"><i></i></span><i class="tech-node tech-node-a"></i><i class="tech-node tech-node-b"></i><i class="tech-node tech-node-c"></i><span class="tech-coordinate">sys://production · live</span></div><div class="availability"><i aria-hidden="true"></i> Available for backend + ML engineering roles</div><div class="hero-main"><p class="eyebrow">Backend systems · Applied ML · Agent infrastructure</p><h1><span class="hero-line"><span>I build models that</span></span><span class="hero-line hero-line-muted"><span>survive production.</span></span></h1></div><div class="hero-bottom"><p class="hero-copy">I turn experimental ML into fast, observable systems. Most recently, I built <strong>Sableau</strong>—browser automation that explores once with an LLM, then replays with zero model calls.</p><div class="hero-actions"><a class="primary-button" href="#work">Explore my work <span>↓</span></a><a class="text-link" href="https://github.com/Lokesh1566" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div></div></section><section class="metric-band shell" aria-label="Selected impact metrics"><article class="metric"><p class="metric-source">Sableau</p><p class="metric-value" data-count="0" data-display="00" data-decimals="0" data-prefix="" data-suffix="">00</p><p class="metric-label">model calls on replay</p></article><article class="metric"><p class="metric-source">Vidal Health</p><p class="metric-value" data-count="200" data-display="&lt;200ms" data-decimals="0" data-prefix="&lt;" data-suffix="ms">&lt;200ms</p><p class="metric-label">p95 inference latency</p></article><article class="metric"><p class="metric-source">Healthcare NLP</p><p class="metric-value" data-count="0.86" data-display="0.86" data-decimals="2" data-prefix="" data-suffix="">0.86</p><p class="metric-label">macro F1 in production</p></article><article class="metric"><p class="metric-source">NYC TLC</p><p class="metric-value" data-count="3.3" data-display="3.3M" data-decimals="1" data-prefix="" data-suffix="M">3.3M</p><p class="metric-label">rows through one pipeline</p></article></section><section class="section flagship-section shell" id="work"><div class="section-heading"><p><span>01</span> Flagship system</p><p>Applied agents · Deterministic execution</p></div><div class="flagship-title"><div><p class="project-year">Built 2026 · Open source</p><h2>Sableau</h2></div><p>Explore once.<br/>Replay forever.</p></div><div class="architecture live-architecture" aria-label="Sableau system flow"><div class="architecture-stage messy-stage"><span>01 · Discovery</span><div class="wander-line"><i></i><i></i><i></i><i></i></div><strong>LLM in the loop</strong></div><div class="architecture-arrow" aria-hidden="true">→</div><div class="architecture-stage artifact-stage"><span>02 · Compile</span><div class="artifact-box">capability.json</div><strong>Typed artifact</strong></div><div class="architecture-arrow" aria-hidden="true">→</div><div class="architecture-stage replay-stage"><span>03 · Replay</span><div class="replay-track"><i></i><i></i><i></i><i></i><b class="replay-bead"></b></div><strong>llm_calls = 0</strong></div></div><div class="flagship-grid"><div class="case-study"><p class="case-lede">An LLM explores a live banking interface once. Sableau compiles the successful run into a typed, versioned capability that replays with new inputs—and no planner in the loop.</p><div class="case-points"><article><span>Problem</span><p>Legacy workflows are costly for an LLM to rediscover on every run.</p></article><article><span>Decision</span><p>Separate probabilistic discovery from deterministic execution.</p></article><article><span>Safety</span><p>Typed outcomes, explicit confirmation, redaction, and human handoff.</p></article><article><span>Proof</span><p>Seven end-to-end capabilities replay with a tested zero-model-call path.</p></article></div><div class="tag-list"><span>Python</span><span>Playwright</span><span>CDP</span><span>FastAPI</span><span>Pydantic</span><span>pytest</span></div><div class="project-links"><a class="primary-button" href="https://github.com/Lokesh1566/sableau/tree/main-2" target="_blank" rel="noreferrer">View the system <span>↗</span></a><a class="text-link" href="https://github.com/Lokesh1566/sableau/blob/main-2/REPORT.md" target="_blank" rel="noreferrer">Design report <span>↗</span></a><a class="text-link" href="https://github.com/Lokesh1566/sableau/tree/main-2/evidence" target="_blank" rel="noreferrer">Run evidence <span>↗</span></a></div></div><aside class="capability-console" aria-label="Interactive Sableau capability catalog"><div class="console-header"><span>Capability catalog</span><strong>Zero model calls</strong></div><div class="console-body"><button class="active" type="button" aria-pressed="true" data-output="session status" data-risk="low"><i></i><span>meridian_core.sign_on</span><small>low</small></button><button class="" type="button" aria-pressed="false" data-output="member number · name" data-risk="low"><i></i><span>meridian_core.find_member</span><small>low</small></button><button class="" type="button" aria-pressed="false" data-output="share id · balance · status" data-risk="low"><i></i><span>meridian_core.check_balance</span><small>low</small></button><button class="" type="button" aria-pressed="false" data-output="confirmation · posted amount" data-risk="high"><i></i><span>meridian_core.transfer_funds</span><small>high</small></button><button class="" type="button" aria-pressed="false" data-output="new share id · confirmation" data-risk="high"><i></i><span>meridian_core.open_new_share</span><small>high</small></button><button class="" type="button" aria-pressed="false" data-output="confirmation message" data-risk="high"><i></i><span>meridian_core.update_member_information</span><small>high</small></button><button class="" type="button" aria-pressed="false" data-output="confirmation · hold status" data-risk="supervisor"><i></i><span>meridian_core.place_account_hold</span><small>supervisor</small></button></div><div class="console-output" aria-live="polite"><p><span>Output</span><b id="cap-output">session status</b></p><p><span>Risk</span><b id="cap-risk">low</b></p><div class="execution-track"><i></i><i></i><i></i><i></i></div><strong>Replay complete · deterministic path</strong></div><div class="console-stats"><p><strong>4</strong><span>typed outcome classes</span></p><p><strong>80%</strong><span>branch coverage floor</span></p></div></aside></div></section><section class="section projects-section shell" aria-labelledby="selected-work-title"><div class="section-heading"><p id="selected-work-title"><span>02—04</span> Selected systems</p><p>Built, measured, documented</p></div><div class="project-list"><article class="project-row"><div class="project-index">02</div><div class="project-name"><div class="project-motif motif-pipeline" aria-hidden="true"><i></i><i></i><i></i><i></i></div><p>Data engineering</p><h3>NYC Taxi Real-Time Data Pipeline</h3><div class="tag-list compact"><span>PySpark</span><span>Airflow</span><span>Snowflake</span><span>Kafka</span><span>Docker</span></div></div><div class="project-story"><strong>3.3M rows</strong><p>A medallion pipeline that moves NYC TLC records through schema enforcement into curated Snowflake tables. Great Expectations quarantines the 2.3% that fail validation instead of silently dropping them.</p><div class="project-links"><a class="text-link" href="https://github.com/Lokesh1566/nyc-taxi-pipeline" target="_blank" rel="noreferrer">View repository <span>↗</span></a></div></div></article><article class="project-row"><div class="project-index">03</div><div class="project-name"><div class="project-motif motif-retrieval" aria-hidden="true"><i></i><i></i><i></i><i></i></div><p>LLM systems · RAG</p><h3>Grounded Document Q&amp;A</h3><div class="tag-list compact"><span>Python</span><span>FAISS</span><span>BGE</span><span>FastAPI</span><span>Evaluation</span></div></div><div class="project-story"><strong>+22% grounded accuracy</strong><p>A citation-first retrieval system with FAISS, BGE embeddings, and cross-encoder reranking. An evaluation harness isolated retrieval failures and guided chunk-size and reranker-depth tuning.</p><div class="project-links"><a class="text-link" href="https://github.com/Lokesh1566/doc-qa-rag" target="_blank" rel="noreferrer">View repository <span>↗</span></a></div></div></article><article class="project-row"><div class="project-index">04</div><div class="project-name"><div class="project-motif motif-vision" aria-hidden="true"><i></i><i></i><i></i><i></i></div><p>Product · Computer vision</p><h3>Wove — AI Wardrobe Stylist</h3><div class="tag-list compact"><span>CLIP</span><span>PyTorch</span><span>FastAPI</span><span>Product design</span><span>Docker</span></div></div><div class="project-story"><strong>50+ categories</strong><p>A wardrobe product using CLIP zero-shot classification, dominant-color extraction, and cosine-similarity pairing to build occasion-aware outfits from clothes a user already owns.</p><div class="project-links"><a class="text-link" href="https://lokesh1566.github.io/wove/" target="_blank" rel="noreferrer">Open live app <span>↗</span></a><a class="text-link" href="https://github.com/Lokesh1566/wove" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div></div></article></div><div class="earlier-work"><p>Earlier work</p><div><a href="https://github.com/Lokesh1566/churn-predictor" target="_blank" rel="noreferrer"><span>05</span>Customer churn · XGBoost + SHAP <b>↗</b></a><a href="https://ieeexplore.ieee.org/document/10205698" target="_blank" rel="noreferrer"><span>06</span>XSS detection · IEEE CONIT 2023 <b>↗</b></a><a href="https://github.com/Lokesh1566/JPEG-Error-Analysis" target="_blank" rel="noreferrer"><span>07</span>JPEG forensics · 8× vectorized speedup <b>↗</b></a></div></div></section><section class="section experience-section shell" id="experience"><div class="section-heading"><p><span>05</span> Experience</p><p>Production impact, not task lists</p></div><div class="experience-list"><article class="experience-row"><p class="experience-number">01</p><div class="experience-role"><h3>Data Scientist Intern</h3><p>Vidal Health</p></div><div class="experience-detail"><div class="experience-meta"><span>Feb — Apr 2024</span><span>Bengaluru, India</span></div><p>Owned an NLP intent-classification pipeline from TF-IDF baseline to production DistilBERT, serving 5,000+ monthly queries below 200ms p95.</p><div class="proof-list"><span>Macro F1 0.71 → 0.86</span><span>−40% labeling cost</span><span>15% L1 ticket deflection</span></div></div></article><article class="experience-row"><p class="experience-number">02</p><div class="experience-role"><h3>Software Engineering Intern</h3><p>TeamLease</p></div><div class="experience-detail"><div class="experience-meta"><span>May — Jun 2023</span><span>Bengaluru, India</span></div><p>Built Django and PostgreSQL services for an ATS platform serving 500+ concurrent applicants, then traced a slow query to a non-sargable filter.</p><div class="proof-list"><span>−35% p99 read latency</span><span>80% test coverage</span><span>500+ concurrent users</span></div></div></article><article class="experience-row"><p class="experience-number">03</p><div class="experience-role"><h3>Research Team Member</h3><p>VIT Security &amp; ML Lab</p></div><div class="experience-detail"><div class="experience-meta"><span>Jan — Jul 2023</span><span>Vellore, India</span></div><p>Built a real-time XSS detection model using engineered URL and script features, then published the work at IEEE CONIT 2023.</p><div class="proof-list"><span>IEEE Xplore</span><span>82.65% accuracy</span><span>80% recall</span></div></div></article></div></section><section class="section stack-section shell" id="stack"><div class="section-heading"><p><span>06</span> Working stack</p><p>Tools I can defend in an interview</p></div><div class="stack-grid"><article><p>Core strengths</p><h3>Python · FastAPI · PostgreSQL · Playwright · PyTorch · SQL</h3><span>The tools I reach for to ship reliable backend and ML systems.</span></article><article><p>Shipped with</p><h3>Transformers · Pydantic · Docker · pytest · Django · FAISS · MLflow</h3><span>Serving, evaluation, contracts, testing, and production operations.</span></article><article><p>Data systems</p><h3>PySpark · Airflow · Snowflake · Kafka · Great Expectations</h3><span>Batch and streaming pipelines with observable data-quality gates.</span></article></div></section><section class="section about-section shell" id="about"><div class="section-heading"><p><span>07</span> Education + perspective</p><p>Bloomington, Indiana</p></div><div class="about-grid"><div class="about-copy"><p>I care about the boundary between a promising model and a dependable product: latency budgets, evaluation, typed failure modes, observable pipelines, and the judgment to keep a model out of paths that do not need one.</p></div><div class="education-list"><article><span>2024—2026</span><h3>M.S. Data Science</h3><p>Indiana University Bloomington · 3.77 / 4.0</p></article><article><span>2020—2024</span><h3>B.Tech Computer Science</h3><p>Vellore Institute of Technology · 8.14 / 10</p></article><article><span>Leadership</span><h3>Community Development Coordinator</h3><p>Graduate &amp; Professional Student Government · Indiana University</p></article></div></div></section><section class="contact-section" id="contact"><div class="shell contact-inner"><p class="contact-kicker">Have a hard systems problem?</p><h2>Let&#x27;s build something<br/><span>that holds up.</span></h2><p class="contact-copy">Open to full-time backend and ML engineering roles. Available immediately on F-1 OPT with STEM extension eligibility.</p><div class="contact-actions"><a class="contact-email" href="mailto:redfylokesh@gmail.com">redfylokesh@gmail.com<span>↗</span></a><button class="copy-button" id="copy-email" data-email="redfylokesh@gmail.com" type="button">Copy email</button></div><div class="contact-links"><a href="https://www.linkedin.com/in/lokesh-reddy-elluri-a77a7b201/" target="_blank" rel="noreferrer"><span>LinkedIn</span><b>Connect ↗</b></a><a href="https://github.com/Lokesh1566" target="_blank" rel="noreferrer"><span>GitHub</span><b>View source ↗</b></a><a href="https://ieeexplore.ieee.org/document/10205698" target="_blank" rel="noreferrer"><span>IEEE Xplore</span><b>Read paper ↗</b></a></div></div></section></main><footer class="shell footer"><span>© 2026 Lokesh Reddy Elluri</span><span>Backend systems · Applied ML · Agents</span><a href="#top">Back to top ↑</a></footer>
+<a class="skip-link" href="#main">Skip to content</a><div class="top-rule" id="scroll-progress" aria-hidden="true"></div><div class="cursor-label" id="cursor-label" data-visible="false" aria-hidden="true"></div><header class="site-header"><nav class="shell nav" aria-label="Primary navigation"><a class="wordmark" href="#top" aria-label="Lokesh Reddy Elluri, home">LRE<span>.</span></a><div class="nav-links"><a href="#work">Work</a><a href="#experience">Experience</a><a href="#stack">Stack</a><a href="#about">About</a></div><div class="nav-tools"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme">Dark</button><a class="nav-cta" href="#contact">Let&#x27;s talk <span>↓</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">Menu</button></div></nav><div class="mobile-menu" id="mobile-menu" data-open="false"><a href="#work"><span>01</span>Work</a><a href="#experience"><span>02</span>Experience</a><a href="#stack"><span>03</span>Stack</a><a href="#about"><span>04</span>About</a><a href="#contact"><span>05</span>Contact</a></div></header><main id="main"><section class="hero shell" id="top"><div class="hero-tech-field" aria-hidden="true"><div class="tech-grid"></div><span class="signal-line signal-line-a"><i></i></span><span class="signal-line signal-line-b"><i></i></span><span class="signal-line signal-line-c"><i></i></span><i class="tech-node tech-node-a"></i><i class="tech-node tech-node-b"></i><i class="tech-node tech-node-c"></i><span class="tech-coordinate">sys://production · live</span></div><div class="availability"><i aria-hidden="true"></i> Available for backend + ML engineering roles</div><div class="hero-main"><p class="eyebrow">Backend systems · Applied ML · Agent infrastructure</p><h1><span class="hero-line"><span>I build models that</span></span><span class="hero-line hero-line-muted"><span>survive production.</span></span></h1></div><div class="hero-robot-3d" id="hero-robot-3d"><div class="robot-loader" id="robot-loader" aria-live="polite"><i></i><span>Initializing 3D guide</span></div><div class="robot-fallback" aria-hidden="true"><div class="fallback-band"></div><div class="fallback-head"><i></i><i></i><b></b></div></div><canvas id="robot-canvas" aria-label="Interactive three-dimensional robot wearing headphones. Drag to rotate." role="img" tabindex="0"></canvas><div class="robot-guide" aria-live="polite"><span id="robot-guide-label">/ HELLO</span><p id="robot-guide-copy">Drag to rotate. I’ll guide you through the systems.</p></div></div><div class="hero-bottom"><p class="hero-copy">I turn experimental ML into fast, observable systems. Most recently, I built <strong>Sableau</strong>—browser automation that explores once with an LLM, then replays with zero model calls.</p><div class="hero-actions"><a class="primary-button" href="#work">Explore my work <span>↓</span></a><a class="text-link" href="https://github.com/Lokesh1566" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div></div></section><section class="metric-band shell" aria-label="Selected impact metrics"><article class="metric"><p class="metric-source">Sableau</p><p class="metric-value" data-count="0" data-display="00" data-decimals="0" data-prefix="" data-suffix="">00</p><p class="metric-label">model calls on replay</p></article><article class="metric"><p class="metric-source">Vidal Health</p><p class="metric-value" data-count="200" data-display="&lt;200ms" data-decimals="0" data-prefix="&lt;" data-suffix="ms">&lt;200ms</p><p class="metric-label">p95 inference latency</p></article><article class="metric"><p class="metric-source">Healthcare NLP</p><p class="metric-value" data-count="0.86" data-display="0.86" data-decimals="2" data-prefix="" data-suffix="">0.86</p><p class="metric-label">macro F1 in production</p></article><article class="metric"><p class="metric-source">NYC TLC</p><p class="metric-value" data-count="3.3" data-display="3.3M" data-decimals="1" data-prefix="" data-suffix="M">3.3M</p><p class="metric-label">rows through one pipeline</p></article></section><section class="section flagship-section shell" id="work"><div class="section-heading"><p><span>01</span> Flagship system</p><p>Applied agents · Deterministic execution</p></div><div class="flagship-title"><div><p class="project-year">Built 2026 · Open source</p><h2>Sableau</h2></div><p>Explore once.<br/>Replay forever.</p></div><div class="architecture live-architecture" aria-label="Sableau system flow"><div class="architecture-stage messy-stage"><span>01 · Discovery</span><div class="wander-line"><i></i><i></i><i></i><i></i></div><strong>LLM in the loop</strong></div><div class="architecture-arrow" aria-hidden="true">→</div><div class="architecture-stage artifact-stage"><span>02 · Compile</span><div class="artifact-box">capability.json</div><strong>Typed artifact</strong></div><div class="architecture-arrow" aria-hidden="true">→</div><div class="architecture-stage replay-stage"><span>03 · Replay</span><div class="replay-track"><i></i><i></i><i></i><i></i><b class="replay-bead"></b></div><strong>llm_calls = 0</strong></div></div><div class="flagship-grid"><div class="case-study"><p class="case-lede">An LLM explores a live banking interface once. Sableau compiles the successful run into a typed, versioned capability that replays with new inputs—and no planner in the loop.</p><div class="case-points"><article><span>Problem</span><p>Legacy workflows are costly for an LLM to rediscover on every run.</p></article><article><span>Decision</span><p>Separate probabilistic discovery from deterministic execution.</p></article><article><span>Safety</span><p>Typed outcomes, explicit confirmation, redaction, and human handoff.</p></article><article><span>Proof</span><p>Seven end-to-end capabilities replay with a tested zero-model-call path.</p></article></div><div class="tag-list"><span>Python</span><span>Playwright</span><span>CDP</span><span>FastAPI</span><span>Pydantic</span><span>pytest</span></div><div class="project-links"><button class="case-open" type="button" data-case-open="sableau">Open case study <span>↗</span></button><a class="primary-button" href="https://github.com/Lokesh1566/sableau/tree/main-2" target="_blank" rel="noreferrer">View the system <span>↗</span></a><a class="text-link" href="https://github.com/Lokesh1566/sableau/blob/main-2/REPORT.md" target="_blank" rel="noreferrer">Design report <span>↗</span></a><a class="text-link" href="https://github.com/Lokesh1566/sableau/tree/main-2/evidence" target="_blank" rel="noreferrer">Run evidence <span>↗</span></a></div></div><aside class="capability-console" aria-label="Interactive Sableau capability catalog"><div class="console-header"><span>Capability catalog</span><strong>Zero model calls</strong></div><div class="console-body"><button class="active" type="button" aria-pressed="true" data-output="session status" data-risk="low"><i></i><span>meridian_core.sign_on</span><small>low</small></button><button class="" type="button" aria-pressed="false" data-output="member number · name" data-risk="low"><i></i><span>meridian_core.find_member</span><small>low</small></button><button class="" type="button" aria-pressed="false" data-output="share id · balance · status" data-risk="low"><i></i><span>meridian_core.check_balance</span><small>low</small></button><button class="" type="button" aria-pressed="false" data-output="confirmation · posted amount" data-risk="high"><i></i><span>meridian_core.transfer_funds</span><small>high</small></button><button class="" type="button" aria-pressed="false" data-output="new share id · confirmation" data-risk="high"><i></i><span>meridian_core.open_new_share</span><small>high</small></button><button class="" type="button" aria-pressed="false" data-output="confirmation message" data-risk="high"><i></i><span>meridian_core.update_member_information</span><small>high</small></button><button class="" type="button" aria-pressed="false" data-output="confirmation · hold status" data-risk="supervisor"><i></i><span>meridian_core.place_account_hold</span><small>supervisor</small></button></div><div class="console-output" aria-live="polite"><p><span>Output</span><b id="cap-output">session status</b></p><p><span>Risk</span><b id="cap-risk">low</b></p><div class="execution-track"><i></i><i></i><i></i><i></i></div><strong>Replay complete · deterministic path</strong></div><div class="console-stats"><p><strong>4</strong><span>typed outcome classes</span></p><p><strong>80%</strong><span>branch coverage floor</span></p></div></aside></div></section><section class="section projects-section shell" id="projects" aria-labelledby="selected-work-title"><div class="section-heading"><p id="selected-work-title"><span>02—04</span> Selected systems</p><p>Built, measured, documented</p></div><div class="project-list"><article class="project-row" data-case-row="taxi" tabindex="0" aria-label="Open NYC Taxi Real-Time Data Pipeline case study"><div class="project-index">02</div><div class="project-name"><div class="project-motif motif-pipeline" aria-hidden="true"><i></i><i></i><i></i><i></i></div><p>Data engineering</p><h3>NYC Taxi Real-Time Data Pipeline</h3><div class="tag-list compact"><span>PySpark</span><span>Airflow</span><span>Snowflake</span><span>Kafka</span><span>Docker</span></div></div><div class="project-story"><strong>3.3M rows</strong><p>A medallion pipeline that moves NYC TLC records through schema enforcement into curated Snowflake tables. Great Expectations quarantines the 2.3% that fail validation instead of silently dropping them.</p><div class="project-evidence" aria-label="NYC Taxi Real-Time Data Pipeline evidence"><span>3.3M rows</span><span>2.3% quarantined</span><span>Medallion pipeline</span></div><div class="project-links"><button class="case-open" type="button" data-case-open="taxi">Open case study <span>↗</span></button><a class="text-link" href="https://github.com/Lokesh1566/nyc-taxi-pipeline" target="_blank" rel="noreferrer">View repository <span>↗</span></a></div></div></article><article class="project-row" data-case-row="rag" tabindex="0" aria-label="Open Grounded Document Q&amp;A case study"><div class="project-index">03</div><div class="project-name"><div class="project-motif motif-retrieval" aria-hidden="true"><i></i><i></i><i></i><i></i></div><p>LLM systems · RAG</p><h3>Grounded Document Q&amp;A</h3><div class="tag-list compact"><span>Python</span><span>FAISS</span><span>BGE</span><span>FastAPI</span><span>Evaluation</span></div></div><div class="project-story"><strong>+22% grounded accuracy</strong><p>A citation-first retrieval system with FAISS, BGE embeddings, and cross-encoder reranking. An evaluation harness isolated retrieval failures and guided chunk-size and reranker-depth tuning.</p><div class="project-evidence" aria-label="Grounded Document Q&amp;A evidence"><span>+22% grounded accuracy</span><span>Citation-first answers</span><span>Evaluation harness</span></div><div class="project-links"><button class="case-open" type="button" data-case-open="rag">Open case study <span>↗</span></button><a class="text-link" href="https://github.com/Lokesh1566/doc-qa-rag" target="_blank" rel="noreferrer">View repository <span>↗</span></a></div></div></article><article class="project-row" data-case-row="wove" tabindex="0" aria-label="Open Wove — AI Wardrobe Stylist case study"><div class="project-index">04</div><div class="project-name"><div class="project-motif motif-vision" aria-hidden="true"><i></i><i></i><i></i><i></i></div><p>Product · Computer vision</p><h3>Wove — AI Wardrobe Stylist</h3><div class="tag-list compact"><span>CLIP</span><span>PyTorch</span><span>FastAPI</span><span>Product design</span><span>Docker</span></div></div><div class="project-story"><strong>50+ categories</strong><p>A wardrobe product using CLIP zero-shot classification, dominant-color extraction, and cosine-similarity pairing to build occasion-aware outfits from clothes a user already owns.</p><div class="project-evidence" aria-label="Wove — AI Wardrobe Stylist evidence"><span>50+ categories</span><span>CLIP zero-shot</span><span>Occasion-aware pairing</span></div><div class="project-links"><button class="case-open" type="button" data-case-open="wove">Open case study <span>↗</span></button><a class="text-link" href="https://lokesh1566.github.io/wove/" target="_blank" rel="noreferrer">Open live app <span>↗</span></a><a class="text-link" href="https://github.com/Lokesh1566/wove" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></div></div></article></div><div class="earlier-work"><p>Earlier work</p><div><a href="https://github.com/Lokesh1566/churn-predictor" target="_blank" rel="noreferrer"><span>05</span>Customer churn · XGBoost + SHAP <b>↗</b></a><a href="https://ieeexplore.ieee.org/document/10205698" target="_blank" rel="noreferrer"><span>06</span>XSS detection · IEEE CONIT 2023 <b>↗</b></a><a href="https://github.com/Lokesh1566/JPEG-Error-Analysis" target="_blank" rel="noreferrer"><span>07</span>JPEG forensics · 8× vectorized speedup <b>↗</b></a></div></div></section><section class="section experience-section shell" id="experience"><div class="section-heading"><p><span>05</span> Experience</p><p>Production impact, not task lists</p></div><div class="experience-list"><article class="experience-row"><p class="experience-number">01</p><div class="experience-role"><h3>Data Scientist Intern</h3><p>Vidal Health</p></div><div class="experience-detail"><div class="experience-meta"><span>Feb — Apr 2024</span><span>Bengaluru, India</span></div><p>Owned an NLP intent-classification pipeline from TF-IDF baseline to production DistilBERT, serving 5,000+ monthly queries below 200ms p95.</p><div class="proof-list"><span>Macro F1 0.71 → 0.86</span><span>−40% labeling cost</span><span>15% L1 ticket deflection</span></div></div></article><article class="experience-row"><p class="experience-number">02</p><div class="experience-role"><h3>Software Engineering Intern</h3><p>TeamLease</p></div><div class="experience-detail"><div class="experience-meta"><span>May — Jun 2023</span><span>Bengaluru, India</span></div><p>Built Django and PostgreSQL services for an ATS platform serving 500+ concurrent applicants, then traced a slow query to a non-sargable filter.</p><div class="proof-list"><span>−35% p99 read latency</span><span>80% test coverage</span><span>500+ concurrent users</span></div></div></article><article class="experience-row"><p class="experience-number">03</p><div class="experience-role"><h3>Research Team Member</h3><p>VIT Security &amp; ML Lab</p></div><div class="experience-detail"><div class="experience-meta"><span>Jan — Jul 2023</span><span>Vellore, India</span></div><p>Built a real-time XSS detection model using engineered URL and script features, then published the work at IEEE CONIT 2023.</p><div class="proof-list"><span>IEEE Xplore</span><span>82.65% accuracy</span><span>80% recall</span></div></div></article></div></section><section class="section stack-section shell" id="stack"><div class="section-heading"><p><span>06</span> Working stack</p><p>Tools I can defend in an interview</p></div><div class="stack-grid"><article><p>Core strengths</p><h3>Python · FastAPI · PostgreSQL · Playwright · PyTorch · SQL</h3><span>The tools I reach for to ship reliable backend and ML systems.</span></article><article><p>Shipped with</p><h3>Transformers · Pydantic · Docker · pytest · Django · FAISS · MLflow</h3><span>Serving, evaluation, contracts, testing, and production operations.</span></article><article><p>Data systems</p><h3>PySpark · Airflow · Snowflake · Kafka · Great Expectations</h3><span>Batch and streaming pipelines with observable data-quality gates.</span></article></div></section><section class="section about-section shell" id="about"><div class="section-heading"><p><span>07</span> Education + perspective</p><p>Bloomington, Indiana</p></div><div class="about-grid"><div class="about-copy"><p>I care about the boundary between a promising model and a dependable product: latency budgets, evaluation, typed failure modes, observable pipelines, and the judgment to keep a model out of paths that do not need one.</p></div><div class="education-list"><article><span>2024—2026</span><h3>M.S. Data Science</h3><p>Indiana University Bloomington · 3.77 / 4.0</p></article><article><span>2020—2024</span><h3>B.Tech Computer Science</h3><p>Vellore Institute of Technology · 8.14 / 10</p></article><article><span>Leadership</span><h3>Community Development Coordinator</h3><p>Graduate &amp; Professional Student Government · Indiana University</p></article></div></div></section><section class="contact-section" id="contact"><div class="shell contact-inner"><p class="contact-kicker">Have a hard systems problem?</p><h2>Let&#x27;s build something<br/><span>that holds up.</span></h2><p class="contact-copy">Open to full-time backend and ML engineering roles. Available immediately on F-1 OPT with STEM extension eligibility.</p><div class="contact-actions"><a class="contact-email" href="mailto:redfylokesh@gmail.com">redfylokesh@gmail.com<span>↗</span></a><button class="copy-button" id="copy-email" data-email="redfylokesh@gmail.com" type="button">Copy email</button></div><div class="contact-links"><a href="https://www.linkedin.com/in/lokesh-reddy-elluri-a77a7b201/" target="_blank" rel="noreferrer"><span>LinkedIn</span><b>Connect ↗</b></a><a href="https://github.com/Lokesh1566" target="_blank" rel="noreferrer"><span>GitHub</span><b>View source ↗</b></a><a href="https://ieeexplore.ieee.org/document/10205698" target="_blank" rel="noreferrer"><span>IEEE Xplore</span><b>Read paper ↗</b></a></div></div></section></main><div class="case-modal-shell" data-open="false" aria-hidden="true"><div class="case-modal" role="dialog" aria-modal="true" aria-label="Project case study" tabindex="-1"><header class="case-modal-header"><a class="wordmark" href="#top">LRE<span>.</span></a><p>Selected system / evidence view</p><button class="case-modal-close" type="button" data-case-close="true" aria-label="Close case study">Close <span>×</span></button></header><article class="case-modal-panel " data-case-panel="sableau"><div class="case-modal-hero"><p><span>01</span>Applied agents · Deterministic execution</p><h2>Sableau</h2><strong>Turn a successful browser exploration into a typed capability that can replay without a planner.</strong></div><div class="case-metrics"><p><span>01</span><strong>0 model calls</strong></p><p><span>02</span><strong>7 capabilities</strong></p><p><span>03</span><strong>80% coverage floor</strong></p></div><div class="case-architecture-demo" data-case-architecture="sableau" aria-label="Sableau interactive architecture"><div class="case-architecture-track" role="tablist" aria-label="System stages"><button class="is-active" type="button" role="tab" aria-selected="true" data-architecture-step="0" data-detail="A workflow request arrives with typed user inputs, execution policy, and an explicit risk boundary."><span>01</span><strong>Input</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="1" data-detail="An LLM explores the live interface once while browser events and successful decisions are captured."><span>02</span><strong>Processing</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="2" data-detail="The run is checked for typed outcomes, confirmation gates, redaction, and tested branch coverage."><span>03</span><strong>Evaluation</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="3" data-detail="A versioned capability replays new inputs through the deterministic path with zero planner calls."><span>04</span><strong>Production</strong><i aria-hidden="true"></i></button></div><div class="case-architecture-reveal" role="tabpanel" aria-live="polite"><div class="architecture-stage-code"><span>System stage</span><b>01 / 04</b></div><h3 data-architecture-title="true">Input</h3><p data-architecture-detail="true">A workflow request arrives with typed user inputs, execution policy, and an explicit risk boundary.</p><div class="architecture-stage-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div></div><div class="case-narrative"><article><span>Challenge</span><p>Legacy banking workflows are expensive and fragile when an LLM must rediscover every step on every run.</p></article><article><span>Engineering decision</span><p>Split probabilistic discovery from deterministic execution, then compile the successful path into a versioned contract.</p></article><article><span>Measured outcome</span><p>Seven end-to-end capabilities run through a tested zero-model-call replay path with explicit risk and outcome types.</p></article></div><footer class="case-modal-footer"><div class="tag-list"><span>Python</span><span>Playwright</span><span>CDP</span><span>FastAPI</span><span>Pydantic</span><span>pytest</span></div><div class="project-links"><a class="primary-button" href="https://github.com/Lokesh1566/sableau/tree/main-2" target="_blank" rel="noreferrer">Open project <span>↗</span></a><a class="text-link" href="https://github.com/Lokesh1566/sableau/blob/main-2/REPORT.md" target="_blank" rel="noreferrer">View source / report <span>↗</span></a></div></footer></article><article class="case-modal-panel " data-case-panel="taxi"><div class="case-modal-hero"><p><span>02</span>Data engineering</p><h2>NYC Taxi Real-Time Data Pipeline</h2><strong>A measured path from raw TLC records to trusted Snowflake tables—with failed data kept visible.</strong></div><div class="case-metrics"><p><span>01</span><strong>3.3M rows</strong></p><p><span>02</span><strong>2.3% quarantined</strong></p><p><span>03</span><strong>3 quality layers</strong></p></div><div class="case-architecture-demo" data-case-architecture="taxi" aria-label="NYC Taxi Real-Time Data Pipeline interactive architecture"><div class="case-architecture-track" role="tablist" aria-label="System stages"><button class="is-active" type="button" role="tab" aria-selected="true" data-architecture-step="0" data-detail="NYC TLC trip records enter through a streaming ingestion boundary with the raw payload preserved."><span>01</span><strong>Input</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="1" data-detail="PySpark normalizes schemas and moves records through bronze and silver medallion layers."><span>02</span><strong>Processing</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="2" data-detail="Great Expectations applies data contracts and quarantines the 2.3% that fail validation."><span>03</span><strong>Evaluation</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="3" data-detail="Trusted, observable tables are curated in Snowflake for downstream analytics and recovery."><span>04</span><strong>Production</strong><i aria-hidden="true"></i></button></div><div class="case-architecture-reveal" role="tabpanel" aria-live="polite"><div class="architecture-stage-code"><span>System stage</span><b>01 / 04</b></div><h3 data-architecture-title="true">Input</h3><p data-architecture-detail="true">NYC TLC trip records enter through a streaming ingestion boundary with the raw payload preserved.</p><div class="architecture-stage-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div></div><div class="case-narrative"><article><span>Challenge</span><p>Schema drift and invalid records can silently corrupt downstream analysis when ingestion is optimized only for throughput.</p></article><article><span>Engineering decision</span><p>Use a medallion architecture with Great Expectations at the quality boundary and quarantine failures instead of dropping them.</p></article><article><span>Measured outcome</span><p>The pipeline processed 3.3M rows while surfacing the 2.3% that failed validation for inspection and recovery.</p></article></div><footer class="case-modal-footer"><div class="tag-list"><span>PySpark</span><span>Airflow</span><span>Snowflake</span><span>Kafka</span><span>Docker</span></div><div class="project-links"><a class="primary-button" href="https://github.com/Lokesh1566/nyc-taxi-pipeline" target="_blank" rel="noreferrer">Open project <span>↗</span></a></div></footer></article><article class="case-modal-panel " data-case-panel="rag"><div class="case-modal-hero"><p><span>03</span>LLM systems · RAG</p><h2>Grounded Document Q&amp;A</h2><strong>A citation-first retrieval system tuned with evaluation evidence instead of prompt intuition.</strong></div><div class="case-metrics"><p><span>01</span><strong>+22% accuracy</strong></p><p><span>02</span><strong>BGE + FAISS</strong></p><p><span>03</span><strong>Citation first</strong></p></div><div class="case-architecture-demo" data-case-architecture="rag" aria-label="Grounded Document Q&amp;A interactive architecture"><div class="case-architecture-track" role="tablist" aria-label="System stages"><button class="is-active" type="button" role="tab" aria-selected="true" data-architecture-step="0" data-detail="Documents are parsed into traceable semantic chunks while every source location is retained."><span>01</span><strong>Input</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="1" data-detail="BGE embeddings retrieve candidates from FAISS before a cross-encoder reranks the evidence."><span>02</span><strong>Processing</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="2" data-detail="The harness separates retrieval misses, faithfulness, and context precision instead of hiding them in one score."><span>03</span><strong>Evaluation</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="3" data-detail="FastAPI returns a grounded response together with the exact source chunks used to support it."><span>04</span><strong>Production</strong><i aria-hidden="true"></i></button></div><div class="case-architecture-reveal" role="tabpanel" aria-live="polite"><div class="architecture-stage-code"><span>System stage</span><b>01 / 04</b></div><h3 data-architecture-title="true">Input</h3><p data-architecture-detail="true">Documents are parsed into traceable semantic chunks while every source location is retained.</p><div class="architecture-stage-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div></div><div class="case-narrative"><article><span>Challenge</span><p>Top-k vector retrieval alone returned plausible context, but not consistently the evidence needed for grounded answers.</p></article><article><span>Engineering decision</span><p>Add BGE embeddings, cross-encoder reranking, and an evaluation harness that isolates retrieval from generation failures.</p></article><article><span>Measured outcome</span><p>The measured iteration improved grounded-answer accuracy by 22% and made source citations a first-class output.</p></article></div><footer class="case-modal-footer"><div class="tag-list"><span>Python</span><span>FAISS</span><span>BGE</span><span>FastAPI</span><span>Evaluation</span></div><div class="project-links"><a class="primary-button" href="https://github.com/Lokesh1566/doc-qa-rag" target="_blank" rel="noreferrer">Open project <span>↗</span></a></div></footer></article><article class="case-modal-panel " data-case-panel="wove"><div class="case-modal-hero"><p><span>04</span>Product · Computer vision</p><h2>Wove — AI Wardrobe Stylist</h2><strong>Translate visual embeddings into a useful outfit decision—not another model demo.</strong></div><div class="case-metrics"><p><span>01</span><strong>50+ categories</strong></p><p><span>02</span><strong>CLIP zero-shot</strong></p><p><span>03</span><strong>Live product</strong></p></div><div class="case-architecture-demo" data-case-architecture="wove" aria-label="Wove — AI Wardrobe Stylist interactive architecture"><div class="case-architecture-track" role="tablist" aria-label="System stages"><button class="is-active" type="button" role="tab" aria-selected="true" data-architecture-step="0" data-detail="A user adds wardrobe photographs and selects the occasion they need to dress for."><span>01</span><strong>Input</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="1" data-detail="CLIP classifies garments while color extraction builds a compact visual representation."><span>02</span><strong>Processing</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="2" data-detail="Similarity, color compatibility, and occasion rules score candidate garment combinations."><span>03</span><strong>Evaluation</strong><i aria-hidden="true"></i></button><button class="" type="button" role="tab" aria-selected="false" data-architecture-step="3" data-detail="The product returns explainable outfit pairings made only from clothes the user already owns."><span>04</span><strong>Production</strong><i aria-hidden="true"></i></button></div><div class="case-architecture-reveal" role="tabpanel" aria-live="polite"><div class="architecture-stage-code"><span>System stage</span><b>01 / 04</b></div><h3 data-architecture-title="true">Input</h3><p data-architecture-detail="true">A user adds wardrobe photographs and selects the occasion they need to dress for.</p><div class="architecture-stage-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div></div><div class="case-narrative"><article><span>Challenge</span><p>Personal wardrobes have sparse labels, inconsistent photography, and subjective occasion constraints.</p></article><article><span>Engineering decision</span><p>Combine CLIP zero-shot classification, dominant-color extraction, and similarity-based pairing in a focused product flow.</p></article><article><span>Measured outcome</span><p>Wove recognizes 50+ garment categories and builds occasion-aware combinations from clothes a user already owns.</p></article></div><footer class="case-modal-footer"><div class="tag-list"><span>CLIP</span><span>PyTorch</span><span>FastAPI</span><span>Product design</span><span>Docker</span></div><div class="project-links"><a class="primary-button" href="https://lokesh1566.github.io/wove/" target="_blank" rel="noreferrer">Open project <span>↗</span></a><a class="text-link" href="https://github.com/Lokesh1566/wove" target="_blank" rel="noreferrer">View source / report <span>↗</span></a></div></footer></article></div></div><script type="module">const mount = document.getElementById("hero-robot-3d");
+const canvas = document.getElementById("robot-canvas");
+
+if (mount && canvas && !canvas.dataset.ready) {
+  if (document.documentElement.dataset.portfolioHydrated !== "true") {
+    await new Promise((resolve) => {
+      const timer = window.setTimeout(resolve, 650);
+      window.addEventListener("portfolio:hydrated", () => {
+        window.clearTimeout(timer);
+        resolve();
+      }, { once: true });
+    });
+  }
+  canvas.dataset.ready = "true";
+
+  try {
+    const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js");
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const lowPower = window.matchMedia("(max-width: 760px)").matches || Boolean(connection?.saveData);
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: !lowPower,
+      powerPreference: "high-performance",
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.2 : 1.8));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.14;
+    renderer.shadowMap.enabled = !lowPower;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
+    camera.position.set(0, 0.1, 10.8);
+
+    const robot = new THREE.Group();
+    robot.rotation.set(-0.035, -0.22, 0);
+    robot.scale.setScalar(0.88);
+    scene.add(robot);
+
+    const shell = new THREE.MeshPhysicalMaterial({
+      color: 0xf0f2f4,
+      metalness: 0.34,
+      roughness: 0.2,
+      clearcoat: 1,
+      clearcoatRoughness: 0.15,
+    });
+    const shellDark = new THREE.MeshPhysicalMaterial({
+      color: 0x242933,
+      metalness: 0.72,
+      roughness: 0.23,
+      clearcoat: 0.8,
+    });
+    const joint = new THREE.MeshStandardMaterial({ color: 0x59616d, metalness: 0.86, roughness: 0.26 });
+    const visor = new THREE.MeshPhysicalMaterial({
+      color: 0x050912,
+      metalness: 0.64,
+      roughness: 0.08,
+      clearcoat: 1,
+      clearcoatRoughness: 0.05,
+    });
+    const blue = new THREE.MeshStandardMaterial({
+      color: 0x78ccff,
+      emissive: 0x3155f5,
+      emissiveIntensity: 3.2,
+      metalness: 0.34,
+      roughness: 0.16,
+      toneMapped: false,
+    });
+    const eyeCore = new THREE.MeshStandardMaterial({
+      color: 0xdff8ff,
+      emissive: 0x5ecbff,
+      emissiveIntensity: 4.6,
+      toneMapped: false,
+    });
+
+    function mesh(geometry, material, position, scale, parent = robot) {
+      const item = new THREE.Mesh(geometry, material);
+      item.position.set(...position);
+      if (scale) item.scale.set(...scale);
+      item.castShadow = true;
+      item.receiveShadow = true;
+      parent.add(item);
+      return item;
+    }
+
+    const head = mesh(new THREE.SphereGeometry(1.36, 64, 48), shell, [0, 1.26, 0], [1.08, 0.88, 0.84]);
+    const visorPanel = mesh(new THREE.SphereGeometry(1.16, 64, 40), visor, [0, 1.24, 0.97], [1, 0.56, 0.22]);
+    visorPanel.renderOrder = 2;
+
+    const eyeGroup = new THREE.Group();
+    eyeGroup.position.set(0, 1.28, 1.225);
+    robot.add(eyeGroup);
+    const eyeGeometry = new THREE.SphereGeometry(0.25, 40, 32);
+    const eyeRingGeometry = new THREE.TorusGeometry(0.35, 0.052, 18, 54);
+    const pupilGeometry = new THREE.SphereGeometry(0.105, 28, 22);
+    const eyeVisuals = [];
+    [-0.48, 0.48].forEach((x) => {
+      const ring = mesh(eyeRingGeometry, blue, [x, 0, 0], null, eyeGroup);
+      const eye = mesh(eyeGeometry, visor, [x, 0, 0.025], [1, 1, 0.38], eyeGroup);
+      const pupil = mesh(pupilGeometry, eyeCore, [x, 0, 0.145], null, eyeGroup);
+      eyeVisuals.push(
+        { item: ring, baseScale: ring.scale.clone() },
+        { item: eye, baseScale: eye.scale.clone() },
+        { item: pupil, baseScale: pupil.scale.clone() },
+      );
+    });
+    mesh(new THREE.CapsuleGeometry(0.055, 0.22, 8, 18), joint, [0, 0.82, 1.18], [1, 1, 0.55]).rotation.z = Math.PI / 2;
+
+    const band = mesh(new THREE.TorusGeometry(1.48, 0.11, 20, 76, Math.PI), shellDark, [0, 1.3, -0.05]);
+    band.rotation.z = 0;
+    const innerBand = mesh(new THREE.TorusGeometry(1.48, 0.024, 12, 70, Math.PI), blue, [0, 1.3, 0.045]);
+    innerBand.rotation.z = 0;
+
+    [-1, 1].forEach((side) => {
+      const cup = mesh(new THREE.CylinderGeometry(0.44, 0.44, 0.34, 48), shellDark, [side * 1.47, 1.2, 0], [1, 1.08, 1]);
+      cup.rotation.z = Math.PI / 2;
+      const cupInset = mesh(new THREE.CylinderGeometry(0.33, 0.33, 0.365, 48), visor, [side * 1.49, 1.2, 0]);
+      cupInset.rotation.z = Math.PI / 2;
+      const cupRing = mesh(new THREE.TorusGeometry(0.31, 0.045, 16, 48), blue, [side * 1.68, 1.2, 0]);
+      cupRing.rotation.y = Math.PI / 2;
+    });
+
+    mesh(new THREE.CylinderGeometry(0.035, 0.045, 0.62, 18), joint, [0, 2.67, 0]);
+    mesh(new THREE.SphereGeometry(0.13, 28, 20), blue, [0, 3.01, 0]);
+
+    mesh(new THREE.CylinderGeometry(0.4, 0.46, 0.48, 32), joint, [0, 0.02, 0]);
+    const body = mesh(new THREE.SphereGeometry(1.28, 58, 44), shell, [0, -1.15, 0], [0.96, 1.2, 0.74]);
+    const chest = mesh(new THREE.SphereGeometry(0.76, 46, 32), shellDark, [0, -0.98, 0.91], [1, 0.63, 0.16]);
+    chest.renderOrder = 2;
+    mesh(new THREE.TorusGeometry(0.25, 0.045, 16, 48), blue, [0, -0.97, 1.06]);
+    mesh(new THREE.SphereGeometry(0.11, 24, 18), eyeCore, [0, -0.97, 1.075]);
+
+    const arms = [];
+    const hands = [];
+    const legs = [];
+    const feet = [];
+    [-1, 1].forEach((side) => {
+      mesh(new THREE.SphereGeometry(0.33, 30, 24), joint, [side * 1.2, -0.68, 0], [1, 1, 1]);
+      const arm = mesh(new THREE.CapsuleGeometry(0.28, 0.95, 8, 24), shell, [side * 1.39, -1.38, 0], [1, 1, 1]);
+      arm.rotation.z = side * -0.16;
+      arms.push({ item: arm, side, baseZ: arm.rotation.z });
+      const hand = mesh(new THREE.SphereGeometry(0.32, 30, 24), shell, [side * 1.53, -2.05, 0], [1, 1, 1]);
+      hands.push({ item: hand, side, basePosition: hand.position.clone() });
+
+      mesh(new THREE.SphereGeometry(0.34, 30, 24), joint, [side * 0.57, -2.18, 0], [1, 0.76, 1]);
+      const leg = mesh(new THREE.CapsuleGeometry(0.31, 0.72, 8, 24), shell, [side * 0.58, -2.68, 0], [1, 1, 1]);
+      legs.push({ item: leg, side });
+      const foot = mesh(new THREE.SphereGeometry(0.48, 32, 24), shellDark, [side * 0.58, -3.16, 0.16], [1.14, 0.48, 1.55]);
+      foot.rotation.x = -0.08;
+      feet.push({ item: foot, side });
+    });
+
+    const backPlate = mesh(new THREE.BoxGeometry(1.28, 1.42, 0.16, 1, 1, 1), shellDark, [0, -1.13, -0.93], [1, 1, 1]);
+    backPlate.rotation.y = Math.PI;
+    [-0.38, 0, 0.38].forEach((x) => mesh(new THREE.CapsuleGeometry(0.04, 0.72, 6, 12), blue, [x, -1.1, -1.04]));
+
+    const pedestal = mesh(new THREE.TorusGeometry(1.55, 0.025, 10, 80), blue, [0, -3.44, 0]);
+    pedestal.rotation.x = Math.PI / 2;
+    const shadow = new THREE.Mesh(
+      new THREE.CircleGeometry(1.65, 64),
+      new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.24 }),
+    );
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.position.y = -3.46;
+    shadow.scale.setScalar(0.88);
+    shadow.receiveShadow = true;
+    scene.add(shadow);
+
+    scene.add(new THREE.HemisphereLight(0xf7f8ff, 0x10131c, 2.5));
+    const key = new THREE.DirectionalLight(0xffffff, 4.2);
+    key.position.set(-4, 6, 7);
+    key.castShadow = !lowPower;
+    key.shadow.mapSize.set(lowPower ? 512 : 1024, lowPower ? 512 : 1024);
+    scene.add(key);
+    const rim = new THREE.PointLight(0x3155f5, 34, 18, 2);
+    rim.position.set(4.2, 2.2, 2.8);
+    scene.add(rim);
+    const fill = new THREE.PointLight(0xaeeaff, 12, 14, 2);
+    fill.position.set(-3.8, -1.4, 4.5);
+    scene.add(fill);
+
+    let targetRotation = -0.22;
+    let targetTilt = -0.035;
+    let dragging = false;
+    let previousX = 0;
+    let previousY = 0;
+    let visible = true;
+    let pageVisible = !document.hidden;
+    let firstFrame = true;
+    let travelAnimation = null;
+    let walkStarted = 0;
+    let walkUntil = 0;
+    let reaction = "idle";
+    let reactionUntil = 0;
+    let reactionLookX = 0;
+    let reactionLookY = 0;
+    let currentMood = "hero";
+    let asleep = false;
+    let wakeStarted = 0;
+    let pointerInside = false;
+    let pointerLookX = 0;
+    let pointerLookY = 0;
+    let pressTravel = 0;
+    let blinkStarted = -1000;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function blink() {
+      blinkStarted = performance.now();
+    }
+
+    function runTravel(transition) {
+      if (!transition || lowPower || reducedMotion || typeof mount.animate !== "function") return;
+      if (!transition.docking && !transition.returning) return;
+      const from = transition.from;
+      const to = transition.to;
+      if (!from || !to || !to.width || !to.height) return;
+
+      travelAnimation?.cancel();
+      mount.classList.remove("robot-walking", "robot-returning");
+      const docking = Boolean(transition.docking);
+      const duration = docking ? 1050 : 760;
+      const dx = from.left - to.left;
+      const dy = from.top - to.top;
+      const sx = from.width / to.width;
+      const sy = from.height / to.height;
+      const transformAt = (progress, curveX = 0, curveY = 0) => {
+        const x = dx * (1 - progress) + curveX;
+        const y = dy * (1 - progress) + curveY;
+        const scaleX = sx + (1 - sx) * progress;
+        const scaleY = sy + (1 - sy) * progress;
+        return `translate(${x}px, ${y}px) scale(${scaleX}, ${scaleY})`;
+      };
+
+      mount.classList.add(docking ? "robot-walking" : "robot-returning");
+      if (docking) {
+        walkStarted = performance.now();
+        walkUntil = walkStarted + duration;
+      } else {
+        walkUntil = 0;
+      }
+      travelAnimation = mount.animate([
+        { transform: transformAt(0), transformOrigin: "top left", offset: 0 },
+        { transform: transformAt(0.28, docking ? 16 : -10, docking ? -12 : 8), transformOrigin: "top left", offset: 0.28 },
+        { transform: transformAt(0.58, docking ? 30 : -18, docking ? -28 : 16), transformOrigin: "top left", offset: 0.58 },
+        { transform: transformAt(0.82, docking ? 10 : -5, docking ? -8 : 5), transformOrigin: "top left", offset: 0.82 },
+        { transform: "translate(0px, 0px) scale(1, 1)", transformOrigin: "top left", offset: 1 },
+      ], {
+        duration,
+        easing: "cubic-bezier(.22,.78,.2,1)",
+        fill: "both",
+      });
+      travelAnimation.onfinish = () => {
+        travelAnimation?.cancel();
+        travelAnimation = null;
+        mount.classList.remove("robot-walking", "robot-returning");
+      };
+    }
+
+    function robotSectionChange(event) {
+      const detail = event.detail || {};
+      if (Number.isFinite(detail.rotation)) targetRotation = detail.rotation;
+      if (Number.isFinite(detail.tilt)) targetTilt = detail.tilt;
+      if (detail.key) {
+        currentMood = detail.key;
+        mount.dataset.mood = detail.key;
+        if (!asleep && reaction !== "celebrate") {
+          reaction = currentMood === "contact" ? "wave" : "idle";
+          reactionUntil = 0;
+        }
+      }
+      if (detail.action) {
+        const now = performance.now();
+        if (detail.action === "sleep") {
+          asleep = true;
+          reaction = "sleep";
+          reactionUntil = 0;
+        } else if (detail.action === "wake") {
+          asleep = false;
+          reaction = "wake";
+          wakeStarted = now;
+          reactionUntil = now + 850;
+        } else if (detail.action === "celebrate") {
+          asleep = false;
+          reaction = "celebrate";
+          reactionUntil = now + 1500;
+        } else if (detail.action === "look") {
+          asleep = false;
+          reaction = "look";
+          reactionLookX = Number(detail.lookX) || 0;
+          reactionLookY = Number(detail.lookY) || 0;
+          reactionUntil = 0;
+        } else if (detail.action === "point") {
+          asleep = false;
+          reaction = "point";
+          reactionUntil = 0;
+        } else if (detail.action === "idle" && !asleep) {
+          reaction = currentMood === "contact" ? "wave" : "idle";
+          reactionUntil = 0;
+        }
+      }
+      if (detail.transition) runTravel(detail.transition);
+    }
+    function visibilityChange() {
+      pageVisible = !document.hidden;
+    }
+    window.addEventListener("portfolio:robot", robotSectionChange);
+    document.addEventListener("visibilitychange", visibilityChange);
+
+    function pointerDown(event) {
+      dragging = true;
+      pressTravel = 0;
+      previousX = event.clientX;
+      previousY = event.clientY;
+      canvas.setPointerCapture(event.pointerId);
+    }
+    function pointerMove(event) {
+      const rect = canvas.getBoundingClientRect();
+      const nx = (event.clientX - rect.left) / rect.width - 0.5;
+      const ny = (event.clientY - rect.top) / rect.height - 0.5;
+      pointerInside = true;
+      pointerLookX = nx * 2;
+      pointerLookY = ny * 2;
+      if (!dragging) return;
+      const deltaX = event.clientX - previousX;
+      const deltaY = event.clientY - previousY;
+      pressTravel += Math.hypot(deltaX, deltaY);
+      targetRotation += deltaX * 0.012;
+      targetTilt = THREE.MathUtils.clamp(targetTilt + deltaY * 0.004, -0.24, 0.18);
+      previousX = event.clientX;
+      previousY = event.clientY;
+    }
+    function pointerUp(event) {
+      const wasClick = dragging && pressTravel < 7;
+      dragging = false;
+      if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+      if (wasClick) blink();
+    }
+    function pointerLeave() {
+      pointerInside = false;
+    }
+    function keyDown(event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        blink();
+        return;
+      }
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      targetRotation += event.key === "ArrowLeft" ? -Math.PI / 6 : Math.PI / 6;
+    }
+    canvas.addEventListener("pointerdown", pointerDown);
+    canvas.addEventListener("pointermove", pointerMove);
+    canvas.addEventListener("pointerup", pointerUp);
+    canvas.addEventListener("pointercancel", pointerUp);
+    canvas.addEventListener("pointerleave", pointerLeave);
+    canvas.addEventListener("keydown", keyDown);
+
+    function resize() {
+      const width = Math.max(1, mount.clientWidth);
+      const height = Math.max(1, mount.clientHeight);
+      const docked = document.documentElement.dataset.robotDocked === "true";
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.position.z = docked ? 12.35 : 10.8;
+      camera.position.y = docked ? -0.05 : 0.1;
+      camera.updateProjectionMatrix();
+    }
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(mount);
+    resize();
+
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      visible = entries[0]?.isIntersecting ?? true;
+    }, { threshold: 0.01 });
+    visibilityObserver.observe(mount);
+
+    const clock = new THREE.Clock();
+    function animate() {
+      if (!visible || !pageVisible) return;
+      const elapsed = clock.getElapsedTime();
+      const now = performance.now();
+      const walking = now < walkUntil;
+      if (reactionUntil && now > reactionUntil) {
+        reaction = currentMood === "contact" ? "wave" : "idle";
+        reactionUntil = 0;
+      }
+      const activeReaction = asleep ? "sleep" : reaction;
+      const lookX = activeReaction === "look"
+        ? reactionLookX
+        : activeReaction === "point"
+          ? -0.9
+          : pointerInside
+            ? pointerLookX
+            : 0;
+      const lookY = activeReaction === "look" ? reactionLookY : pointerInside ? pointerLookY : 0;
+      const reactionYaw = activeReaction === "look"
+        ? lookX * 0.22
+        : activeReaction === "point"
+          ? -0.24
+          : activeReaction === "wave"
+            ? 0.08
+            : 0;
+      const reactionTilt = activeReaction === "sleep" ? 0.11 : activeReaction === "celebrate" ? -0.07 : 0;
+      robot.rotation.y = THREE.MathUtils.lerp(robot.rotation.y, targetRotation + reactionYaw, dragging ? 0.2 : 0.075);
+      robot.rotation.x = THREE.MathUtils.lerp(robot.rotation.x, targetTilt + reactionTilt, 0.07);
+      if (!reducedMotion) {
+        if (walking) {
+          const phase = (now - walkStarted) * 0.018;
+          const stride = Math.sin(phase);
+          arms.forEach(({ item, side, baseZ }) => {
+            item.rotation.x = stride * 0.34 * side;
+            item.rotation.z = THREE.MathUtils.lerp(item.rotation.z, baseZ, 0.2);
+          });
+          hands.forEach(({ item, basePosition }) => { item.position.lerp(basePosition, 0.2); });
+          legs.forEach(({ item, side }) => { item.rotation.x = -stride * 0.3 * side; });
+          feet.forEach(({ item, side }) => { item.rotation.x = -0.08 + Math.max(0, stride * side) * 0.18; });
+          robot.position.y = Math.abs(Math.sin(phase)) * 0.095;
+          robot.rotation.z = Math.sin(phase * 0.5) * 0.025;
+        } else {
+          const gesturePhase = elapsed * 5.2;
+          arms.forEach(({ item, side, baseZ }) => {
+            let targetX = 0;
+            let targetZ = baseZ;
+            if (activeReaction === "point" && side === -1) {
+              targetX = -0.18;
+              targetZ = 1.18;
+            } else if (activeReaction === "celebrate") {
+              targetX = Math.sin(gesturePhase) * 0.1 * side;
+              targetZ = side * -1.22;
+            } else if (activeReaction === "wave" && side === 1) {
+              targetX = Math.sin(gesturePhase * 1.35) * 0.22;
+              targetZ = -1.08 + Math.sin(gesturePhase) * 0.18;
+            }
+            item.rotation.x = THREE.MathUtils.lerp(item.rotation.x, targetX, 0.14);
+            item.rotation.z = THREE.MathUtils.lerp(item.rotation.z, targetZ, 0.14);
+          });
+          hands.forEach(({ item, side, basePosition }) => {
+            let targetX = basePosition.x;
+            let targetY = basePosition.y;
+            let targetZ = basePosition.z;
+            if (activeReaction === "point" && side === -1) {
+              targetX = -2.05;
+              targetY = -0.9;
+              targetZ = 0.08;
+            } else if (activeReaction === "celebrate") {
+              targetX = side * 1.8;
+              targetY = -0.52 + Math.sin(gesturePhase) * 0.08;
+            } else if (activeReaction === "wave" && side === 1) {
+              targetX = 1.78;
+              targetY = -0.58 + Math.sin(gesturePhase * 1.35) * 0.08;
+            }
+            item.position.x = THREE.MathUtils.lerp(item.position.x, targetX, 0.14);
+            item.position.y = THREE.MathUtils.lerp(item.position.y, targetY, 0.14);
+            item.position.z = THREE.MathUtils.lerp(item.position.z, targetZ, 0.14);
+          });
+          legs.forEach(({ item }) => { item.rotation.x = THREE.MathUtils.lerp(item.rotation.x, 0, 0.14); });
+          feet.forEach(({ item }) => { item.rotation.x = THREE.MathUtils.lerp(item.rotation.x, -0.08, 0.14); });
+          if (activeReaction === "celebrate") {
+            robot.position.y = Math.abs(Math.sin(gesturePhase)) * 0.16;
+            robot.rotation.z = Math.sin(gesturePhase * 0.5) * 0.035;
+          } else if (activeReaction === "sleep") {
+            robot.position.y = -0.03 + Math.sin(elapsed * 0.42) * 0.018;
+            robot.rotation.z = THREE.MathUtils.lerp(robot.rotation.z, 0.065, 0.06);
+          } else {
+            robot.position.y = Math.sin(elapsed * 1.15) * 0.055;
+            robot.rotation.z = THREE.MathUtils.lerp(robot.rotation.z, 0, 0.12);
+          }
+        }
+        const targetEyeX = lookX * 0.105;
+        const targetEyeY = 1.28 - lookY * 0.055;
+        eyeGroup.position.x = THREE.MathUtils.lerp(eyeGroup.position.x, targetEyeX, 0.13);
+        eyeGroup.position.y = THREE.MathUtils.lerp(eyeGroup.position.y, targetEyeY, 0.13);
+        let eyeOpen = activeReaction === "sleep" ? 0.08 : 1;
+        if (activeReaction === "wake") {
+          const wakeProgress = Math.min(1, Math.max(0, (now - wakeStarted) / 850));
+          eyeOpen = 1 + Math.sin(wakeProgress * Math.PI) * 0.28;
+        }
+        const blinkAge = now - blinkStarted;
+        const blinkActive = blinkAge >= 0 && blinkAge < 460;
+        if (blinkActive) {
+          let blinkOpen = 0.012;
+          if (blinkAge < 90) {
+            const closing = blinkAge / 90;
+            blinkOpen = 1 - closing * closing;
+          } else if (blinkAge > 170) {
+            const opening = Math.min(1, (blinkAge - 170) / 290);
+            blinkOpen = 0.012 + 0.988 * opening * opening * (3 - 2 * opening);
+          }
+          eyeOpen *= blinkOpen;
+        }
+        eyeVisuals.forEach(({ item, baseScale }) => {
+          item.scale.y = THREE.MathUtils.lerp(
+            item.scale.y,
+            baseScale.y * eyeOpen,
+            blinkActive ? 0.62 : activeReaction === "sleep" ? 0.075 : 0.16,
+          );
+        });
+        if (!dragging) targetRotation += Math.sin(elapsed * 0.33) * 0.00018;
+        const glow = activeReaction === "sleep"
+          ? 0.45
+          : activeReaction === "celebrate"
+            ? 4.2 + Math.abs(Math.sin(elapsed * 6)) * 1.3
+            : 3.1 + Math.sin(elapsed * 2.1) * 0.45;
+        blue.emissiveIntensity = THREE.MathUtils.lerp(blue.emissiveIntensity, glow, 0.12);
+        eyeCore.emissiveIntensity = THREE.MathUtils.lerp(eyeCore.emissiveIntensity, activeReaction === "sleep" ? 0.35 : 4.6, 0.12);
+      }
+      renderer.render(scene, camera);
+      if (firstFrame) {
+        firstFrame = false;
+        mount.classList.add("robot-3d-ready");
+      }
+    }
+    renderer.setAnimationLoop(animate);
+
+    window.__portfolioRobotDispose?.();
+    window.__portfolioRobotDispose = () => {
+      renderer.setAnimationLoop(null);
+      travelAnimation?.cancel();
+      resizeObserver.disconnect();
+      visibilityObserver.disconnect();
+      canvas.removeEventListener("pointerdown", pointerDown);
+      canvas.removeEventListener("pointermove", pointerMove);
+      canvas.removeEventListener("pointerup", pointerUp);
+      canvas.removeEventListener("pointercancel", pointerUp);
+      canvas.removeEventListener("pointerleave", pointerLeave);
+      canvas.removeEventListener("keydown", keyDown);
+      window.removeEventListener("portfolio:robot", robotSectionChange);
+      document.removeEventListener("visibilitychange", visibilityChange);
+      renderer.dispose();
+    };
+  } catch (error) {
+    mount.classList.remove("robot-3d-ready");
+    mount.classList.add("robot-3d-unavailable");
+  }
+}
+</script><footer class="shell footer"><span>© 2026 Lokesh Reddy Elluri</span><span>Backend systems · Applied ML · Agents</span><a href="#top">Back to top ↑</a></footer>
 <script>
 (function () {
   var root = document.documentElement;
+  root.dataset.portfolioHydrated = 'true';
+  dispatchEvent(new Event('portfolio:hydrated'));
   var themeButton = document.getElementById('theme-toggle');
   function syncThemeLabel() {
     var dark = root.dataset.theme === 'dark';
@@ -551,13 +1349,140 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
   });
 
   var progressBar = document.getElementById('scroll-progress');
+  var robotDocked = false;
+  var dockingInitialized = false;
+  function rectData(rect) {
+    return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
+  }
+  function updateRobotDocking() {
+    var hero = document.getElementById('top');
+    var robotMount = document.getElementById('hero-robot-3d');
+    if (!hero || !robotMount) return;
+    var mobile = matchMedia('(max-width: 760px)').matches;
+    var threshold = Math.min(hero.offsetHeight * .42, innerHeight * .52);
+    var nextDocked = !mobile && (robotDocked ? scrollY > threshold - 54 : scrollY > threshold);
+    if (!dockingInitialized) {
+      robotDocked = nextDocked;
+      root.dataset.robotDocked = String(nextDocked);
+      dockingInitialized = true;
+      return;
+    }
+    if (nextDocked === robotDocked) return;
+    var from = rectData(robotMount.getBoundingClientRect());
+    root.dataset.robotDocked = String(nextDocked);
+    var to = rectData(robotMount.getBoundingClientRect());
+    robotDocked = nextDocked;
+    dispatchEvent(new CustomEvent('portfolio:robot', {
+      detail: { transition: { from: from, to: to, docking: nextDocked, returning: !nextDocked } }
+    }));
+  }
   function updateProgress() {
     var max = root.scrollHeight - root.clientHeight;
     var ratio = max > 0 ? root.scrollTop / max : 0;
     if (progressBar) progressBar.style.setProperty('--scroll-progress', String(ratio));
+    updateRobotDocking();
   }
   addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
+
+  var robotSections = [
+    { id: 'top', key: 'hero', label: '/ HELLO', copy: 'Drag to rotate. I’ll guide you through the systems.', rotation: -.22, tilt: -.035 },
+    { id: 'work', key: 'sableau', label: '/ SABLEAU', copy: 'Discovery becomes a deterministic, typed replay path.', rotation: .34, tilt: -.06 },
+    { id: 'projects', key: 'systems', label: '/ SYSTEMS', copy: 'Three builds. Each one shows a decision, evidence, and outcome.', rotation: -.5, tilt: .02 },
+    { id: 'experience', key: 'experience', label: '/ EXPERIENCE', copy: 'Production impact—from NLP latency to platform reliability.', rotation: .62, tilt: -.09 },
+    { id: 'stack', key: 'stack', label: '/ STACK', copy: 'Tools are useful only when the engineering choices are defensible.', rotation: -.15, tilt: .045 },
+    { id: 'about', key: 'about', label: '/ PERSPECTIVE', copy: 'The real work starts where a promising model meets constraints.', rotation: .18, tilt: -.02 },
+    { id: 'contact', key: 'contact', label: '/ CONTACT', copy: 'Have a difficult systems problem? Let’s build something durable.', rotation: Math.PI, tilt: -.04 }
+  ];
+  function setRobotSection(section) {
+    root.dataset.robotSection = section.key;
+    var label = document.getElementById('robot-guide-label');
+    var copy = document.getElementById('robot-guide-copy');
+    if (label) label.textContent = section.label;
+    if (copy) copy.textContent = section.copy;
+    dispatchEvent(new CustomEvent('portfolio:robot', { detail: section }));
+  }
+  var sectionObserver = new IntersectionObserver(function (entries) {
+    var visibleEntry = entries.find(function (entry) { return entry.isIntersecting; });
+    if (!visibleEntry) return;
+    var section = robotSections.find(function (item) { return item.id === visibleEntry.target.id; });
+    if (section) setRobotSection(section);
+  }, { rootMargin: '-34% 0px -54%', threshold: 0 });
+  robotSections.forEach(function (section) {
+    var element = document.getElementById(section.id);
+    if (element) sectionObserver.observe(element);
+  });
+  setRobotSection(robotSections[0]);
+
+  function emitRobot(detail) {
+    dispatchEvent(new CustomEvent('portfolio:robot', { detail: detail }));
+  }
+  document.querySelectorAll('.nav-links a,.nav-cta').forEach(function (element) {
+    element.addEventListener('pointerenter', function () {
+      var rect = element.getBoundingClientRect();
+      emitRobot({
+        action: 'look',
+        lookX: ((rect.left + rect.width / 2) / innerWidth - .5) * 2,
+        lookY: ((rect.top + rect.height / 2) / innerHeight - .5) * 2
+      });
+    });
+    element.addEventListener('pointerleave', function () { emitRobot({ action: 'idle' }); });
+  });
+  document.querySelectorAll('[data-case-row]').forEach(function (element) {
+    element.addEventListener('pointerenter', function () { emitRobot({ action: 'point' }); });
+    element.addEventListener('pointerleave', function () { emitRobot({ action: 'idle' }); });
+  });
+
+  var robotSleeping = false;
+  var inactivityTimer = 0;
+  var lastActivity = 0;
+  function scheduleSleep() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(function () {
+      robotSleeping = true;
+      emitRobot({ action: 'sleep' });
+    }, 14000);
+  }
+  function registerActivity() {
+    var now = performance.now();
+    if (now - lastActivity < 350) return;
+    lastActivity = now;
+    if (robotSleeping) {
+      robotSleeping = false;
+      emitRobot({ action: 'wake' });
+    }
+    scheduleSleep();
+  }
+  addEventListener('pointermove', registerActivity, { passive: true });
+  addEventListener('pointerdown', registerActivity, { passive: true });
+  addEventListener('keydown', registerActivity);
+  scheduleSleep();
+
+  var cursorLabel = document.getElementById('cursor-label');
+  if (cursorLabel && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var cursorFrame = 0;
+    var pointerX = 0;
+    var pointerY = 0;
+    function cursorText(target) {
+      if (target && target.closest('#robot-canvas')) return 'ROTATE';
+      if (target && target.closest('a[href*="github.com"],a[href*="ieeexplore.ieee.org"]')) return 'VIEW SOURCE';
+      if (target && target.closest('[data-case-open],[data-case-row]')) return 'OPEN';
+      if (target && target.closest('#contact,.nav-cta')) return 'CONNECT';
+      return '';
+    }
+    addEventListener('pointermove', function (event) {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      var label = cursorText(event.target instanceof Element ? event.target : null);
+      cursorLabel.textContent = label;
+      cursorLabel.dataset.visible = String(Boolean(label));
+      if (!cursorFrame) cursorFrame = requestAnimationFrame(function () {
+        cursorLabel.style.transform = 'translate3d(' + String(pointerX + 15) + 'px,' + String(pointerY + 15) + 'px,0)';
+        cursorFrame = 0;
+      });
+    }, { passive: true });
+    document.documentElement.addEventListener('mouseleave', function () { cursorLabel.dataset.visible = 'false'; });
+  }
 
   var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduceMotion) {
@@ -619,6 +1544,80 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
         element.style.setProperty('--spot-y', String(event.clientY - rect.top) + 'px');
       });
     });
+
+    var heroSurface = document.querySelector('.hero');
+    if (heroSurface) {
+      heroSurface.addEventListener('pointermove', function (event) {
+        var rect = heroSurface.getBoundingClientRect();
+        var x = ((event.clientX - rect.left) / rect.width - .5) * 22;
+        var y = ((event.clientY - rect.top) / rect.height - .5) * 12;
+        heroSurface.style.setProperty('--hero-x', String(x) + 'px');
+        heroSurface.style.setProperty('--hero-y', String(y) + 'px');
+      });
+      heroSurface.addEventListener('pointerleave', function () {
+        heroSurface.style.setProperty('--hero-x', '0px');
+        heroSurface.style.setProperty('--hero-y', '0px');
+      });
+    }
+
+    var robot = document.getElementById('hero-robot');
+    if (robot) {
+      var rotation = 0;
+      var startRotation = 0;
+      var startX = 0;
+      var dragging = false;
+      var leftControl = robot.querySelector('.robot-control-left');
+      var rightControl = robot.querySelector('.robot-control-right');
+      function renderRobot() { robot.style.setProperty('--robot-ry', String(rotation) + 'deg'); }
+      function rotateBy(amount) { rotation += amount; renderRobot(); }
+      robot.addEventListener('pointerdown', function (event) {
+        if (event.target.closest('.robot-control')) return;
+        dragging = true;
+        startX = event.clientX;
+        startRotation = rotation;
+        robot.classList.add('is-dragging');
+        robot.setPointerCapture(event.pointerId);
+      });
+      robot.addEventListener('pointermove', function (event) {
+        var rect = robot.getBoundingClientRect();
+        var eyeX = Math.max(-8, Math.min(8, ((event.clientX - rect.left) / rect.width - .5) * 16));
+        var eyeY = Math.max(-6, Math.min(6, ((event.clientY - rect.top) / rect.height - .4) * 12));
+        robot.style.setProperty('--eye-x', String(eyeX) + 'px');
+        robot.style.setProperty('--eye-y', String(eyeY) + 'px');
+        if (!dragging) return;
+        rotation = startRotation + (event.clientX - startX) * .65;
+        renderRobot();
+      });
+      function finishRotation(event) {
+        dragging = false;
+        robot.classList.remove('is-dragging');
+        if (robot.hasPointerCapture(event.pointerId)) robot.releasePointerCapture(event.pointerId);
+      }
+      robot.addEventListener('pointerup', finishRotation);
+      robot.addEventListener('pointercancel', finishRotation);
+      robot.addEventListener('pointerleave', function () {
+        if (dragging) return;
+        robot.style.setProperty('--eye-x', '0px');
+        robot.style.setProperty('--eye-y', '0px');
+      });
+      robot.addEventListener('keydown', function (event) {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        rotateBy(event.key === 'ArrowLeft' ? -30 : 30);
+      });
+      if (leftControl) leftControl.addEventListener('click', function () { rotateBy(-30); });
+      if (rightControl) rightControl.addEventListener('click', function () { rotateBy(30); });
+    }
+
+    document.querySelectorAll('.primary-button,.nav-cta').forEach(function (element) {
+      element.addEventListener('pointermove', function (event) {
+        var rect = element.getBoundingClientRect();
+        var x = ((event.clientX - rect.left) / rect.width - .5) * 8;
+        var y = ((event.clientY - rect.top) / rect.height - .5) * 6;
+        element.style.translate = String(x) + 'px ' + String(y) + 'px';
+      });
+      element.addEventListener('pointerleave', function () { element.style.translate = '0 0'; });
+    });
   }
 
   var menuButton = document.querySelector('.menu-toggle');
@@ -674,6 +1673,87 @@ h1 { max-width: 1120px; margin: 0; font-size: clamp(4rem, 9.3vw, 8.4rem); line-h
     }
     copyButton.textContent = 'Copied';
     setTimeout(function () { copyButton.textContent = 'Copy email'; }, 1800);
+  });
+
+  var caseShell = document.querySelector('.case-modal-shell');
+  var casePanels = Array.from(document.querySelectorAll('[data-case-panel]'));
+  var caseClose = document.querySelector('.case-modal-close');
+  function closeCase() {
+    if (!caseShell) return;
+    caseShell.dataset.open = 'false';
+    caseShell.setAttribute('aria-hidden', 'true');
+    document.body.dataset.modalOpen = 'false';
+    casePanels.forEach(function (panel) { panel.classList.remove('is-active'); });
+  }
+  function setCaseOrigin(trigger) {
+    if (!caseShell || !trigger) return;
+    var origin = trigger.closest('[data-case-row],.flagship-grid') || trigger;
+    var rect = origin.getBoundingClientRect();
+    caseShell.style.setProperty('--case-origin-x', String(rect.left + rect.width / 2 - innerWidth / 2) + 'px');
+    caseShell.style.setProperty('--case-origin-y', String(rect.top + rect.height / 2 - innerHeight / 2) + 'px');
+    caseShell.style.setProperty('--case-origin-scale-x', String(Math.max(.08, Math.min(1, rect.width / Math.max(1, innerWidth - 28)))));
+    caseShell.style.setProperty('--case-origin-scale-y', String(Math.max(.08, Math.min(1, rect.height / Math.max(1, innerHeight - 28)))));
+    caseShell.dataset.transition = 'expand';
+    setTimeout(function () { delete caseShell.dataset.transition; }, 760);
+  }
+  function openCase(id, trigger) {
+    if (!caseShell) return;
+    setCaseOrigin(trigger);
+    casePanels.forEach(function (panel) {
+      panel.classList.toggle('is-active', panel.dataset.casePanel === id);
+    });
+    caseShell.dataset.open = 'true';
+    caseShell.setAttribute('aria-hidden', 'false');
+    document.body.dataset.modalOpen = 'true';
+    emitRobot({ action: 'celebrate' });
+    setTimeout(function () { if (caseClose) caseClose.focus(); }, 30);
+  }
+  document.querySelectorAll('[data-case-open]').forEach(function (button) {
+    button.addEventListener('click', function () { openCase(button.dataset.caseOpen, button); });
+  });
+  document.querySelectorAll('[data-case-row]').forEach(function (row) {
+    row.addEventListener('click', function (event) {
+      if (event.target.closest('a,button')) return;
+      openCase(row.dataset.caseRow, row);
+    });
+    row.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openCase(row.dataset.caseRow, row);
+    });
+  });
+  document.querySelectorAll('[data-case-architecture]').forEach(function (demo) {
+    var buttons = Array.from(demo.querySelectorAll('[data-architecture-step]'));
+    var reveal = demo.querySelector('.case-architecture-reveal');
+    var title = demo.querySelector('[data-architecture-title]');
+    var detail = demo.querySelector('[data-architecture-detail]');
+    var counter = demo.querySelector('.architecture-stage-code b');
+    buttons.forEach(function (button, index) {
+      button.addEventListener('click', function () {
+        buttons.forEach(function (item) {
+          var active = item === button;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', String(active));
+        });
+        if (title) title.textContent = button.querySelector('strong')?.textContent || '';
+        if (detail) detail.textContent = button.dataset.detail || '';
+        if (counter) counter.textContent = '0' + String(index + 1) + ' / 04';
+        if (reveal) {
+          reveal.style.animation = 'none';
+          void reveal.offsetHeight;
+          reveal.style.animation = '';
+        }
+      });
+    });
+  });
+  document.querySelectorAll('[data-case-close]').forEach(function (button) {
+    button.addEventListener('click', closeCase);
+  });
+  if (caseShell) caseShell.addEventListener('mousedown', function (event) {
+    if (event.target === caseShell) closeCase();
+  });
+  addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && caseShell && caseShell.dataset.open === 'true') closeCase();
   });
 })();</script>
 </body>

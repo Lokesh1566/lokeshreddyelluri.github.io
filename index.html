@@ -695,9 +695,12 @@ html[data-robot-docked="true"] .robot-guide p { display: none; }
   .mobile-menu[data-open="true"] a { min-height: 56px; }
   .hero { min-height: auto; padding: calc(88px + env(safe-area-inset-top)) 0 52px; }
   .hero-tech-field { top: 94px; right: -24vw; width: 105vw; height: 330px; opacity: .22; overflow: hidden; }
-  .availability { max-width: 100%; font-size: .6rem; line-height: 1.4; }
-  .hero-main { width: 100%; margin-top: 50px; }
-  .hero-intro { margin-bottom: 11px; font-size: .94rem; }
+  .hero-main { order: 1; width: 100%; margin-top: 0; }
+  .availability { order: 2; align-self: flex-start; max-width: 100%; margin-top: 22px; font-size: .6rem; line-height: 1.4; }
+  .hero > .hero-robot-3d { order: 3; }
+  .hero-bottom { order: 4; }
+  .hero-intro { margin: 0 0 17px; padding-left: 12px; border-left: 2px solid var(--blue); color: var(--muted); font: 520 .67rem/1.15 var(--mono); letter-spacing: .035em; }
+  .hero-intro strong { display: block; margin-top: 7px; color: var(--ink); font-family: var(--font-geist-sans), system-ui, sans-serif; font-size: clamp(1.15rem, 4.25vw, 1.35rem); line-height: 1.05; letter-spacing: -.035em; white-space: nowrap; }
   .hero .eyebrow { margin-bottom: 15px; font-size: .59rem; line-height: 1.55; letter-spacing: .09em; }
   .hero h1 { max-width: none; font-size: clamp(3rem, 13.5vw, 5.2rem); line-height: .9; letter-spacing: -.067em; }
   .hero > .hero-robot-3d { position: relative; inset: auto; width: 100%; height: clamp(340px, 102vw, 410px); margin: 18px 0 0; }
@@ -773,8 +776,10 @@ html[data-robot-docked="true"] .robot-guide p { display: none; }
   .hero { padding-top: calc(82px + env(safe-area-inset-top)); }
   .hero-tech-field { top: 92px; right: -38vw; width: 125vw; height: 290px; opacity: .18; }
   .availability { width: auto; max-width: 100%; line-height: 1.4; }
-  .hero-main { margin-top: 44px; }
-  .hero h1 { font-size: clamp(2.85rem, 14.1vw, 4.5rem); }
+  .hero-main { margin-top: 0; }
+  .hero-intro { margin-bottom: 15px; }
+  .hero-intro strong { font-size: clamp(1.1rem, 5vw, 1.25rem); }
+  .hero h1 { font-size: clamp(2.7rem, 13.4vw, 4.25rem); }
   .hero > .hero-robot-3d,
   html[data-robot-docked="true"] .hero > .hero-robot-3d { width: 100%; height: clamp(326px, 100vw, 370px); margin: 14px 0 0; }
   .robot-guide,
@@ -820,11 +825,17 @@ html[data-robot-docked="true"] .robot-guide p { display: none; }
   .wordmark { font-size: .6rem; }
   .theme-toggle, .menu-toggle { min-width: 40px; }
   .availability { font-size: .56rem; }
-  .hero h1 { font-size: clamp(2.55rem, 14vw, 3.4rem); }
+  .hero-tech-field { opacity: .11; }
+  .hero-intro { padding-left: 10px; font-size: .61rem; }
+  .hero-intro strong { font-size: 1.05rem; }
+  .hero h1 { font-size: clamp(2.45rem, 13.5vw, 3.2rem); }
   .hero > .hero-robot-3d,
   html[data-robot-docked="true"] .hero > .hero-robot-3d { height: 320px; }
   .robot-guide,
   html[data-robot-docked="true"] .robot-guide { width: 178px; }
+  .robot-guide p,
+  html[data-robot-docked="true"] .robot-guide p { display: none; }
+  .robot-guide span { margin-bottom: 0; }
   .case-modal-panel { width: calc(100% - 24px); }
   .case-modal-header .wordmark { max-width: 140px; font-size: .56rem; }
 }
